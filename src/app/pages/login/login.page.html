@@ -1,34 +1,16 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Iniciar sesión</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding">
-  <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
-    <ion-item>
-      <ion-label position="floating">Correo Electrónico</ion-label>
-      <ion-input
-        formControlName="email"
-        type="email"
-        placeholder="Tu correo electrónico"
-        required
-      ></ion-input>
-    </ion-item>
-
-    <div *ngIf="signInForm.controls.email.invalid && signInForm.controls.email.touched">
-      <ion-text color="danger">
-        <p *ngIf="signInForm.controls.email.errors?.['required']">Este campo es obligatorio.</p>
-        <p *ngIf="signInForm.controls.email.errors?.['email']">Por favor ingresa un correo electrónico válido.</p>
-      </ion-text>
-    </div>
-
-    <ion-button
-      expand="full"
-      type="submit"
-      [disabled]="loading || signInForm.invalid"
-    >
-      {{ loading ? 'Enviando...' : 'Enviar enlace mágico' }}
-    </ion-button>
-  </form>
+<ion-content>
+  <div class="ion-padding">
+    <h1>Iniciar sesión</h1>
+  </div>
+  <ion-list inset="true">
+    <form (ngSubmit)="handleLogin($event)">
+      <ion-item>
+        <ion-label position="stacked">E-mail</ion-label>
+        <ion-input [(ngModel)]="email" name="email" autocomplete type="email"></ion-input>
+      </ion-item>
+      <div class="ion-text-center">
+        <ion-button type="submit" fill="clear">Iniciar sesión</ion-button>
+      </div>
+    </form>
+  </ion-list>
 </ion-content>

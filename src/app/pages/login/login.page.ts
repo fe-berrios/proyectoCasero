@@ -1,66 +1,32 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SupabaseService } from 'src/app/services/supabase.service';
-import { AlertController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'
+import { SupabaseService } from 'src/app/services/supabase.service'
 
 @Component({
   standalone: false,
   selector: 'app-login',
+  template:  './login.page.html',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  loading = false;
-  signInForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-  });
+  email = ''
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private supabase: SupabaseService,
-    private alertController: AlertController,
-    private router: Router // Asegúrate de inyectar Router aquí
-  ) {}
+  constructor(private readonly supabase: SupabaseService) {}
 
-  ngOnInit() {
-    const session = this.supabase.session;
-    if (session) {
-      this.router.navigate(['/account']);
-    }
-  }
-
-  // Método para manejar el envío del formulario de inicio de sesión
-  async onSubmit(): Promise<void> {
+  async handleLogin(event: any) {
+    event.preventDefault()
+    const loader = await this.supabase.createLoader()
+    await loader.present()
     try {
-      this.loading = true;
-      const email = this.signInForm.value.email as string;
-
-      // Llamada al servicio de Supabase para enviar el Magic Link
-      const { error } = await this.supabase.signIn(email);
-      if (error) throw error;
-
-      // Mostrar alerta de éxito
-      const alert = await this.alertController.create({
-        header: 'Correo enviado',
-        message: 'Revisa tu bandeja de entrada para continuar con el inicio de sesión.',
-        buttons: ['OK'],
-      });
-      await alert.present();
-    } catch (error) {
-      if (error instanceof Error) {
-        // Mostrar alerta de error
-        const alert = await this.alertController.create({
-          header: 'Error',
-          message: error.message,
-          buttons: ['OK'],
-        });
-        await alert.present();
+      const { error } = await this.supabase.signIn(this.email)
+      if (error) {
+        throw error
       }
-    } finally {
-      this.signInForm.reset();
-      this.loading = false;
+      await loader.dismiss()
+      await this.supabase.createNotice('Check your email for the login link!')
+    } catch (error: any) {
+      await loader.dismiss()
+      await this.supabase.createNotice(error.error_description || error.message)
     }
   }
 }
-

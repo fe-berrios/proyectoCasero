@@ -1,34 +1,30 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Mi Perfil</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="ion-padding">
+    <h1>Mi Perfil</h1>
+  </div>
+  <ion-list inset="true">
+    <form>
+      <ion-item>
+        <ion-label position="stacked">E-mail</ion-label>
+        <ion-input type="email" name="email" [(ngModel)]="email" readonly></ion-input>
+      </ion-item>
 
-<ion-content class="ion-padding">
-  <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()">
+      <ion-item>
+        <ion-label position="stacked">Nombre de Usuario</ion-label>
+        <ion-input type="text" name="username" [(ngModel)]="profile.username"></ion-input>
+      </ion-item>
 
-    <ion-item *ngIf="session?.user">
-      <ion-label position="stacked">E-mail</ion-label>
-      <ion-input [value]="session?.user?.email" disabled></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Teléfono</ion-label>
+        <ion-input type="url" name="website" [(ngModel)]="profile.website"></ion-input>
+      </ion-item>
+      <div class="ion-text-center">
+        <ion-button fill="clear" (click)="updateProfile()">Update Profile</ion-button>
+      </div>
+    </form>
 
-    <ion-item>
-      <ion-label position="stacked">Nombre de Usuario</ion-label>
-      <ion-input formControlName="username" type="text"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked">Sitio Web</ion-label>
-      <ion-input formControlName="website" type="url"></ion-input>
-    </ion-item>
-
-    <ion-button expand="block" type="submit" [disabled]="loading">
-      {{ loading ? 'Loading...' : 'Update' }}
-    </ion-button>
-
-    <ion-button expand="block" color="danger" (click)="signOut()">
-      Cerrar Sesión
-    </ion-button>
-
-  </form>
+    <div class="ion-text-center">
+      <ion-button fill="clear" (click)="signOut()">Cerrar sesión</ion-button>
+    </div>
+  </ion-list>
 </ion-content>

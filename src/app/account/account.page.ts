@@ -1,80 +1,69 @@
-import { Component, OnInit , Input} from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { AuthSession } from '@supabase/supabase-js';
-import { Profile, SupabaseService } from 'src/app/services/supabase.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { Profile, SupabaseService } from 'src/app/services/supabase.service'
 
 @Component({
   standalone: false,
   selector: 'app-account',
+  template: './account.page.html',
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss'],
 })
 export class AccountPage implements OnInit {
-  loading = false
-  profile!: Profile
-  @Input()
-  session!: AuthSession
-  updateProfileForm = this.formBuilder.group({
+  profile: Profile = {
     username: '',
-    website: '',
     avatar_url: '',
-  })
+    website: '',
+  }
+
+  email = ''
+
   constructor(
     private readonly supabase: SupabaseService,
-    private formBuilder: FormBuilder
+    private router: Router
   ) {}
-  async ngOnInit(): Promise<void> {
-    await this.getProfile()
-    const { username, website, avatar_url } = this.profile
-    this.updateProfileForm.patchValue({
-      username,
-      website,
-      avatar_url,
-    })
+  ngOnInit() {
+    this.getEmail()
+    this.getProfile()
   }
+
+  async getEmail() {
+    this.email = await this.supabase.user.then((user) => user?.email || '')
+  }
+
   async getProfile() {
     try {
-      this.loading = true
-      const { user } = this.session
-      const { data: profile, error, status } = await this.supabase.profile(user)
+      const { data: profile, error, status } = await this.supabase.profile
       if (error && status !== 406) {
         throw error
       }
       if (profile) {
         this.profile = profile
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message)
-      }
-    } finally {
-      this.loading = false
+    } catch (error: any) {
+      alert(error.message)
     }
   }
-  async updateProfile(): Promise<void> {
+
+  async updateProfile(avatar_url: string = '') {
+    const loader = await this.supabase.createLoader()
+    await loader.present()
     try {
-      this.loading = true
-      const { user } = this.session
-      const username = this.updateProfileForm.value.username as string
-      const website = this.updateProfileForm.value.website as string
-      const avatar_url = this.updateProfileForm.value.avatar_url as string
-      const { error } = await this.supabase.updateProfile({
-        id: user.id,
-        username,
-        website,
-        avatar_url,
-      })
-      if (error) throw error
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message)
+      const { error } = await this.supabase.updateProfile({ ...this.profile, avatar_url })
+      if (error) {
+        throw error
       }
-    } finally {
-      this.loading = false
+      await loader.dismiss()
+      await this.supabase.createNotice('Profile updated!')
+    } catch (error: any) {
+      await loader.dismiss()
+      await this.supabase.createNotice(error.message)
     }
   }
+
   async signOut() {
+    console.log('testing?')
     await this.supabase.signOut()
+    this.router.navigate(['/'], { replaceUrl: true })
   }
 }

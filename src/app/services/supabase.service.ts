@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core'
-import {
-  AuthChangeEvent,
-  AuthSession,
-  createClient,
-  Session,
-  SupabaseClient,
-  User,
-} from '@supabase/supabase-js'
+import { LoadingController, ToastController } from '@ionic/angular'
+import { AuthChangeEvent, createClient, Session, SupabaseClient } from '@supabase/supabase-js'
 import { environment } from 'src/environments/environment'
 
 export interface Profile {
-  id?: string
   username: string
   website: string
   avatar_url: string
@@ -21,25 +14,28 @@ export interface Profile {
 })
 export class SupabaseService {
   private supabase: SupabaseClient
-  _session: AuthSession | null = null
 
-  constructor() {
+  constructor(
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController
+  ) {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
   }
 
-  get session() {
-    this.supabase.auth.getSession().then(({ data }) => {
-      this._session = data.session
-    })
-    return this._session
+  get user() {
+    return this.supabase.auth.getUser().then(({ data }) => data?.user)
   }
 
-  profile(user: User) {
-    return this.supabase
-      .from('profiles')
-      .select(`username, website, avatar_url`)
-      .eq('id', user.id)
-      .single()
+  get session() {
+    return this.supabase.auth.getSession().then(({ data }) => data?.session)
+  }
+
+  get profile() {
+    return this.user
+      .then((user) => user?.id)
+      .then((id) =>
+        this.supabase.from('profiles').select(`username, website, avatar_url`).eq('id', id).single()
+      )
   }
 
   authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
@@ -54,9 +50,11 @@ export class SupabaseService {
     return this.supabase.auth.signOut()
   }
 
-  updateProfile(profile: Profile) {
+  async updateProfile(profile: Profile) {
+    const user = await this.user
     const update = {
       ...profile,
+      id: user?.id,
       updated_at: new Date(),
     }
 
@@ -69,5 +67,14 @@ export class SupabaseService {
 
   uploadAvatar(filePath: string, file: File) {
     return this.supabase.storage.from('avatars').upload(filePath, file)
+  }
+
+  async createNotice(message: string) {
+    const toast = await this.toastCtrl.create({ message, duration: 5000 })
+    await toast.present()
+  }
+
+  createLoader() {
+    return this.loadingCtrl.create()
   }
 }
