@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SupabaseService } from 'src/app/services/supabase.service';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: false,
@@ -18,8 +19,16 @@ export class LoginPage {
   constructor(
     private formBuilder: FormBuilder,
     private supabase: SupabaseService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router // Asegúrate de inyectar Router aquí
   ) {}
+
+  ngOnInit() {
+    const session = this.supabase.session;
+    if (session) {
+      this.router.navigate(['/account']);
+    }
+  }
 
   // Método para manejar el envío del formulario de inicio de sesión
   async onSubmit(): Promise<void> {
