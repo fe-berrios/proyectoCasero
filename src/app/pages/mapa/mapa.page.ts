@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as leaflet from 'leaflet';
+import { SupabaseService } from 'src/app/services/supabase.service';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: false,
@@ -10,7 +12,10 @@ import * as leaflet from 'leaflet';
 export class MapaPage implements OnInit {
   map: leaflet.Map | undefined;
 
-  constructor() {}
+  constructor(
+    private router: Router,
+    private readonly supabase: SupabaseService,
+  ) {}
 
   ngOnInit() {
     this.initMap();
@@ -34,5 +39,11 @@ export class MapaPage implements OnInit {
     setTimeout(() => {
       this.map?.invalidateSize();
     }, 0);
+  }
+
+  async signOut() {
+    console.log('testing?')
+    await this.supabase.signOut()
+    this.router.navigate(['/'], { replaceUrl: true })
   }
 }

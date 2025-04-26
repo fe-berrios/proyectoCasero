@@ -1,4 +1,16 @@
-<ion-content [fullscreen]="true">
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-button routerLink="/account">Mi Perfil</ion-button>
+    <ion-button  (click)="signOut()">Cerrar sesión</ion-button>
+  </ion-content>
+</ion-menu>
+
+<ion-content id="main-content" [fullscreen]="true">
   <div class="buscador">
     <ion-searchbar placeholder="Buscar feria" color="light"></ion-searchbar>
   </div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { SupabaseService } from 'src/app/services/supabase.service'
 import { AlertController } from '@ionic/angular'
+import { Router } from '@angular/router'
 
 @Component({
   standalone: false,
@@ -13,8 +14,19 @@ export class LoginPage {
 
   constructor(
     private readonly supabase: SupabaseService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router
   ) {}
+
+  ngOnInit() {
+    // Verificar si la sesión está activa
+    this.supabase.session.then((session) => {
+      if (session) {
+        // Si la sesión está activa, redirigir al mapa
+        this.router.navigate(['/mapa']);
+      }
+    });
+  }
 
   async handleLogin(event: any) {
     event.preventDefault()

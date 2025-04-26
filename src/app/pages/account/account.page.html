@@ -1,3 +1,12 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
   <div class="ion-padding">
     <h1>Mi Perfil</h1>
@@ -23,6 +32,7 @@
         <ion-label position="stacked">Teléfono</ion-label>
         <ion-input type="url" name="phone" [(ngModel)]="profile.phone"></ion-input>
       </ion-item>
+      
       <div class="ion-text-center">
         <ion-button fill="clear" (click)="updateProfile()">Actualizar perfil</ion-button>
       </div>
