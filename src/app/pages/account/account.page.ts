@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { Profile, SupabaseService } from 'src/app/services/supabase.service'
+import { AlertController } from '@ionic/angular'
 
 @Component({
   standalone: false,
   selector: 'app-account',
-  template: './account.page.html',
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss'],
 })
@@ -21,8 +21,10 @@ export class AccountPage implements OnInit {
 
   constructor(
     private readonly supabase: SupabaseService,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController
   ) {}
+
   ngOnInit() {
     this.getEmail()
     this.getProfile()
@@ -42,7 +44,13 @@ export class AccountPage implements OnInit {
         this.profile = profile
       }
     } catch (error: any) {
-      alert(error.message)
+      // Mostrar mensaje de error en un popup
+      const alert = await this.alertController.create({
+        header: '¡Error!',
+        message: error.message,
+        buttons: ['OK']
+      })
+      await alert.present()
     }
   }
 
@@ -55,10 +63,25 @@ export class AccountPage implements OnInit {
         throw error
       }
       await loader.dismiss()
-      await this.supabase.createNotice('Profile updated!')
+
+      // Mostrar mensaje de éxito en un popup
+      const successAlert = await this.alertController.create({
+        header: '¡Éxito!',
+        message: 'Perfil actualizado con éxito',
+        buttons: ['OK']
+      })
+      await successAlert.present()
+
     } catch (error: any) {
       await loader.dismiss()
-      await this.supabase.createNotice(error.message)
+
+      // Mostrar mensaje de error en un popup
+      const errorAlert = await this.alertController.create({
+        header: '¡Error!',
+        message: error.message,
+        buttons: ['OK']
+      })
+      await errorAlert.present()
     }
   }
 

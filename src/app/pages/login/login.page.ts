@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { SupabaseService } from 'src/app/services/supabase.service'
+import { AlertController } from '@ionic/angular'
 
 @Component({
   standalone: false,
   selector: 'app-login',
-  template:  './login.page.html',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
   email = ''
 
-  constructor(private readonly supabase: SupabaseService) {}
+  constructor(
+    private readonly supabase: SupabaseService,
+    private alertController: AlertController
+  ) {}
 
   async handleLogin(event: any) {
     event.preventDefault()
@@ -23,10 +26,25 @@ export class LoginPage {
         throw error
       }
       await loader.dismiss()
-      await this.supabase.createNotice('Check your email for the login link!')
+
+      // Popup de éxito
+      const successAlert = await this.alertController.create({
+        header: '¡Éxito!',
+        message: '¡Revisa tu correo electrónico y haz clic en el enlace para iniciar sesión!',
+        buttons: ['OK']
+      })
+      await successAlert.present()
+
     } catch (error: any) {
       await loader.dismiss()
-      await this.supabase.createNotice(error.error_description || error.message)
+
+      // Popup de error
+      const errorAlert = await this.alertController.create({
+        header: '¡Error!',
+        message: error.error_description || error.message,
+        buttons: ['OK']
+      })
+      await errorAlert.present()
     }
   }
 }
