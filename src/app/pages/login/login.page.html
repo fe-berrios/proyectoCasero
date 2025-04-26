@@ -1,20 +1,34 @@
-<ion-content>
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Iniciar sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-item>
-    <ion-label position="floating">Correo Electrónico</ion-label>
-    <ion-input type="email"></ion-input>
-  </ion-item>
+<ion-content class="ion-padding">
+  <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input
+        formControlName="email"
+        type="email"
+        placeholder="Tu correo electrónico"
+        required
+      ></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="floating">Contraseña</ion-label>
-    <ion-input type="password"></ion-input>
-  </ion-item>
+    <div *ngIf="signInForm.controls.email.invalid && signInForm.controls.email.touched">
+      <ion-text color="danger">
+        <p *ngIf="signInForm.controls.email.errors?.['required']">Este campo es obligatorio.</p>
+        <p *ngIf="signInForm.controls.email.errors?.['email']">Por favor ingresa un correo electrónico válido.</p>
+      </ion-text>
+    </div>
 
-  <ion-button expand="full" (click)="navigateTo('registro')">Registrarse</ion-button>
-  <ion-button expand="full" (click)="navigateTo('home/mapa')">Iniciar sesión</ion-button>
+    <ion-button
+      expand="full"
+      type="submit"
+      [disabled]="loading || signInForm.invalid"
+    >
+      {{ loading ? 'Enviando...' : 'Enviar enlace mágico' }}
+    </ion-button>
+  </form>
 </ion-content>
