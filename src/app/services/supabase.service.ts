@@ -5,8 +5,9 @@ import { environment } from 'src/environments/environment'
 
 export interface Profile {
   username: string
-  website: string
+  phone: string
   avatar_url: string
+  full_name: string
 }
 
 @Injectable({
@@ -34,7 +35,7 @@ export class SupabaseService {
     return this.user
       .then((user) => user?.id)
       .then((id) =>
-        this.supabase.from('profiles').select(`username, website, avatar_url`).eq('id', id).single()
+        this.supabase.from('profiles').select(`username, full_name, phone, avatar_url`).eq('id', id).single()
       )
   }
 

@@ -12,8 +12,9 @@ import { Profile, SupabaseService } from 'src/app/services/supabase.service'
 export class AccountPage implements OnInit {
   profile: Profile = {
     username: '',
+    full_name: '',
     avatar_url: '',
-    website: '',
+    phone: '',
   }
 
   email = ''
