@@ -24,7 +24,7 @@ export class AdminPage implements OnInit {
     });
   }
 
-  async createFeria() {
+  async crearFeria() {
     if (this.nuevaFeria.id && this.nuevaFeria.name && this.nuevaFeria.location) {
       try {
         const success = await this.feriaService.createFeria(this.nuevaFeria);

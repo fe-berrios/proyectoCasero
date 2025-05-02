@@ -8,9 +8,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  constructor(private router: Router) {}
 
-  navigateTo(path: string) {
-    this.router.navigate([path]);
+  email:any = '';
+  password:any= '';
+
+  constructor(private router: Router ){
+
   }
+
+  home() {
+    this.router.navigate(['home']);
+  }
+  registro() {
+    this.router.navigate(['registro']);
+  }
+
+
 }

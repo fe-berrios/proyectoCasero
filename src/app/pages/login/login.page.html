@@ -1,20 +1,26 @@
+
 <ion-content>
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Login</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <ion-item>
-    <ion-label position="floating">Correo Electrónico</ion-label>
-    <ion-input type="email"></ion-input>
-  </ion-item>
+  <div class="contenedor">
 
-  <ion-item>
-    <ion-label position="floating">Contraseña</ion-label>
-    <ion-input type="password"></ion-input>
-  </ion-item>
+    <div class="logo">
+      <h1> CASER </h1> <img src="../../../assets/tomate.png">
+    </div>  
 
-  <ion-button expand="full" (click)="navigateTo('registro')">Registrarse</ion-button>
-  <ion-button expand="full" (click)="navigateTo('home/mapa')">Iniciar sesión</ion-button>
+    <div style="display: flex; flex-direction: column;">
+      <label > Email </label>
+      <input type="email" [(ngModel)]="email" class="input">
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+      <label > Contraseña </label>
+      <input type="password" [(ngModel)]="password" class="input">  
+    </div>
+
+    <button expand="full" class="button" (click)="home()" >  Entrar  </button>
+
+    <h6 (click)="registro()">  Registrate ahora aqui => </h6>
+
+  </div>
+
 </ion-content>
