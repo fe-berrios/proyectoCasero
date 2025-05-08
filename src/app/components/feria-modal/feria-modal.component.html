@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title>Detalles de la Feria</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="feria-details">
+    <h2>ID: {{ feria.id }}</h2>
+    <h3>Feria: "{{ feria.nombre }}"</h3>
+    <h3>Hora inicio: "{{ feria.hora_inicio }}"</h3>
+    <h3>Hora termino: "{{ feria.hora_termino }}"</h3>
+    <h3>Dia: "{{ feria.dia }}"</h3>
+  </div>
+</ion-content>

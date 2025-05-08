@@ -1,26 +1,41 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as leaflet from 'leaflet';
-import { SupabaseService } from 'src/app/services/supabase.service';
+import { FeriaService } from 'src/app/services/feria.service';
 import { Router } from '@angular/router';
+import { SupabaseService } from 'src/app/services/supabase.service';
+import { FeriaModalComponent } from 'src/app/components/feria-modal/feria-modal.component';
+import { ModalController, AlertController } from '@ionic/angular';
 
 @Component({
   standalone: false,
   selector: 'app-mapa',
   templateUrl: './mapa.page.html',
   styleUrls: ['./mapa.page.scss'],
-}) 
-export class MapaPage implements OnInit {
+})
+export class MapaPage implements OnInit, OnDestroy {
   map: leaflet.Map | undefined;
+  markers: leaflet.Marker[] = [];
+  subscription: any;
 
   constructor(
     private router: Router,
     private readonly supabase: SupabaseService,
+    private feriaService: FeriaService,
+    private modalCtrl: ModalController,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
     this.initMap();
+    this.loadFerias();
+    this.subscribeToNewFerias();
   }
 
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
   private initMap(): void {
     this.map = leaflet.map('map', {
@@ -35,15 +50,136 @@ export class MapaPage implements OnInit {
       attribution: '© OpenStreetMap',
     }).addTo(this.map);
 
-    // Forzar el redimensionamiento del mapa
     setTimeout(() => {
       this.map?.invalidateSize();
     }, 0);
   }
 
+  private async loadFerias(dayFilter?: string) {
+    const { data: ferias, error } = await this.feriaService.getFerias();
+    if (error) {
+      console.error('Error al cargar las ferias:', error);
+      return;
+    }
+
+    const filteredFerias = dayFilter
+      ? ferias?.filter((feria: any) => feria.dia === dayFilter)
+      : ferias;
+
+    this.clearMarkers();
+
+    filteredFerias?.forEach((feria: any) => {
+      this.addMarker(feria);
+    });
+  }
+
+  private addMarker(feria: any) {
+    const marker = leaflet.marker([feria.lat, feria.lng], {
+      icon: leaflet.icon({
+        iconUrl: 'assets/icon/feria-marker.png',
+        iconSize: [25, 25],
+        iconAnchor: [12, 41],
+      }),
+    });
+
+    marker.addTo(this.map!).on('click', () => this.showFeriaDetails(feria));
+    this.markers.push(marker);
+  }
+
+  private clearMarkers() {
+    this.markers.forEach((marker) => this.map?.removeLayer(marker));
+    this.markers = [];
+  }
+
+  public async openDaySelector() {
+    const alert = await this.alertCtrl.create({
+      header: 'Selecciona un día',
+      inputs: [
+        { type: 'radio', label: 'Lunes', value: 'lun' },
+        { type: 'radio', label: 'Martes', value: 'mar' },
+        { type: 'radio', label: 'Miércoles', value: 'mie' },
+        { type: 'radio', label: 'Jueves', value: 'jue' },
+        { type: 'radio', label: 'Viernes', value: 'vie' },
+        { type: 'radio', label: 'Sábado', value: 'sab' },
+        { type: 'radio', label: 'Domingo', value: 'dom' },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Aceptar',
+          handler: (selectedDay) => {
+            this.loadFerias(selectedDay);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  private async showFeriaDetails(feria: any) {
+    const modal = await this.modalCtrl.create({
+      component: FeriaModalComponent,
+      componentProps: { feria },
+    });
+    await modal.present();
+  }
+
+  private subscribeToNewFerias() {
+    this.subscription = this.feriaService.subscribeToFerias((newFeria) => {
+      this.addMarker(newFeria);
+    });
+  }
+
   async signOut() {
-    console.log('testing?')
-    await this.supabase.signOut()
-    this.router.navigate(['/'], { replaceUrl: true })
+    console.log('testing?');
+    await this.supabase.signOut();
+    this.router.navigate(['/'], { replaceUrl: true });
+  }
+
+  public async filterByHorario() {
+    const alert = await this.alertCtrl.create({
+      header: 'Selecciona un rango de horario',
+      inputs: [
+        { type: 'time', label: 'Hora Inicio', name: 'horaInicio', placeholder: '08:00' },
+        { type: 'time', label: 'Hora Término', name: 'horaTermino', placeholder: '18:00' },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Aceptar',
+          handler: (data) => {
+            const { horaInicio, horaTermino } = data;
+            this.loadFeriasByHorario(horaInicio, horaTermino);
+          },
+        },
+      ],
+    });
+  
+    await alert.present();
+  }
+  
+  private async loadFeriasByHorario(horaInicio: string, horaTermino: string) {
+    const { data: ferias, error } = await this.feriaService.getFerias();
+    if (error) {
+      console.error('Error al cargar las ferias:', error);
+      return;
+    }
+  
+    const filteredFerias = ferias?.filter((feria: any) => {
+      return feria.hora_inicio >= horaInicio && feria.hora_termino <= horaTermino;
+    });
+  
+    this.clearMarkers();
+  
+    filteredFerias?.forEach((feria: any) => {
+      this.addMarker(feria);
+    });
   }
 }

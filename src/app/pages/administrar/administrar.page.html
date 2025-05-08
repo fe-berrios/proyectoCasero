@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Administrar Ferias</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input [(ngModel)]="nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Latitud</ion-label>
+      <ion-input type="number" [(ngModel)]="lat"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Longitud</ion-label>
+      <ion-input type="number" [(ngModel)]="lng"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="full" (click)="saveFeria()">Guardar Feria</ion-button>
+</ion-content>

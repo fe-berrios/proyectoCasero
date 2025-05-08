@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'mapa',
     loadChildren: () => import('../mapa/mapa.module').then( m => m.MapaPageModule)
   },
+  {
+    path: 'administrar',
+    loadChildren: () => import('../administrar/administrar.module').then( m => m.AdministrarPageModule)
+  },
 ];
 
 @NgModule({

@@ -6,7 +6,7 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-button routerLink="/account">Mi Perfil</ion-button>
-    <ion-button  (click)="signOut()">Cerrar sesión</ion-button>
+    <ion-button (click)="signOut()">Cerrar sesión</ion-button>
   </ion-content>
 </ion-menu>
 
@@ -16,8 +16,8 @@
   </div>
 
   <div class="botones-badges">
-    <ion-button>Dia</ion-button>
-    <ion-button>Horario</ion-button>
+    <ion-button (click)="openDaySelector()">Día</ion-button>
+    <ion-button (click)="filterByHorario()">Horario</ion-button>
     <ion-button>Puesto</ion-button>
   </div>
 
