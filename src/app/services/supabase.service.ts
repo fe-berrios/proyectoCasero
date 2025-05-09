@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { LoadingController, ToastController } from '@ionic/angular'
-import { AuthChangeEvent, createClient, Session, SupabaseClient } from '@supabase/supabase-js'
-import { environment } from 'src/environments/environment'
+import { AuthChangeEvent, Session } from '@supabase/supabase-js'
+import { supabase } from '../supabase_client'
 
 export interface Profile {
   username: string
@@ -14,41 +14,38 @@ export interface Profile {
   providedIn: 'root',
 })
 export class SupabaseService {
-  private supabase: SupabaseClient
 
   constructor(
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController
-  ) {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
-  }
+  ) {}
 
   get user() {
-    return this.supabase.auth.getUser().then(({ data }) => data?.user)
+    return supabase.auth.getUser().then(({ data }) => data?.user)
   }
 
   get session() {
-    return this.supabase.auth.getSession().then(({ data }) => data?.session)
+    return supabase.auth.getSession().then(({ data }) => data?.session)
   }
 
   get profile() {
     return this.user
       .then((user) => user?.id)
       .then((id) =>
-        this.supabase.from('profiles').select(`username, full_name, phone, avatar_url`).eq('id', id).single()
+        supabase.from('profiles').select(`username, full_name, phone, avatar_url`).eq('id', id).single()
       )
   }
 
   authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
-    return this.supabase.auth.onAuthStateChange(callback)
+    return supabase.auth.onAuthStateChange(callback)
   }
 
   signIn(email: string) {
-    return this.supabase.auth.signInWithOtp({ email })
+    return supabase.auth.signInWithOtp({ email })
   }
 
   signOut() {
-    return this.supabase.auth.signOut()
+    return supabase.auth.signOut()
   }
 
   async updateProfile(profile: Profile) {
@@ -59,15 +56,15 @@ export class SupabaseService {
       updated_at: new Date(),
     }
 
-    return this.supabase.from('profiles').upsert(update)
+    return supabase.from('profiles').upsert(update)
   }
 
   downLoadImage(path: string) {
-    return this.supabase.storage.from('avatars').download(path)
+    return supabase.storage.from('avatars').download(path)
   }
 
   uploadAvatar(filePath: string, file: File) {
-    return this.supabase.storage.from('avatars').upload(filePath, file)
+    return supabase.storage.from('avatars').upload(filePath, file)
   }
 
   async createNotice(message: string) {

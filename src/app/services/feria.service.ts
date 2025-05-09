@@ -1,30 +1,24 @@
 import { Injectable } from '@angular/core';
-import { SupabaseClient, createClient } from '@supabase/supabase-js';
-import { environment } from 'src/environments/environment';
+import { supabase } from '../supabase_client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeriaService {
-  private supabase: SupabaseClient;
-  
-  constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-  }
-  
+
   // Guardar una feria en la base de datos
   async saveFeria(nombre: string, lat: number, lng: number) {
-    return this.supabase.from('ferias').insert([{ nombre, lat, lng }]);
+    return supabase.from('ferias').insert([{ nombre, lat, lng }]);
   }
-  
+
   // Obtener todas las ferias de la base de datos
   async getFerias() {
-    return this.supabase.from('ferias').select('*');
+    return supabase.from('ferias').select('*');
   }
-  
+
   // Suscribirse a cambios en tiempo real en la tabla de ferias
   subscribeToFerias(callback: (feria: any) => void) {
-    const channel = this.supabase
+    const channel = supabase
       .channel('ferias-changes')
       .on(
         'postgres_changes',
@@ -32,12 +26,12 @@ export class FeriaService {
         (payload) => callback(payload.new)
       )
       .subscribe();
-      
+
     return channel;
   }
-  
+
   // Método para cancelar la suscripción cuando ya no sea necesaria
   unsubscribeFromFerias(channel: any) {
-    this.supabase.removeChannel(channel);
+    supabase.removeChannel(channel);
   }
 }
