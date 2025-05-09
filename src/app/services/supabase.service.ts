@@ -32,7 +32,7 @@ export class SupabaseService {
     return this.user
       .then((user) => user?.id)
       .then((id) =>
-        supabase.from('profiles').select(`username, full_name, phone, avatar_url`).eq('id', id).single()
+        supabase.from('profiles').select(`username, full_name, phone, avatar_url, admin_status`).eq('id', id).single()
       )
   }
 

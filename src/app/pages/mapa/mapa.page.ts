@@ -16,6 +16,8 @@ export class MapaPage implements OnInit, OnDestroy {
   map: leaflet.Map | undefined;
   markers: leaflet.Marker[] = [];
   subscription: any;
+  isAdmin: boolean = false; // ✅ NUEVA variable para controlar visibilidad
+  loading: boolean = true;  // Para manejar la carga del perfil y evitar flicker
 
   constructor(
     private router: Router,
@@ -29,6 +31,12 @@ export class MapaPage implements OnInit, OnDestroy {
     this.initMap();
     this.loadFerias();
     this.subscribeToNewFerias();
+
+    // ✅ Verifica si el usuario es admin
+    this.supabase.profile.then((response) => {
+      this.isAdmin = response.data?.admin_status === true;
+      this.loading = false; // Una vez cargado el perfil, ya no estamos en carga
+    });
   }
 
   ngOnDestroy() {

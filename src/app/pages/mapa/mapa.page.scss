@@ -6,7 +6,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 0; /* Asegura que el mapa esté en el fondo */
+    z-index: 0;
+    /* Asegura que el mapa esté en el fondo */
 }
 
 /* Contenedor del buscador */
@@ -15,35 +16,38 @@
     top: 10px;
     left: 10px;
     right: 10px;
-    z-index: 1000; /* Asegura que esté encima del mapa */
+    z-index: 1000;
+    /* Asegura que esté encima del mapa */
 }
 
 /* Contenedor de los botones */
 .botones-badges {
     position: absolute;
-    top: 70px; /* Ajusta para que esté debajo del buscador */
+    top: 70px;
+    /* Ajusta para que esté debajo del buscador */
     left: 10px;
     right: 10px;
     display: flex;
     justify-content: space-around;
-    z-index: 1000; /* Asegura que esté encima del mapa */
+    z-index: 1000;
+    /* Asegura que esté encima del mapa */
 }
 
 /* Estilo para el ion-searchbar */
 ion-searchbar {
-    --border-radius: 20px; /* Forma redondeada */
-    --background: rgba(255, 255, 255); /* Fondo translúcido */
-    --box-shadow: none; /* Sin sombra */
+    --border-radius: 20px;
+    --background: rgba(255, 255, 255);
+    --box-shadow: none;
     --padding-start: 10px;
-    color: white; /* Texto blanco */
+    color: white;
 }
 
 /* Estilo para los botones */
 ion-button {
-    --border-radius: 20px; /* Forma redondeada */
-    --background: rgba(255, 255, 255); /* Fondo translúcido */
-    --color: rgb(0, 0, 0); /* Texto blanco */
-    --box-shadow: none; /* Sin sombra */
+    --border-radius: 20px;
+    --background: rgba(255, 255, 255);
+    --color: rgb(0, 0, 0);
+    --box-shadow: none;
     font-weight: bold;
 }
 
@@ -52,6 +56,8 @@ ion-content {
     position: relative;
 }
 
-html, body, ion-content {
+html,
+body,
+ion-content {
     height: 100%;
 }

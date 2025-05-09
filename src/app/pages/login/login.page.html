@@ -1,25 +1,23 @@
-
 <ion-content>
 
   <div class="contenedor">
 
     <div class="logo">
-      <h1> CASER </h1> <img src="../../../assets/tomate.png">
-    </div>  
-
-    <div style="display: flex; flex-direction: column;">
-      <label > Email </label>
-      <input type="email" [(ngModel)]="email" class="input">
+      <h1>CASER</h1>
+      <img src="../../../assets/tomate.png">
     </div>
 
-    <div style="display: flex; flex-direction: column;">
-      <label > Contraseña </label>
-      <input type="password" [(ngModel)]="password" class="input">  
-    </div>
+    <form (submit)="handleLogin($event)">
 
-    <button expand="full" class="button" (click)="home()" >  Entrar  </button>
+      <div style="display: flex; flex-direction: column;">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" name="email" class="input" required>
+      </div>
 
-    <h6 (click)="registro()">  Registrate ahora aqui => </h6>
+      <button expand="full" class="button" type="submit">Entrar</button>
+
+    </form>
+
 
   </div>
 
