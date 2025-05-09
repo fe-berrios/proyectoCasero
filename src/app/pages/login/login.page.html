@@ -1,16 +1,26 @@
+
 <ion-content>
-  <div class="ion-padding">
-    <h1>Iniciar sesión</h1>
+
+  <div class="contenedor">
+
+    <div class="logo">
+      <h1> CASER </h1> <img src="../../../assets/tomate.png">
+    </div>  
+
+    <div style="display: flex; flex-direction: column;">
+      <label > Email </label>
+      <input type="email" [(ngModel)]="email" class="input">
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+      <label > Contraseña </label>
+      <input type="password" [(ngModel)]="password" class="input">  
+    </div>
+
+    <button expand="full" class="button" (click)="home()" >  Entrar  </button>
+
+    <h6 (click)="registro()">  Registrate ahora aqui => </h6>
+
   </div>
-  <ion-list inset="true">
-    <form (ngSubmit)="handleLogin($event)">
-      <ion-item>
-        <ion-label position="stacked">E-mail</ion-label>
-        <ion-input [(ngModel)]="email" name="email" autocomplete type="email"></ion-input>
-      </ion-item>
-      <div class="ion-text-center">
-        <ion-button type="submit" fill="clear">Iniciar sesión</ion-button>
-      </div>
-    </form>
-  </ion-list>
+
 </ion-content>
