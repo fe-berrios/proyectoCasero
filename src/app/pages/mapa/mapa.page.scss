@@ -1,3 +1,5 @@
+@use 'src/theme/variables' as *;
+
 #map {
     height: 100%;
     width: 100%;
@@ -61,3 +63,55 @@ body,
 ion-content {
     height: 100%;
 }
+
+/* Estilo menu */
+.custom-menu {
+    --background: #f8fbff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+    padding: 20px;
+    color: $inverse-text-color;
+    margin-bottom: 20px;
+    clip-path: path("M0,0 H100% V80 Q50% 100% 0 80 Z");
+  }
+  
+  
+  .profile-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 3px solid $inverse-text-color; /* Blanco para el borde */
+  }
+  
+  .profile-info h2 {
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .profile-info p {
+    font-size: 12px;
+    margin: 0;
+    opacity: 0.8;
+  }
+  
+  .menu-options ion-item {
+    --background: transparent;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  ion-menu::part(container) {
+    border-radius: 0 30px 30px 0;
+    box-shadow: 4px 0px 16px gray;
+  } 
+  

@@ -16,8 +16,9 @@ export class MapaPage implements OnInit, OnDestroy {
   map: leaflet.Map | undefined;
   markers: leaflet.Marker[] = [];
   subscription: any;
-  isAdmin: boolean = false; // ✅ NUEVA variable para controlar visibilidad
+  isAdmin: boolean = false; // NUEVA variable para controlar visibilidad
   loading: boolean = true;  // Para manejar la carga del perfil y evitar flicker
+  userName: string = '';
 
   constructor(
     private router: Router,
@@ -25,18 +26,27 @@ export class MapaPage implements OnInit, OnDestroy {
     private feriaService: FeriaService,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController
-  ) {}
+  ) { }
 
   ngOnInit() {
+    // Inicializa el mapa y carga las ferias al entrar en la vista
     this.initMap();
     this.loadFerias();
     this.subscribeToNewFerias();
 
-    // ✅ Verifica si el usuario es admin
+    // Verifica si el usuario es admin
     this.supabase.profile.then((response) => {
       this.isAdmin = response.data?.admin_status === true;
       this.loading = false; // Una vez cargado el perfil, ya no estamos en carga
     });
+
+    //obtiene el nombre del usuario
+    this.supabase.profile.then((response) => {
+      const profile = response.data;
+      this.isAdmin = profile?.admin_status === true;
+      this.userName = profile?.full_name || 'Usuario';
+      this.loading = false;
+    });    
   }
 
   ngOnDestroy() {
@@ -169,23 +179,23 @@ export class MapaPage implements OnInit, OnDestroy {
         },
       ],
     });
-  
+
     await alert.present();
   }
-  
+
   private async loadFeriasByHorario(horaInicio: string, horaTermino: string) {
     const { data: ferias, error } = await this.feriaService.getFerias();
     if (error) {
       console.error('Error al cargar las ferias:', error);
       return;
     }
-  
+
     const filteredFerias = ferias?.filter((feria: any) => {
       return feria.hora_inicio >= horaInicio && feria.hora_termino <= horaTermino;
     });
-  
+
     this.clearMarkers();
-  
+
     filteredFerias?.forEach((feria: any) => {
       this.addMarker(feria);
     });

@@ -1,45 +1,40 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Mi Perfil</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <div class="ion-padding">
-    <h1>Mi Perfil</h1>
+  <!-- Botón volver atrás -->
+  <div class="back-button-container">
+    <ion-buttons>
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
   </div>
-  <ion-list inset="true">
-    <form>
-      <ion-item>
-        <ion-label position="stacked">E-mail</ion-label>
-        <ion-input type="email" name="email" [(ngModel)]="email" readonly></ion-input>
-      </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Nombre de Usuario</ion-label>
-        <ion-input type="text" name="username" [(ngModel)]="profile.username"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Nombre Completo</ion-label>
-        <ion-input type="text" name="full_name" [(ngModel)]="profile.full_name"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Teléfono</ion-label>
-        <ion-input type="url" name="phone" [(ngModel)]="profile.phone"></ion-input>
-      </ion-item>
-      
-      <div class="ion-text-center">
-        <ion-button fill="clear" (click)="updateProfile()">Actualizar perfil</ion-button>
-      </div>
-    </form>
-
-    <div class="ion-text-center">
-      <ion-button fill="clear" (click)="signOut()">Cerrar sesión</ion-button>
+  <!-- Encabezado -->
+  <div class="header-background">
+    <div class="profile-image-container">
+      <img src="assets/profile_pics/joy.png" alt="Foto de perfil" class="profile-image" />
+      <p class="change-picture-text">Cambiar foto</p>
     </div>
-  </ion-list>
+  </div>
+
+  <!-- Formulario -->
+  <form class="profile-form">
+    <ion-input type="text" label="Nombre de Usuario" label-placement="floating" fill="outline"
+      [(ngModel)]="profile.username" name="username"></ion-input>
+
+    <ion-input type="text" label="Nombre Completo" label-placement="floating" fill="outline"
+      [(ngModel)]="profile.full_name" name="full_name"></ion-input>
+
+    <ion-input type="email" label="E-mail" label-placement="floating" fill="outline" [(ngModel)]="email" name="email"
+      readonly></ion-input>
+
+    <ion-input type="text" label="Teléfono" label-placement="floating" fill="outline" [(ngModel)]="profile.phone"
+      name="phone"></ion-input>
+
+    <ion-button shape="round" class="update-button" (click)="updateProfile()">
+      Actualizar
+    </ion-button>
+
+    <ion-button fill="clear" color="medium" (click)="signOut()">
+      Cerrar sesión
+    </ion-button>
+
+  </form>
 </ion-content>

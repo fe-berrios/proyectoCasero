@@ -1,0 +1,75 @@
+@use 'src/theme/variables' as *;
+
+.back-button-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  
+  ion-back-button {
+    --color: #{$inverse-text-color};
+    --background: transparent;
+    --box-shadow: none;
+    --padding-start: 0;
+  }
+}
+
+.header-background {
+    background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 10px;
+  }
+  
+  .profile-image-container {
+    text-align: center;
+    transform: translateY(50%);
+  }
+  
+  .profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid $inverse-text-color; 
+    object-fit: cover;
+    background-color: $light-primary-color; 
+  }
+  
+  .change-picture-text {
+    margin-top: 8px;
+    font-size: 14px;
+    color: $primary-text-color;;
+  }
+  
+  .profile-form {
+    padding: 90px 16px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .update-button {
+    --background: #{$dark-primary-color};
+    --color: #{$inverse-text-color};
+    width: 50%; 
+    margin: 0 auto; 
+    display: block;
+  }
+  
+  
+  ion-button {
+    width: 50%; // o 250px, como prefieras
+    margin: 0 auto; // centra horizontalmente
+    display: block;
+  }
+  
+  
+  ion-input {
+    --border-radius: 12px;
+    --highlight-color-focused: $primary-text-color;
+    --background: $inverse-text-color;
+    color: $primary-text-color;
+  }
+  

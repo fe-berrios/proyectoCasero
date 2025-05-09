@@ -1,10 +1,11 @@
+@use 'src/theme/variables' as *;
 
 .contenedor{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #4CC53A;
+    background-color: $primary-color;
  
     background-position: cover;
     background-repeat: repeat;  /* Evita que se repita */
@@ -24,8 +25,9 @@
     flex-direction: row;
     margin-bottom: 0px;
 }
+
 h1{
-    color: white;
+    color: $inverse-text-color;
     font-size: 50px;
     font-weight: bold;
     text-align: center;
@@ -39,10 +41,10 @@ img{
 }
 
 .button{
-    background-color: #86E065;
+    background-color: $dark-primary-color;
     width: 70vw;
     height: 40px;
-    color: white;
+    color: $inverse-text-color;
     font-size: 16px;
     border-radius: 20px;
     padding: 10px 10px;
@@ -52,18 +54,14 @@ img{
     cursor: pointer;
 }
 .button:hover{
-    background-color: #86E065;
-    border: 2px solid white;
-    width: 75vw;
-    height: 60px;
-    margin: 30px 0px 30px 0px;
-    font-size: 18px;
+    background-color: $divider_color;
+    ;
 }
 .input{
-    background-color: #86E065;
+    background-color: $primary-color;
     height: 36px;
     width: 70vw;
-    color: white;
+    color: $inverse-text-color;
     font-size: 18px;
     border-radius: 8px;
 }
@@ -73,16 +71,10 @@ font-size: 20px;
 padding: 10PX 0PX 10PX 0PX;
 }
 h6{
-    color: #207601;
+    color: $dark-primary-color;
     font-size: 16px;
     font-weight: bold;  
     text-align: center;
     padding-top: 0PX;
     cursor: pointer;
 }
-
-/*
-
-
-
-*/
