@@ -1,0 +1,48 @@
+@use 'src/theme/variables' as *;
+
+.back-button-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+
+    ion-back-button {
+        --color: #{$inverse-text-color};
+        --background: transparent;
+        --box-shadow: none;
+        --padding-start: 0;
+    }
+}
+
+.admin-header {
+    text-align: center;
+    padding: 60px 20px 20px 20px;
+    background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+    color: $inverse-text-color;
+
+    h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+    }
+}
+
+.admin-form {
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    ion-input {
+        --highlight-color: #{$dark-primary-color};
+    }
+}
+
+.save-button {
+    --background: #{$dark-primary-color};
+    --color: #{$inverse-text-color};
+    border-radius: 9999px;
+    width: 50%;
+    margin: 0 auto;
+}

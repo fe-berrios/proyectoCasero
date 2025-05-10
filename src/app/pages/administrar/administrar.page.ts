@@ -9,8 +9,8 @@ import { FeriaService } from 'src/app/services/feria.service';
 })
 export class AdministrarPage {
   nombre = '';
-  lat = 0;
-  lng = 0;
+  lat: number | null = null;
+  lng: number | null = null;
 
   constructor(private feriaService: FeriaService) {}
 

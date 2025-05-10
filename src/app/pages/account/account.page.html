@@ -16,14 +16,14 @@
 
   <!-- Formulario -->
   <form class="profile-form">
+    <ion-input type="email" label="E-mail" label-placement="floating" fill="outline" [(ngModel)]="email" name="email"
+      readonly></ion-input>
+
     <ion-input type="text" label="Nombre de Usuario" label-placement="floating" fill="outline"
       [(ngModel)]="profile.username" name="username"></ion-input>
 
     <ion-input type="text" label="Nombre Completo" label-placement="floating" fill="outline"
       [(ngModel)]="profile.full_name" name="full_name"></ion-input>
-
-    <ion-input type="email" label="E-mail" label-placement="floating" fill="outline" [(ngModel)]="email" name="email"
-      readonly></ion-input>
 
     <ion-input type="text" label="Teléfono" label-placement="floating" fill="outline" [(ngModel)]="profile.phone"
       name="phone"></ion-input>
