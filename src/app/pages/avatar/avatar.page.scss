@@ -1,0 +1,87 @@
+@use 'src/theme/variables' as *;
+
+.back-button-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+
+    ion-back-button {
+        --color: #{$inverse-text-color};
+        --background: transparent;
+        --box-shadow: none;
+        --padding-start: 0;
+    }
+}
+
+.avatar-header {
+    text-align: center;
+    padding: 60px 20px 20px 20px;
+    background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+    color: $inverse-text-color;
+
+    h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+    }
+}
+
+.title-container {
+    text-align: center;
+    margin: 20px 0;
+
+    h2 {
+        color: $primary-text-color;
+    }
+}
+
+.avatar-grid {
+    margin-top: 10%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    justify-items: center;
+    padding: 0 16px;
+}
+
+.avatar-option {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $inverse-text-color;
+}
+
+.avatar-option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.avatar-option img.selected {
+    border: 3px solid $dark-primary-color;
+}
+
+.add-avatar {
+    border: 2px dashed $divider-color;
+    color: $accent-color;
+    font-size: 28px;
+    background-color: $light-primary-color;
+}
+
+.select-button {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    --background: #{$dark-primary-color};
+    --color: #{$inverse-text-color};
+    display: block; /* Asegúrate de que sea un bloque */
+    width: 50%; /* O cualquier ancho que prefieras */
+}

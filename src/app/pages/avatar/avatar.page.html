@@ -1,0 +1,29 @@
+<ion-content>
+  <!-- Botón de volver atrás -->
+  <div class="back-button-container">
+    <ion-buttons>
+      <ion-back-button defaultHref="/mapa"></ion-back-button>
+    </ion-buttons>
+  </div>
+
+  <!-- Encabezado -->
+  <div class="avatar-header">
+    <h2>Selecciona tu Avatar</h2>
+  </div>
+
+  <!-- Avatar Grid -->
+  <div class="avatar-grid">
+    <div class="avatar-option" *ngFor="let avatar of avatars" (click)="selectAvatar(avatar)">
+      <img [src]="avatar.src" [alt]="avatar.name" [class.selected]="avatar.name === selectedAvatar"/>
+    </div>
+  </div>
+
+  <!-- Botón Seleccionar que llama a la función para actualizar el avatar -->
+  <ion-button 
+    shape="round" 
+    class="select-button" 
+    (click)="updateProfileAvatar()" 
+    [disabled]="!selectedAvatar">
+    Seleccionar
+  </ion-button>
+</ion-content>

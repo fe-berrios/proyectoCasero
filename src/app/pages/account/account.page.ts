@@ -13,7 +13,7 @@ export class AccountPage implements OnInit {
   profile: Profile = {
     username: '',
     full_name: '',
-    avatar_url: '',
+    avatar_url: 'assets/profile_pics/joy.png',
     phone: '',
   }
 
@@ -23,7 +23,7 @@ export class AccountPage implements OnInit {
     private readonly supabase: SupabaseService,
     private router: Router,
     private alertController: AlertController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getEmail()
@@ -41,10 +41,12 @@ export class AccountPage implements OnInit {
         throw error
       }
       if (profile) {
-        this.profile = profile
+        this.profile = {
+          ...profile,
+          avatar_url: profile.avatar_url || 'assets/profile_pics/joy.png'
+        }
       }
     } catch (error: any) {
-      // Mostrar mensaje de error en un popup
       const alert = await this.alertController.create({
         header: '¡Error!',
         message: error.message,
@@ -64,7 +66,6 @@ export class AccountPage implements OnInit {
       }
       await loader.dismiss()
 
-      // Mostrar mensaje de éxito en un popup
       const successAlert = await this.alertController.create({
         header: '¡Éxito!',
         message: 'Perfil actualizado con éxito',
@@ -74,8 +75,6 @@ export class AccountPage implements OnInit {
 
     } catch (error: any) {
       await loader.dismiss()
-
-      // Mostrar mensaje de error en un popup
       const errorAlert = await this.alertController.create({
         header: '¡Error!',
         message: error.message,
@@ -84,6 +83,11 @@ export class AccountPage implements OnInit {
       await errorAlert.present()
     }
   }
+
+  goToAvatar() {
+    this.router.navigate(['/avatar']);
+  }
+
 
   async signOut() {
     console.log('testing?')

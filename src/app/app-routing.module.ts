@@ -28,7 +28,11 @@ const routes: Routes = [
     path: 'administrar',
     loadChildren: () => import('./pages/administrar/administrar.module').then(m => m.AdministrarPageModule),
     canActivate: [adminGuard]
-  },  
+  },   {
+    path: 'avatar',
+    loadChildren: () => import('./pages/avatar/avatar.module').then( m => m.AvatarPageModule)
+  },
+ 
 ];
 
 @NgModule({

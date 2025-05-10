@@ -19,6 +19,7 @@ export class MapaPage implements OnInit, OnDestroy {
   isAdmin: boolean = false; // NUEVA variable para controlar visibilidad
   loading: boolean = true;  // Para manejar la carga del perfil y evitar flicker
   userName: string = '';
+  profileImgUrl: string = 'assets/profile_pics/joy.png'; // Valor por defecto
 
   constructor(
     private router: Router,
@@ -40,13 +41,13 @@ export class MapaPage implements OnInit, OnDestroy {
       this.loading = false; // Una vez cargado el perfil, ya no estamos en carga
     });
 
-    //obtiene el nombre del usuario
-    this.supabase.profile.then((response) => {
+ this.supabase.profile.then((response) => {
       const profile = response.data;
       this.isAdmin = profile?.admin_status === true;
       this.userName = profile?.full_name || 'Usuario';
+      this.profileImgUrl = profile?.avatar_url || 'assets/profile_pics/default.png';
       this.loading = false;
-    });    
+    });  
   }
 
   ngOnDestroy() {

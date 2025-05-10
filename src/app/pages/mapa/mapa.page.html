@@ -1,7 +1,7 @@
 <ion-menu contentId="main-content" side="start" menuId="main-menu">
   <ion-content class="custom-menu">
     <div class="profile-container">
-      <img src="assets/profile_pics/joy.png" alt="Foto de perfil" class="profile-img" />
+      <img [src]="profileImgUrl" alt="Foto de perfil" class="profile-img" />
       <div class="profile-info" *ngIf="!loading">
         <h2>{{ userName }}</h2>
       </div>
