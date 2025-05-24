@@ -18,8 +18,22 @@
     top: 10px;
     left: 10px;
     right: 10px;
-    z-index: 1000;
-    /* Asegura que esté encima del mapa */
+    z-index: 1100; /* aumenté este z-index para que esté sobre los botones */
+}
+
+/* Contenedor de la lista de sugerencias */
+.autocomplete-list {
+    position: absolute;  /* para posicionar debajo del buscador */
+    top: 100%;           /* justo debajo del searchbar */
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 1200; /* aún más arriba que el buscador */
 }
 
 /* Contenedor de los botones */
@@ -31,8 +45,7 @@
     right: 10px;
     display: flex;
     justify-content: space-around;
-    z-index: 1000;
-    /* Asegura que esté encima del mapa */
+    z-index: 1000; /* mantiene el z-index menor que buscador para que no lo tapen */
 }
 
 /* Estilo para el ion-searchbar */
@@ -70,9 +83,9 @@ ion-content {
     display: flex;
     flex-direction: column;
     padding: 20px;
-  }
+}
   
-  .profile-container {
+.profile-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -81,10 +94,9 @@ ion-content {
     color: $inverse-text-color;
     margin-bottom: 20px;
     clip-path: path("M0,0 H100% V80 Q50% 100% 0 80 Z");
-  }
+}
   
-  
-  .profile-img {
+.profile-img {
     width: 70px;
     height: 70px;
     border-radius: 50%;
@@ -92,27 +104,26 @@ ion-content {
     margin-bottom: 10px;
     border: 3px solid $inverse-text-color;
     background-color: $dark-primary-color;
-  }
+}
   
-  .profile-info h2 {
+.profile-info h2 {
     font-size: 16px;
     margin: 0;
-  }
+}
   
-  .profile-info p {
+.profile-info p {
     font-size: 12px;
     margin: 0;
     opacity: 0.8;
-  }
+}
   
-  .menu-options ion-item {
+.menu-options ion-item {
     --background: transparent;
     border-radius: 10px;
     margin-bottom: 10px;
-  }
+}
 
-  ion-menu::part(container) {
+ion-menu::part(container) {
     border-radius: 0 30px 30px 0;
     box-shadow: 4px 0px 16px gray;
-  } 
-  
+}

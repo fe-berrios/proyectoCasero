@@ -29,10 +29,17 @@
 
 <ion-content id="main-content" [fullscreen]="true">
   <div class="buscador">
-    <ion-searchbar placeholder="Buscar feria" color="light" [(ngModel)]="searchTerm" (ionInput)="onSearchChange()">
+    <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onSearchChange()" placeholder="Buscar feria" color="light">
     </ion-searchbar>
 
+    <!-- Lista de sugerencias -->
+    <ion-list *ngIf="suggestedFerias.length > 0" class="autocomplete-list">
+      <ion-item *ngFor="let feria of suggestedFerias" (click)="selectFeria(feria)">
+        {{ feria.nombre }}
+      </ion-item>
+    </ion-list>
   </div>
+
 
   <div class="botones-badges">
     <ion-button (click)="openDaySelector()">Día</ion-button>

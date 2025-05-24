@@ -21,6 +21,7 @@ export class MapaPage implements OnInit, OnDestroy {
   userName: string = '';
   profileImgUrl: string = 'assets/profile_pics/loading.svg'; // Valor por defecto
   searchTerm: string = '';
+  suggestedFerias: any[] = [];
 
   constructor(
     private router: Router,
@@ -213,22 +214,34 @@ export class MapaPage implements OnInit, OnDestroy {
     }
 
     const filteredFerias = !term
-      ? ferias
+      ? []
       : ferias?.filter((feria: any) =>
         feria.nombre.toLowerCase().includes(term)
       );
 
-    this.clearMarkers();
-    filteredFerias?.forEach((feria: any) => this.addMarker(feria));
+    // Mostrar sugerencias debajo
+    this.suggestedFerias = filteredFerias;
 
-    // Solo mover el mapa si hay exactamente una coincidencia y el término no está vacío
-    if (term && filteredFerias?.length === 1) {
+    // Opcional: si hay una sola coincidencia, mover el mapa
+    if (filteredFerias.length === 1) {
       const feria = filteredFerias[0];
-      this.map?.flyTo([feria.lat, feria.lng], 18, {
-        animate: true,
-        duration: 1.5,
-      });
+      this.flyToFeria(feria);
     }
+  }
+
+  selectFeria(feria: any) {
+    this.searchTerm = feria.nombre;
+    this.suggestedFerias = [];
+    this.flyToFeria(feria);
+    this.clearMarkers();
+    this.addMarker(feria);
+  }
+
+  flyToFeria(feria: any) {
+    this.map?.flyTo([feria.lat, feria.lng], 18, {
+      animate: true,
+      duration: 1.5,
+    });
   }
 
 
