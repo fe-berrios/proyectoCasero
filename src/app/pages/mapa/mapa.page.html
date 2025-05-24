@@ -29,7 +29,9 @@
 
 <ion-content id="main-content" [fullscreen]="true">
   <div class="buscador">
-    <ion-searchbar placeholder="Buscar feria" color="light"></ion-searchbar>
+    <ion-searchbar placeholder="Buscar feria" color="light" [(ngModel)]="searchTerm" (ionInput)="onSearchChange()">
+    </ion-searchbar>
+
   </div>
 
   <div class="botones-badges">

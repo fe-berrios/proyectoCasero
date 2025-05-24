@@ -19,7 +19,8 @@ export class MapaPage implements OnInit, OnDestroy {
   isAdmin: boolean = false; // NUEVA variable para controlar visibilidad
   loading: boolean = true;  // Para manejar la carga del perfil y evitar flicker
   userName: string = '';
-  profileImgUrl: string = 'assets/profile_pics/joy.png'; // Valor por defecto
+  profileImgUrl: string = 'assets/profile_pics/loading.svg'; // Valor por defecto
+  searchTerm: string = '';
 
   constructor(
     private router: Router,
@@ -41,13 +42,13 @@ export class MapaPage implements OnInit, OnDestroy {
       this.loading = false; // Una vez cargado el perfil, ya no estamos en carga
     });
 
- this.supabase.profile.then((response) => {
+    this.supabase.profile.then((response) => {
       const profile = response.data;
       this.isAdmin = profile?.admin_status === true;
       this.userName = profile?.full_name || 'Usuario';
       this.profileImgUrl = profile?.avatar_url || 'assets/profile_pics/default.png';
       this.loading = false;
-    });  
+    });
   }
 
   ngOnDestroy() {
@@ -201,4 +202,34 @@ export class MapaPage implements OnInit, OnDestroy {
       this.addMarker(feria);
     });
   }
+
+  async onSearchChange() {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    const { data: ferias, error } = await this.feriaService.getFerias();
+    if (error) {
+      console.error('Error al buscar ferias:', error);
+      return;
+    }
+
+    const filteredFerias = !term
+      ? ferias
+      : ferias?.filter((feria: any) =>
+        feria.nombre.toLowerCase().includes(term)
+      );
+
+    this.clearMarkers();
+    filteredFerias?.forEach((feria: any) => this.addMarker(feria));
+
+    // Solo mover el mapa si hay exactamente una coincidencia y el término no está vacío
+    if (term && filteredFerias?.length === 1) {
+      const feria = filteredFerias[0];
+      this.map?.flyTo([feria.lat, feria.lng], 18, {
+        animate: true,
+        duration: 1.5,
+      });
+    }
+  }
+
+
 }
