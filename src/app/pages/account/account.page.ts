@@ -13,7 +13,7 @@ export class AccountPage implements OnInit {
   profile: Profile = {
     username: '',
     full_name: '',
-    avatar_url: 'assets/profile_pics/joy.png',
+    avatar_url: 'assets/profile_pics/loading.svg',
     phone: '',
   }
 
