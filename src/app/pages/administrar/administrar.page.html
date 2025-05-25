@@ -12,63 +12,11 @@
     <h2>Administrar Ferias</h2>
   </div>
 
-  <!-- Formulario -->
-  <form class="admin-form">
-
-    <ion-input type="text" label="Nombre de la Feria" label-placement="floating" fill="outline" [(ngModel)]="nombre"
-      name="nombre"></ion-input>
-
-    <ion-input type="number" label="Latitud" label-placement="floating" fill="outline" [(ngModel)]="lat"
-      name="lat"></ion-input>
-
-    <ion-input type="number" label="Longitud" label-placement="floating" fill="outline" [(ngModel)]="lng"
-      name="lng"></ion-input>
-
-    <!-- Hora de Inicio -->
-    <ion-item lines="none">
-      <ion-label position="stacked">Hora de Inicio</ion-label>
-      <div class="time-inputs">
-        <ion-input type="number" placeholder="HH" min="0" max="23" [(ngModel)]="horaInicioHora" name="horaInicioHora"
-          (ionChange)="validarHoras()"></ion-input>
-        <span>:</span>
-        <ion-input type="number" placeholder="MM" min="0" max="59" [(ngModel)]="horaInicioMinuto"
-          name="horaInicioMinuto" (ionChange)="validarHoras()"></ion-input>
-      </div>
-      <ion-text color="danger" *ngIf="errorHoraInicio">{{ errorHoraInicio }}</ion-text>
-    </ion-item>
-
-    <!-- Hora de Término -->
-    <ion-item lines="none">
-      <ion-label position="stacked">Hora de Término</ion-label>
-      <div class="time-inputs">
-        <ion-input type="number" placeholder="HH" min="00" max="23" [(ngModel)]="horaTerminoHora" name="horaTerminoHora"
-          (ionChange)="validarHoras()"></ion-input>
-        <span>:</span>
-        <ion-input type="number" placeholder="MM" min="00" max="59" [(ngModel)]="horaTerminoMinuto"
-          name="horaTerminoMinuto" (ionChange)="validarHoras()"></ion-input>
-      </div>
-      <ion-text color="danger" *ngIf="errorHoraTermino">{{ errorHoraTermino }}</ion-text>
-    </ion-item>
-
-    <!-- Día: selector desplegable -->
-    <ion-item button lines="none" (click)="toggleDiasDropdown()">
-      <ion-label>Día(s)</ion-label>
-      <ion-note slot="end" color="medium">
-        {{ dia.length > 0 ? dia.join(' - ') : 'Seleccione días' }}
-      </ion-note>
-      <ion-icon slot="end" [name]="showDiasDropdown ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
-    </ion-item>
-
-    <div *ngIf="showDiasDropdown" class="dias-dropdown">
-      <ion-list lines="none">
-        <ion-item *ngFor="let d of diasSemana">
-          <ion-label>{{ d.label }}</ion-label>
-          <ion-checkbox slot="start" [checked]="isDiaSelected(d.value)" (ionChange)="toggleDia(d.value, $event)"></ion-checkbox>
-        </ion-item>
-      </ion-list>
-    </div>
-
-    <ion-button shape="round" class="save-button" (click)="saveFeria()">Guardar Feria</ion-button>
-  </form>
+  <!-- Botón para abrir el modal -->
+  <div class="modal-trigger-container ion-padding">
+    <ion-button expand="block" color="success" (click)="abrirModalAgregarFeria()">
+      Agregar Feria
+    </ion-button>
+  </div>
 
 </ion-content>
