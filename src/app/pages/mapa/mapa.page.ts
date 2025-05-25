@@ -23,6 +23,9 @@ export class MapaPage implements OnInit, OnDestroy {
   profileImgUrl: string = 'assets/profile_pics/loading.svg'; // Valor por defecto
   searchTerm: string = '';
   suggestedFerias: any[] = [];
+  userLocationMarker: leaflet.Marker | null = null;
+  watchId: string | null = null;
+
 
   constructor(
     private router: Router,
@@ -49,7 +52,7 @@ export class MapaPage implements OnInit, OnDestroy {
       const profile = response.data;
       this.isAdmin = profile?.admin_status === true;
       this.userName = profile?.full_name || 'Usuario';
-      this.profileImgUrl = profile?.avatar_url || 'assets/profile_pics/default.png';
+      this.profileImgUrl = profile?.avatar_url || 'assets/profile_pics/loading.svg';
       this.loading = false;
     });
   }
@@ -57,6 +60,11 @@ export class MapaPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+
+    if (this.watchId) {
+      Geolocation.clearWatch({ id: this.watchId });
+      this.watchId = null;
     }
   }
 
@@ -251,36 +259,61 @@ export class MapaPage implements OnInit, OnDestroy {
     if (!this.map) return;
 
     try {
-      // Verifica primero el estado actual de los permisos
       let permission = await Geolocation.checkPermissions();
 
-      // Si el permiso está en prompt (no decidido aún), pedir permiso
       if (permission.location === 'prompt') {
         permission = await Geolocation.requestPermissions();
       }
 
-      // Si el permiso está denegado, mostrar mensaje y salir
       if (permission.location === 'denied') {
         this.mostrarToast('Permiso de ubicación denegado. Por favor habilítalo en configuración.');
         return;
       }
 
-      // Si el permiso está concedido, obtener ubicación
       if (permission.location === 'granted') {
-        const position = await Geolocation.getCurrentPosition({
-          enableHighAccuracy: true,
-          timeout: 10000,
-        });
+        // Si ya hay un watch en curso, no lo reiniciamos
+        if (this.watchId) return;
 
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
+        this.watchId = await Geolocation.watchPosition(
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0,
+          },
+          (position, err) => {
+            if (err) {
+              console.error('Error de geolocalización:', err);
+              this.mostrarToast('Error al rastrear tu ubicación.');
+              return;
+            }
 
-        this.map.flyTo([lat, lng], 18, {
-          animate: true,
-          duration: 1.5,
-        });
+            if (position) {
+              const lat = position.coords.latitude;
+              const lng = position.coords.longitude;
+
+              // Mover mapa
+              this.map!.flyTo([lat, lng], 18, {
+                animate: true,
+                duration: 1,
+              });
+
+              // Crear o mover el marcador del usuario
+              if (!this.userLocationMarker) {
+                this.userLocationMarker = leaflet.marker([lat, lng], {
+                  icon: leaflet.icon({
+                    iconUrl: 'assets/icon/user-location.png',
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 30],
+                  }),
+                  title: 'Tu ubicación',
+                }).addTo(this.map!);
+              } else {
+                this.userLocationMarker.setLatLng([lat, lng]);
+              }
+            }
+          }
+        );
       } else {
-        // Caso extraño que no esté ni denegado ni concedido
         this.mostrarToast('No se pudo obtener el permiso de ubicación.');
       }
     } catch (error) {
@@ -288,6 +321,7 @@ export class MapaPage implements OnInit, OnDestroy {
       this.mostrarToast('No se pudo obtener la ubicación. Verifica permisos y configuración.');
     }
   }
+
 
 
   private async mostrarToast(message: string) {
