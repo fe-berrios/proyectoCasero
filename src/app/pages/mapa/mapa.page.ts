@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SupabaseService } from 'src/app/services/supabase.service';
 import { FeriaModalComponent } from 'src/app/components/feria-modal/feria-modal.component';
 import { ModalController, AlertController, ToastController } from '@ionic/angular';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   standalone: false,
@@ -246,35 +247,48 @@ export class MapaPage implements OnInit, OnDestroy {
   }
 
   // Nueva función para centrar mapa en la ubicación actual del usuario
-  public centrarEnUsuario() {
+  public async centrarEnUsuario() {
     if (!this.map) return;
 
-    if (!navigator.geolocation) {
-      this.mostrarToast('Geolocalización no soportada por el navegador');
-      return;
-    }
+    try {
+      // Verifica primero el estado actual de los permisos
+      let permission = await Geolocation.checkPermissions();
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
+      // Si el permiso está en prompt (no decidido aún), pedir permiso
+      if (permission.location === 'prompt') {
+        permission = await Geolocation.requestPermissions();
+      }
+
+      // Si el permiso está denegado, mostrar mensaje y salir
+      if (permission.location === 'denied') {
+        this.mostrarToast('Permiso de ubicación denegado. Por favor habilítalo en configuración.');
+        return;
+      }
+
+      // Si el permiso está concedido, obtener ubicación
+      if (permission.location === 'granted') {
+        const position = await Geolocation.getCurrentPosition({
+          enableHighAccuracy: true,
+          timeout: 10000,
+        });
+
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
 
-        this.map?.flyTo([lat, lng], 18, {
+        this.map.flyTo([lat, lng], 18, {
           animate: true,
           duration: 1.5,
         });
-      },
-      (error) => {
-        console.error('Error obteniendo ubicación:', error);
-        this.mostrarToast('No se pudo obtener la ubicación. Por favor, verifica los permisos.');
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0,
+      } else {
+        // Caso extraño que no esté ni denegado ni concedido
+        this.mostrarToast('No se pudo obtener el permiso de ubicación.');
       }
-    );
+    } catch (error) {
+      console.error('Error obteniendo ubicación:', error);
+      this.mostrarToast('No se pudo obtener la ubicación. Verifica permisos y configuración.');
+    }
   }
+
 
   private async mostrarToast(message: string) {
     const toast = await this.toastCtrl.create({
