@@ -1,17 +1,53 @@
-/* filepath: d:\proyectoCasero\src\app\components\feria-modal\feria-modal.component.scss */
-.feria-details {
-    border: 2px solid #28a745;
-    border-radius: 8px;
-    padding: 16px;
-    background-color: #d4edda;
-    text-align: center;
+@use 'src/theme/variables' as *;
+
+ion-toolbar {
+  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+  color: $inverse-text-color;
+
+  ion-title {
+    color: $inverse-text-color;
+    font-weight: bold;
   }
-  
-  h2 {
-    color: #155724;
-    margin-bottom: 8px;
+
+  ion-button {
+    --color: #{$inverse-text-color};
   }
-  
-  h3 {
-    color: #155724;
+}
+
+ion-content {
+  --background: #f5f5f5;
+}
+
+.feria-container {
+  margin-top: 24px;
+
+  ion-card {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+
+    ion-card-header {
+      background: $light-primary-color;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+
+      ion-card-title {
+        color: $dark-primary-color;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+
+    ion-item {
+      --background: transparent;
+      --inner-padding-end: 0;
+      --inner-padding-start: 0;
+      font-size: 16px;
+
+      ion-label {
+        color: $primary-text-color;
+      }
+    }
   }
+}

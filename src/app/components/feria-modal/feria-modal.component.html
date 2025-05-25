@@ -7,12 +7,34 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div class="feria-details">
-    <h2>ID: {{ feria.id }}</h2>
-    <h3>Feria: "{{ feria.nombre }}"</h3>
-    <h3>Hora inicio: "{{ feria.hora_inicio }}"</h3>
-    <h3>Hora termino: "{{ feria.hora_termino }}"</h3>
-    <h3>Dia: "{{ feria.dia }}"</h3>
+<ion-content class="ion-padding" [fullscreen]="true">
+  <div class="feria-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Información General</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-label><strong>ID:</strong> {{ feria.id }}</ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label><strong>Feria:</strong> "{{ feria.nombre }}"</ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label><strong>Hora inicio:</strong> "{{ feria.hora_inicio }}"</ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label><strong>Hora término:</strong> "{{ feria.hora_termino }}"</ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label><strong>Día:</strong> "{{ feria.dia }}"</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
