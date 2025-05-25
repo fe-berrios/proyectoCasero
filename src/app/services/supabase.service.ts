@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { LoadingController, ToastController } from '@ionic/angular'
 import { AuthChangeEvent, Session } from '@supabase/supabase-js'
 import { supabase } from '../supabase_client'
+import { isPlatform } from '@ionic/angular'
 
 export interface Profile {
   username: string
@@ -41,7 +42,16 @@ export class SupabaseService {
   }
 
   signIn(email: string) {
-    return supabase.auth.signInWithOtp({ email })
+    const redirectTo = isPlatform('capacitor')
+      ? 'casero://login'
+      : `${window.location.origin}/login` // O tu ruta web deseada
+
+    return supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: redirectTo
+      }
+    })
   }
 
   signOut() {
@@ -74,5 +84,10 @@ export class SupabaseService {
 
   createLoader() {
     return this.loadingCtrl.create()
+  }
+
+  // Necesario para establecer la sesión desde un magic link en móviles
+  setSession(access_token: string, refresh_token: string) {
+    return supabase.auth.setSession({ access_token, refresh_token })
   }
 }
