@@ -26,7 +26,6 @@
   </ion-content>
 </ion-menu>
 
-
 <ion-content id="main-content" [fullscreen]="true">
   <div class="buscador">
     <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onSearchChange()" placeholder="Buscar feria" color="light">
@@ -40,7 +39,6 @@
     </ion-list>
   </div>
 
-
   <div class="botones-badges">
     <ion-button (click)="openDaySelector()">Día</ion-button>
     <ion-button (click)="filterByHorario()">Horario</ion-button>
@@ -48,4 +46,11 @@
   </div>
 
   <div id="map"></div>
+
+  <!-- FAB de ubicación -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fab-ubicacion">
+    <ion-fab-button (click)="centrarEnUsuario()">
+      <ion-icon name="locate"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

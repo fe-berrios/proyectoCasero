@@ -4,7 +4,7 @@ import { FeriaService } from 'src/app/services/feria.service';
 import { Router } from '@angular/router';
 import { SupabaseService } from 'src/app/services/supabase.service';
 import { FeriaModalComponent } from 'src/app/components/feria-modal/feria-modal.component';
-import { ModalController, AlertController } from '@ionic/angular';
+import { ModalController, AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   standalone: false,
@@ -28,7 +28,8 @@ export class MapaPage implements OnInit, OnDestroy {
     private readonly supabase: SupabaseService,
     private feriaService: FeriaService,
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
@@ -244,5 +245,43 @@ export class MapaPage implements OnInit, OnDestroy {
     });
   }
 
+  // Nueva función para centrar mapa en la ubicación actual del usuario
+  public centrarEnUsuario() {
+    if (!this.map) return;
 
+    if (!navigator.geolocation) {
+      this.mostrarToast('Geolocalización no soportada por el navegador');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        this.map?.flyTo([lat, lng], 18, {
+          animate: true,
+          duration: 1.5,
+        });
+      },
+      (error) => {
+        console.error('Error obteniendo ubicación:', error);
+        this.mostrarToast('No se pudo obtener la ubicación. Por favor, verifica los permisos.');
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      }
+    );
+  }
+
+  private async mostrarToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 3000,
+      position: 'bottom',
+    });
+    toast.present();
+  }
 }

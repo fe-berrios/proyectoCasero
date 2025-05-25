@@ -127,3 +127,17 @@ ion-menu::part(container) {
     border-radius: 0 30px 30px 0;
     box-shadow: 4px 0px 16px gray;
 }
+
+.fab-ubicacion ion-fab-button {
+  --background: #{$dark-primary-color} !important;
+  --box-shadow: none !important;
+}
+
+.fab-ubicacion ion-fab-button:hover {
+  --background: rgba(189, 189, 189, 0.5) !important;
+}
+
+.fab-ubicacion {
+  bottom: 25px !important; /* mueve todo el FAB hacia arriba */
+}
+
