@@ -7,8 +7,24 @@ import { supabase } from '../supabase_client';
 export class FeriaService {
 
   // Guardar una feria en la base de datos
-  async saveFeria(nombre: string, lat: number, lng: number) {
-    return supabase.from('ferias').insert([{ nombre, lat, lng }]);
+  async saveFeria(
+    nombre: string,
+    lat: number,
+    lng: number,
+    hora_inicio: string,
+    hora_termino: string,
+    dia: string
+  ) {
+    return supabase.from('ferias').insert([
+      {
+        nombre,
+        lat,
+        lng,
+        hora_inicio,
+        hora_termino,
+        dia,
+      },
+    ]);
   }
 
   // Obtener todas las ferias de la base de datos
@@ -30,7 +46,7 @@ export class FeriaService {
     return channel;
   }
 
-  // Método para cancelar la suscripción cuando ya no sea necesaria
+  // Cancelar la suscripción cuando ya no sea necesaria
   unsubscribeFromFerias(channel: any) {
     supabase.removeChannel(channel);
   }

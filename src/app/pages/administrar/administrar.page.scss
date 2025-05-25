@@ -1,48 +1,98 @@
 @use 'src/theme/variables' as *;
 
-.back-button-container {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 10;
+:host {
+  font-family: 'Roboto', sans-serif;
+}
 
-    ion-back-button {
-        --color: #{$inverse-text-color};
-        --background: transparent;
-        --box-shadow: none;
-        --padding-start: 0;
-    }
+.back-button-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+
+  ion-back-button {
+    --color: #{$inverse-text-color};
+    --background: transparent;
+    --box-shadow: none;
+    --padding-start: 0;
+  }
 }
 
 .admin-header {
-    text-align: center;
-    padding: 60px 20px 20px 20px;
-    background: linear-gradient(135deg, $dark-primary-color, $primary-color);
-    color: $inverse-text-color;
+  text-align: center;
+  padding: 60px 20px 20px 20px;
+  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+  color: $inverse-text-color;
 
-    h2 {
-        font-size: 24px;
-        font-weight: bold;
-        margin: 0;
-    }
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
 }
 
 .admin-form {
-    padding: 20px;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  padding: 20px clamp(16px, 5vw, 32px);
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 
-    ion-input {
-        --highlight-color: #{$dark-primary-color};
-    }
+  ion-input {
+    --highlight-color: #{$dark-primary-color};
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+
+  ion-label {
+    font-size: 14px;
+  }
 }
 
 .save-button {
-    --background: #{$dark-primary-color};
-    --color: #{$inverse-text-color};
-    border-radius: 9999px;
-    width: 50%;
-    margin: 0 auto;
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+  border-radius: 9999px;
+  width: 50%;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.time-inputs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+
+  ion-input {
+    width: 50px;
+    text-align: center;
+  }
+
+  span {
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+
+.days-list {
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+  ion-item {
+    --inner-padding-end: 8px;
+    --background: transparent;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    ion-label {
+      font-size: 14px;
+    }
+  }
 }
