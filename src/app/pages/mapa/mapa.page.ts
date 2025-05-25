@@ -94,7 +94,7 @@ export class MapaPage implements OnInit, OnDestroy {
     }
 
     const filteredFerias = dayFilter
-      ? ferias?.filter((feria: any) => feria.dia === dayFilter)
+      ? ferias?.filter((feria: any) => feria.dia?.includes(dayFilter))
       : ferias;
 
     this.clearMarkers();
