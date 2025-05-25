@@ -96,3 +96,8 @@
     }
   }
 }
+
+.custom-toolbar {
+  --background: #{$dark-primary-color};  // Fondo con tu color personalizado
+  --color: #{$inverse-text-color};       // Color del texto y botones
+}

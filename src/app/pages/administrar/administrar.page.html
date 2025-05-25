@@ -12,11 +12,36 @@
     <h2>Administrar Ferias</h2>
   </div>
 
-  <!-- Botón para abrir el modal -->
-  <div class="modal-trigger-container ion-padding">
-    <ion-button expand="block" color="success" (click)="abrirModalAgregarFeria()">
-      Agregar Feria
-    </ion-button>
-  </div>
+  <!-- Botón flotante para agregar feria -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="fab-custom-color" (click)="abrirModalAgregarFeria()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+  <!-- Lista de cards personalizada -->
+  <ion-list>
+    <ion-card *ngFor="let feria of ferias" class="custom-card">
+      <ion-card-header>
+        <ion-card-title>{{ feria.nombre }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="info-row">
+          <ion-icon name="location-outline"></ion-icon>
+          <span>Lat: {{ feria.lat }}, Lng: {{ feria.lng }}</span>
+        </div>
+        <div class="info-row">
+          <ion-icon name="time-outline"></ion-icon>
+          <span>Horario: {{ feria.hora_inicio }} - {{ feria.hora_termino }}</span>
+        </div>
+        <div class="info-row">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span>Día(s): {{ feria.dia }}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 
 </ion-content>

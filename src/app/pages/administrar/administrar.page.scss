@@ -31,68 +31,50 @@
   }
 }
 
-.admin-form {
-  padding: 20px clamp(16px, 5vw, 32px);
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  ion-input {
-    --highlight-color: #{$dark-primary-color};
-    font-size: 16px;
-    transition: all 0.3s ease;
-  }
-
-  ion-label {
-    font-size: 14px;
-  }
+.modal-trigger-container {
+  padding: 16px 20px;
 }
 
-.save-button {
-  --background: #{$dark-primary-color};
-  --color: #{$inverse-text-color};
-  border-radius: 9999px;
-  width: 50%;
-  margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.time-inputs {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 4px;
-
-  ion-input {
-    width: 50px;
-    text-align: center;
-  }
-
-  span {
-    font-size: 18px;
-    font-weight: bold;
-  }
-}
-
-.days-list {
-  background: #fff;
+.custom-card {
+  --background: $light-primary-color; /* Verde claro de fondo */
+  margin-bottom: 15px;
   border-radius: 12px;
-  padding: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.25); /* sombra verde oscura con opacidad */
+}
 
-  ion-item {
-    --inner-padding-end: 8px;
-    --background: transparent;
-    border-bottom: 1px solid #eee;
+.custom-card ion-card-title {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: $dark-primary-color; /* Verde oscuro */
+}
 
-    &:last-child {
-      border-bottom: none;
-    }
+.info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: $primary-text-color; /* Texto principal */
+}
 
-    ion-label {
-      font-size: 14px;
-    }
-  }
+.info-row ion-icon {
+  margin-right: 8px;
+  color: $primary-color; /* Verde primario */
+  font-size: 1.2rem;
+  min-width: 22px;
+}
+
+.fab-custom-color {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  --background: #{$dark-primary-color};  // color de fondo usando tu variable SCSS
+  --color: #{$inverse-text-color};       // color de texto usando tu variable SCSS
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
