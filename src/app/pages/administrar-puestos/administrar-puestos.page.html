@@ -12,6 +12,17 @@
     <h2>Administrar Puestos</h2>
   </div>
 
+  <!-- Selector de feria -->
+  <ion-item>
+    <ion-label>Filtrar por feria</ion-label>
+    <ion-select [(ngModel)]="feria_id" (ionChange)="onFeriaSeleccionada()" interface="popover" placeholder="Todas">
+      <ion-select-option [value]="null">Todas las ferias</ion-select-option>
+      <ion-select-option *ngFor="let feria of ferias" [value]="feria.id">
+        {{ feria.nombre }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
   <!-- Lista de cards personalizada -->
   <ion-list>
     <ion-card *ngFor="let puesto of puestos" class="custom-card">
@@ -44,6 +55,18 @@
           <ion-icon name="image-outline"></ion-icon>
           <span>Imagen: {{ puesto.img_url }}</span>
         </div>
+
+        <!-- Botones -->
+        <div class="edit-button-container">
+          <ion-button fill="clear" (click)="abrirModalEditarPuesto(puesto)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+
+          <ion-button fill="clear" color="danger" (click)="eliminarPuesto(puesto.id)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+
       </ion-card-content>
     </ion-card>
   </ion-list>

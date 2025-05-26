@@ -11,6 +11,7 @@ import { AgregarFeriaModalComponent } from './components/agregar-feria-modal/agr
 import { PlaceSelectorModalComponent } from './components/place-selector-modal/place-selector-modal.component';
 import { EditarFeriaModalComponent } from './components/editar-feria-modal/editar-feria-modal.component';
 import { AgregarPuestoModalComponent } from './components/agregar-puesto-modal/agregar-puesto-modal.component';
+import { EditarPuestoModalComponent } from './components/editar-puesto-modal/editar-puesto-modal.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AgregarPuestoModalComponent } from './components/agregar-puesto-modal/a
     AgregarFeriaModalComponent,
     PlaceSelectorModalComponent,
     EditarFeriaModalComponent,
-    AgregarPuestoModalComponent
+    AgregarPuestoModalComponent,
+    EditarPuestoModalComponent,
   ],
   imports: [
     ReactiveFormsModule,
