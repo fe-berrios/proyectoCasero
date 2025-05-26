@@ -1,0 +1,121 @@
+@use 'src/theme/variables' as *;
+
+:host {
+  font-family: 'Roboto', sans-serif;
+}
+
+.back-button-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+
+  ion-back-button {
+    --color: #{$inverse-text-color};
+    --background: transparent;
+    --box-shadow: none;
+    --padding-start: 0;
+  }
+}
+
+.admin-header {
+  text-align: center;
+  padding: 60px 20px 20px 20px;
+  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+  color: $inverse-text-color;
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+
+.modal-trigger-container {
+  padding: 16px 20px;
+}
+
+.custom-card {
+  background-color: rgba(200, 230, 201, 0.5);
+  margin-bottom: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.25); // sombra verde oscura con opacidad
+
+  ion-card-title {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: $primary-text-color; // Verde oscuro
+  }
+
+  ion-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px; // espacio para el botón
+  }
+
+  ion-card-header ion-buttons {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  ion-card-header ion-button {
+    font-size: 1.4rem;
+  }
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: $primary-text-color; // Texto principal
+
+  ion-icon {
+    margin-right: 8px;
+    color: $primary-color; // Verde primario
+    font-size: 1.2rem;
+    min-width: 22px;
+  }
+}
+
+.fab-custom-color {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  --background: #{$primary-color}; // color de fondo usando tu variable SCSS
+  --color: #{$inverse-text-color}; // color de texto usando tu variable SCSS
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.button-custom-color {
+  position: fixed;
+  top: 5px;
+  right: 20px;
+  --color: #{$primary-color};
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.delete-custom-color {
+  position: fixed;
+  top: 40px;
+  right: 22px;
+  --color: #{$danger-red};
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}

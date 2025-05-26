@@ -1,0 +1,51 @@
+<ion-content [fullscreen]="true">
+
+  <!-- Botón de volver atrás -->
+  <div class="back-button-container">
+    <ion-buttons>
+      <ion-back-button defaultHref="/mapa"></ion-back-button>
+    </ion-buttons>
+  </div>
+
+  <!-- Encabezado -->
+  <div class="admin-header">
+    <h2>Administrar Puestos</h2>
+  </div>
+
+  <!-- Lista de cards personalizada -->
+  <ion-list>
+    <ion-card *ngFor="let puesto of puestos" class="custom-card">
+      <ion-card-header>
+        <ion-card-title>{{ puesto.nombre }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="info-row" *ngIf="puesto.descripcion">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span>{{ puesto.descripcion }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="puesto.ubicacion">
+          <ion-icon name="pin-outline"></ion-icon>
+          <span>Ubicación: {{ puesto.ubicacion }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="puesto.feria_id">
+          <ion-icon name="storefront-outline"></ion-icon>
+          <span>ID Feria: {{ puesto.feria_id }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="puesto.casero_id">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          <span>ID Casero: {{ puesto.casero_id }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="puesto.img_url">
+          <ion-icon name="image-outline"></ion-icon>
+          <span>Imagen: {{ puesto.img_url }}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+</ion-content>

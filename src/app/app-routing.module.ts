@@ -32,6 +32,12 @@ const routes: Routes = [
     path: 'avatar',
     loadChildren: () => import('./pages/avatar/avatar.module').then( m => m.AvatarPageModule)
   },
+  {
+    path: 'administrar-puestos',
+    loadChildren: () => import('./pages/administrar-puestos/administrar-puestos.module').then( m => m.AdministrarPuestosPageModule),
+    canActivate: [adminGuard]
+  },
+
  
 ];
 

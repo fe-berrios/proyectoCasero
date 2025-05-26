@@ -18,6 +18,11 @@
         <ion-label>Administrar Ferias</ion-label>
       </ion-item>
 
+      <ion-item *ngIf="isAdmin" routerLink="/administrar-puestos">
+        <ion-icon name="storefront" slot="start"></ion-icon>
+        <ion-label>Administrar Puestos</ion-label>
+      </ion-item>
+
       <ion-item (click)="signOut()">
         <ion-icon name="log-out" slot="start"></ion-icon>
         <ion-label>Cerrar sesión</ion-label>
