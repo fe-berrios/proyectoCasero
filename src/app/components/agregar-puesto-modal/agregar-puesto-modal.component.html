@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <ion-title>Agregar Puesto</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+  <form class="admin-form">
+
+    <ion-input
+      type="text"
+      label="Nombre del Puesto"
+      label-placement="floating"
+      fill="outline"
+      [(ngModel)]="nombre"
+      name="nombre"
+    ></ion-input>
+
+    <ion-textarea
+      label="Descripción"
+      label-placement="floating"
+      fill="outline"
+      [(ngModel)]="descripcion"
+      name="descripcion"
+      rows="3"
+    ></ion-textarea>
+
+    <ion-input
+      type="text"
+      label="ID Casero"
+      label-placement="floating"
+      fill="outline"
+      [(ngModel)]="casero_id"
+      name="casero_id"
+    ></ion-input>
+
+    <ion-input
+      type="text"
+      label="URL de Imagen"
+      label-placement="floating"
+      fill="outline"
+      [(ngModel)]="img_url"
+      name="img_url"
+    ></ion-input>
+
+    <ion-input
+      type="text"
+      label="Ubicación"
+      label-placement="floating"
+      fill="outline"
+      [(ngModel)]="ubicacion"
+      name="ubicacion"
+    ></ion-input>
+
+    <!-- Botón acordeón para desplegar/ocultar listado ferias -->
+    <ion-item button (click)="toggleAccordion()">
+      <ion-label>
+        {{ feria_id ? nombreFeriaSeleccionada : 'Seleccionar Feria' }}
+      </ion-label>
+      <ion-icon
+        slot="end"
+        [name]="isAccordionOpen ? 'chevron-up' : 'chevron-down'"
+      ></ion-icon>
+    </ion-item>
+
+    <!-- Contenido acordeón -->
+    <div *ngIf="isAccordionOpen" class="accordion-content" style="margin-top: 0.5rem;">
+      <ion-searchbar
+        [(ngModel)]="filtroFerias"
+        name="filtroFerias"
+        (ionInput)="actualizarFiltro($event)"
+        debounce="300"
+        placeholder="Buscar feria..."
+      ></ion-searchbar>
+
+      <ion-list>
+        <ion-item
+          *ngFor="let feria of feriasFiltradas"
+          button
+          detail="false"
+          (click)="seleccionarFeria(feria)"
+          [class.selected]="feria_id === feria.id"
+        >
+          {{ feria.nombre }}
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <ion-button
+      shape="round"
+      class="save-button"
+      style="margin-top: 1rem;"
+      (click)="savePuesto()"
+    >
+      Guardar Puesto
+    </ion-button>
+  </form>
+</ion-content>
