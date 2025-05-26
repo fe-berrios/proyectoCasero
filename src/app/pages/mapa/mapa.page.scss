@@ -134,8 +134,9 @@ ion-menu::part(container) {
 }
 
 .fab-ubicacion ion-fab-button {
-    --background: #{$dark-primary-color} !important;
+    --background: #{$light-primary-color} !important;
     --box-shadow: none !important;
+    --color: $primary-text-color !important;
 }
 
 .fab-ubicacion ion-fab-button:hover {
@@ -148,8 +149,8 @@ ion-menu::part(container) {
 }
 
 .custom-button {
-    --background: #{$dark-primary-color};
-    --color: white; // Texto blanco
+    --background: #{$light-primary-color};
+    --color: $primary-text-color; // Texto blanco
     --background-hover: darken(#{$dark-primary-color}, 5%);
     --background-activated: darken(#{$dark-primary-color}, 10%);
     --border-radius: 20px; // Opcional, estilo más suave
@@ -189,7 +190,7 @@ ion-menu::part(container) {
     min-width: 35px !important;
     min-height: 35px !important;
     --border-radius: 10px; // opcional, para que siga con esquinas redondeadas pero menos grandes
-    --background: transparent; // fondo transparente para que se vea el mapa
+    --background: #{$light-primary-color} !important;// fondo transparente para que se vea el mapa
 
     ion-icon {
         font-size: 20px !important; // ícono proporcional al botón pequeño
