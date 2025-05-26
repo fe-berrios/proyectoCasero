@@ -41,7 +41,7 @@ export class PlaceSelectorModalComponent implements OnInit, AfterViewInit, OnDes
   }
 
   private initMap(): void {
-    this.map = leaflet.map('map', {
+    this.map = leaflet.map('modal-map', {
       center: [-33.4999, -70.6159],
       zoom: 13,
     });
