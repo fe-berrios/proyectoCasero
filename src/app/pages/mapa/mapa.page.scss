@@ -15,16 +15,19 @@
 /* Contenedor del buscador */
 .buscador {
     position: absolute;
-    top: 10px;
+    top: 65px;
     left: 10px;
     right: 10px;
-    z-index: 1100; /* aumenté este z-index para que esté sobre los botones */
+    z-index: 1100;
+    /* aumenté este z-index para que esté sobre los botones */
 }
 
 /* Contenedor de la lista de sugerencias */
 .autocomplete-list {
-    position: absolute;  /* para posicionar debajo del buscador */
-    top: 100%;           /* justo debajo del searchbar */
+    position: absolute;
+    /* para posicionar debajo del buscador */
+    top: 100%;
+    /* justo debajo del searchbar */
     left: 0;
     right: 0;
     max-height: 200px;
@@ -32,20 +35,22 @@
     background: white;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    z-index: 1200; /* aún más arriba que el buscador */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1200;
+    /* aún más arriba que el buscador */
 }
 
 /* Contenedor de los botones */
 .botones-badges {
     position: absolute;
-    top: 70px;
+    top: 130px;
     /* Ajusta para que esté debajo del buscador */
     left: 10px;
     right: 10px;
     display: flex;
     justify-content: space-around;
-    z-index: 1000; /* mantiene el z-index menor que buscador para que no lo tapen */
+    z-index: 1000;
+    /* mantiene el z-index menor que buscador para que no lo tapen */
 }
 
 /* Estilo para el ion-searchbar */
@@ -84,7 +89,7 @@ ion-content {
     flex-direction: column;
     padding: 20px;
 }
-  
+
 .profile-container {
     display: flex;
     flex-direction: column;
@@ -95,7 +100,7 @@ ion-content {
     margin-bottom: 20px;
     clip-path: path("M0,0 H100% V80 Q50% 100% 0 80 Z");
 }
-  
+
 .profile-img {
     width: 70px;
     height: 70px;
@@ -105,18 +110,18 @@ ion-content {
     border: 3px solid $inverse-text-color;
     background-color: $dark-primary-color;
 }
-  
+
 .profile-info h2 {
     font-size: 16px;
     margin: 0;
 }
-  
+
 .profile-info p {
     font-size: 12px;
     margin: 0;
     opacity: 0.8;
 }
-  
+
 .menu-options ion-item {
     --background: transparent;
     border-radius: 10px;
@@ -129,15 +134,66 @@ ion-menu::part(container) {
 }
 
 .fab-ubicacion ion-fab-button {
-  --background: #{$dark-primary-color} !important;
-  --box-shadow: none !important;
+    --background: #{$dark-primary-color} !important;
+    --box-shadow: none !important;
 }
 
 .fab-ubicacion ion-fab-button:hover {
-  --background: rgba(189, 189, 189, 0.5) !important;
+    --background: rgba(189, 189, 189, 0.5) !important;
 }
 
 .fab-ubicacion {
-  bottom: 25px !important; /* mueve todo el FAB hacia arriba */
+    bottom: 25px !important;
+    /* mueve todo el FAB hacia arriba */
 }
 
+.custom-button {
+    --background: #{$dark-primary-color};
+    --color: white; // Texto blanco
+    --background-hover: darken(#{$dark-primary-color}, 5%);
+    --background-activated: darken(#{$dark-primary-color}, 10%);
+    --border-radius: 20px; // Opcional, estilo más suave
+}
+
+.logo-mapa {
+    position: absolute; // Esto lo saca del flujo normal y lo posiciona encima
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1300; // Más alto que cualquier otro elemento
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 10px;
+
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: $primary-text-color;
+    }
+
+    img {
+        height: 40px;
+        width: auto;
+    }
+}
+
+.fab-menu-small {
+    position: relative;
+    top: 18px;
+    /* Mueve el botón 4 píxeles hacia abajo */
+    width: 35px !important; // ancho deseado
+    height: 35px !important; // alto deseado
+    min-width: 35px !important;
+    min-height: 35px !important;
+    --border-radius: 10px; // opcional, para que siga con esquinas redondeadas pero menos grandes
+    --background: transparent; // fondo transparente para que se vea el mapa
+
+    ion-icon {
+        font-size: 20px !important; // ícono proporcional al botón pequeño
+        background-color: transparent;
+        color: black
+    }
+}

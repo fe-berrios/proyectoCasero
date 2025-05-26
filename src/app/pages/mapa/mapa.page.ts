@@ -6,6 +6,7 @@ import { SupabaseService } from 'src/app/services/supabase.service';
 import { FeriaModalComponent } from 'src/app/components/feria-modal/feria-modal.component';
 import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   standalone: false,
@@ -33,7 +34,8 @@ export class MapaPage implements OnInit, OnDestroy {
     private feriaService: FeriaService,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private menuCtrl: MenuController
   ) { }
 
   ngOnInit() {
@@ -68,6 +70,10 @@ export class MapaPage implements OnInit, OnDestroy {
     }
   }
 
+  openMenu() {
+    this.menuCtrl.open('main-menu');  // usa el menuId que definiste en el ion-menu
+  }
+  
   private initMap(): void {
     this.map = leaflet.map('map', {
       zoomControl: false,

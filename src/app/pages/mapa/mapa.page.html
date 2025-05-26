@@ -27,6 +27,20 @@
 </ion-menu>
 
 <ion-content id="main-content" [fullscreen]="true">
+  <!-- FAB para abrir el menú -->
+  <ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button class="fab-menu-small" (click)="openMenu()">
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+  <!-- Logo de la app -->
+  <div class="logo-mapa">
+    <h1>CASER</h1>
+    <img src="../../../assets/tomate.png" alt="Logo de Caser" />
+  </div>
+
   <div class="buscador">
     <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onSearchChange()" placeholder="Buscar feria" color="light">
     </ion-searchbar>
@@ -40,9 +54,9 @@
   </div>
 
   <div class="botones-badges">
-    <ion-button (click)="openDaySelector()">Día</ion-button>
-    <ion-button (click)="filterByHorario()">Horario</ion-button>
-    <ion-button>Puesto</ion-button>
+    <ion-button class="custom-button" (click)="openDaySelector()">Día</ion-button>
+    <ion-button class="custom-button" (click)="filterByHorario()">Horario</ion-button>
+    <ion-button class="custom-button">Puesto</ion-button>
   </div>
 
   <div id="map"></div>
