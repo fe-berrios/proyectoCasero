@@ -82,4 +82,34 @@ export class PuestoService {
   unsubscribeFromPuestos(channel: any) {
     supabase.removeChannel(channel);
   }
+
+  //subir imagen a Supabase Storage
+  private bucket = 'ferias-images';
+  
+  async uploadImage(file: File): Promise<string | null> {
+    if (!file) return null;
+
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+    const filePath = `${fileName}`;
+
+    const { data, error } = await supabase.storage
+      .from(this.bucket)
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false,
+      });
+
+    if (error) {
+      console.error('Error al subir la imagen:', error.message);
+      return null;
+    }
+
+    // Obtener la url pública sin error porque no la devuelve
+    const { data: urlData } = supabase.storage.from(this.bucket).getPublicUrl(filePath);
+
+    return urlData.publicUrl;
+  }
+
+
 }

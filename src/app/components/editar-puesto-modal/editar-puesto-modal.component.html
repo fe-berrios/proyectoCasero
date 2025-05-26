@@ -37,14 +37,17 @@
       name="casero_id"
     ></ion-input>
 
-    <ion-input
-      type="text"
-      label="URL de Imagen"
-      label-placement="floating"
-      fill="outline"
-      [(ngModel)]="img_url"
-      name="img_url"
-    ></ion-input>
+    <!-- Campo para subir imagen -->
+    <ion-item>
+      <ion-label>Imagen del Puesto</ion-label>
+      <input type="file" accept="image/*" (change)="subirImagen($event)" hidden #fileInput />
+      <ion-button (click)="fileInput.click()">Seleccionar Imagen</ion-button>
+    </ion-item>
+
+    <!-- Vista previa de la imagen subida -->
+    <div *ngIf="img_url" style="text-align:center; margin: 1rem 0;">
+      <img [src]="img_url" alt="Imagen subida" style="max-width: 100%; max-height: 200px; border-radius: 8px;" />
+    </div>
 
     <ion-input
       type="text"
