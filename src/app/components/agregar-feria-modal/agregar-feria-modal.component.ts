@@ -136,7 +136,7 @@ export class AgregarFeriaModalComponent {
       alert('Error al guardar la feria');
     } else {
       alert('Feria guardada con éxito');
-      this.modalCtrl.dismiss(true);
+      this.modalCtrl.dismiss(true, 'confirm');
     }
   }
 }

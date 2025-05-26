@@ -159,7 +159,7 @@ export class EditarFeriaModalComponent implements OnInit {
       alert('Error al actualizar la feria');
     } else {
       alert('Feria actualizada con éxito');
-      this.modalCtrl.dismiss(true);
+      this.modalCtrl.dismiss(true, 'confirm');
     }
   }
 }

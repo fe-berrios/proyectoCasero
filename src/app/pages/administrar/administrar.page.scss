@@ -36,22 +36,26 @@
 }
 
 .custom-card {
-  --background: $light-primary-color; /* Verde claro de fondo */
+  --background: $light-primary-color;
+  /* Verde claro de fondo */
   margin-bottom: 15px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.25); /* sombra verde oscura con opacidad */
+  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.25);
+  /* sombra verde oscura con opacidad */
 
   ion-card-title {
     font-weight: 700;
     font-size: 1.3rem;
-    color: $dark-primary-color; /* Verde oscuro */
+    color: $dark-primary-color;
+    /* Verde oscuro */
   }
 
   ion-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-right: 10px; /* espacio para el botón */
+    padding-right: 10px;
+    /* espacio para el botón */
   }
 
   ion-card-header ion-buttons {
@@ -70,11 +74,13 @@
   align-items: center;
   margin-bottom: 8px;
   font-size: 0.95rem;
-  color: $primary-text-color; /* Texto principal */
+  color: $primary-text-color;
+  /* Texto principal */
 
   ion-icon {
     margin-right: 8px;
-    color: $primary-color; /* Verde primario */
+    color: $primary-color;
+    /* Verde primario */
     font-size: 1.2rem;
     min-width: 22px;
   }
@@ -84,8 +90,8 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  --background: #{$dark-primary-color};  // color de fondo usando tu variable SCSS
-  --color: #{$inverse-text-color};       // color de texto usando tu variable SCSS
+  --background: #{$dark-primary-color}; // color de fondo usando tu variable SCSS
+  --color: #{$inverse-text-color}; // color de texto usando tu variable SCSS
   border-radius: 50%;
   width: 56px;
   height: 56px;
@@ -98,9 +104,10 @@
 
 .button-custom-color {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  --color: #{$dark-primary-color};;       // color de texto usando tu variable SCSS
+  top: 20px;
+  right: 25px;
+  --color: #{$dark-primary-color};
+  ; // color de texto usando tu variable SCSS
   border-radius: 50%;
   display: flex;
   justify-content: center;
