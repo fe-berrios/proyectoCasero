@@ -43,7 +43,7 @@
 /* Contenedor de los botones */
 .botones-badges {
     position: absolute;
-    top: 130px;
+    top: 135px;
     /* Ajusta para que esté debajo del buscador */
     left: 10px;
     right: 10px;
@@ -55,6 +55,7 @@
 
 /* Estilo para el ion-searchbar */
 ion-searchbar {
+    top: 15px;
     --border-radius: 20px;
     --background: rgba(255, 255, 255);
     --box-shadow: none;
@@ -96,7 +97,7 @@ ion-content {
     align-items: center;
     background: linear-gradient(135deg, $dark-primary-color, $primary-color);
     padding: 20px;
-    color: $inverse-text-color;
+    color: $primary-text-color;
     margin-bottom: 20px;
     clip-path: path("M0,0 H100% V80 Q50% 100% 0 80 Z");
 }
@@ -107,8 +108,8 @@ ion-content {
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 10px;
-    border: 3px solid $inverse-text-color;
-    background-color: $dark-primary-color;
+    border: 3px solid $light-primary-color;
+    background-color: $accent-color;
 }
 
 .profile-info h2 {
@@ -134,7 +135,7 @@ ion-menu::part(container) {
 }
 
 .fab-ubicacion ion-fab-button {
-    --background: #{$light-primary-color} !important;
+    --background: #{$primary-color} !important;
     --box-shadow: none !important;
     --color: $primary-text-color !important;
 }
@@ -163,10 +164,11 @@ ion-menu::part(container) {
     right: 0;
     z-index: 1300; // Más alto que cualquier otro elemento
 
+    background-color: $primary-color;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 0px;
     padding-top: 10px;
 
     h1 {
@@ -190,7 +192,7 @@ ion-menu::part(container) {
     min-width: 35px !important;
     min-height: 35px !important;
     --border-radius: 10px; // opcional, para que siga con esquinas redondeadas pero menos grandes
-    --background: #{$light-primary-color} !important;// fondo transparente para que se vea el mapa
+    --background: #{$primary-color} !important;// fondo transparente para que se vea el mapa
     --border-radius: 50% !important;  // Para que sea redondo
 
     ion-icon {
