@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { FeriaService } from 'src/app/services/feria.service';
 import { PlaceSelectorModalComponent } from '../place-selector-modal/place-selector-modal.component';
 
+type CampoHora = 'horaInicioHora' | 'horaInicioMinuto' | 'horaTerminoHora' | 'horaTerminoMinuto';
+
 @Component({
   standalone: false,
   selector: 'app-editar-feria-modal',
@@ -17,10 +19,11 @@ export class EditarFeriaModalComponent implements OnInit {
   lng: number | null = null;
   dia: string[] = [];
 
-  horaInicioHora: number | null = 0;
-  horaInicioMinuto: number | null = 0;
-  horaTerminoHora: number | null = 0;
-  horaTerminoMinuto: number | null = 0;
+  // Cambiado a string para mantener consistencia con AgregarFeriaModalComponent
+  horaInicioHora: string = '00';
+  horaInicioMinuto: string = '00';
+  horaTerminoHora: string = '00';
+  horaTerminoMinuto: string = '00';
 
   errorHoraInicio = '';
   errorHoraTermino = '';
@@ -37,7 +40,7 @@ export class EditarFeriaModalComponent implements OnInit {
     { label: 'dom', value: 'dom' },
   ];
 
-  constructor(private modalCtrl: ModalController, private feriaService: FeriaService) {}
+  constructor(private modalCtrl: ModalController, private feriaService: FeriaService) { }
 
   ngOnInit() {
     if (this.feria) {
@@ -48,17 +51,17 @@ export class EditarFeriaModalComponent implements OnInit {
       // Parsear días separados por " - "
       this.dia = this.feria.dia ? this.feria.dia.split(' - ') : [];
 
-      // Parsear horas "HH:MM"
+      // Parsear horas "HH:MM" y convertir a string con formato "00"
       if (this.feria.hora_inicio) {
         const [hI, mI] = this.feria.hora_inicio.split(':');
-        this.horaInicioHora = parseInt(hI, 10);
-        this.horaInicioMinuto = parseInt(mI, 10);
+        this.horaInicioHora = hI.padStart(2, '0');
+        this.horaInicioMinuto = mI.padStart(2, '0');
       }
 
       if (this.feria.hora_termino) {
         const [hT, mT] = this.feria.hora_termino.split(':');
-        this.horaTerminoHora = parseInt(hT, 10);
-        this.horaTerminoMinuto = parseInt(mT, 10);
+        this.horaTerminoHora = hT.padStart(2, '0');
+        this.horaTerminoMinuto = mT.padStart(2, '0');
       }
     }
   }
@@ -104,25 +107,30 @@ export class EditarFeriaModalComponent implements OnInit {
     this.errorHoraInicio = '';
     this.errorHoraTermino = '';
 
+    const inicioHora = parseInt(this.horaInicioHora, 10);
+    const inicioMin = parseInt(this.horaInicioMinuto, 10);
+    const terminoHora = parseInt(this.horaTerminoHora, 10);
+    const terminoMin = parseInt(this.horaTerminoMinuto, 10);
+
     if (
-      this.horaInicioHora === null || this.horaInicioMinuto === null ||
-      this.horaInicioHora < 0 || this.horaInicioHora > 23 ||
-      this.horaInicioMinuto < 0 || this.horaInicioMinuto > 59
+      isNaN(inicioHora) || isNaN(inicioMin) ||
+      inicioHora < 0 || inicioHora > 23 ||
+      inicioMin < 0 || inicioMin > 59
     ) {
       this.errorHoraInicio = 'Hora de inicio inválida (HH: 0-23, MM: 0-59)';
     }
 
     if (
-      this.horaTerminoHora === null || this.horaTerminoMinuto === null ||
-      this.horaTerminoHora < 0 || this.horaTerminoHora > 23 ||
-      this.horaTerminoMinuto < 0 || this.horaTerminoMinuto > 59
+      isNaN(terminoHora) || isNaN(terminoMin) ||
+      terminoHora < 0 || terminoHora > 23 ||
+      terminoMin < 0 || terminoMin > 59
     ) {
       this.errorHoraTermino = 'Hora de término inválida (HH: 0-23, MM: 0-59)';
     }
 
     if (!this.errorHoraInicio && !this.errorHoraTermino) {
-      const inicio = (this.horaInicioHora ?? 0) * 60 + (this.horaInicioMinuto ?? 0);
-      const termino = (this.horaTerminoHora ?? 0) * 60 + (this.horaTerminoMinuto ?? 0);
+      const inicio = inicioHora * 60 + inicioMin;
+      const termino = terminoHora * 60 + terminoMin;
 
       if (termino <= inicio) {
         this.errorHoraTermino = 'La hora de término debe ser después de la hora de inicio.';
@@ -140,8 +148,8 @@ export class EditarFeriaModalComponent implements OnInit {
 
     if (!this.validarHoras()) return;
 
-    const hora_inicio = `${this.horaInicioHora?.toString().padStart(2, '0')}:${this.horaInicioMinuto?.toString().padStart(2, '0')}`;
-    const hora_termino = `${this.horaTerminoHora?.toString().padStart(2, '0')}:${this.horaTerminoMinuto?.toString().padStart(2, '0')}`;
+    const hora_inicio = `${String(this.horaInicioHora).padStart(2, '0')}:${String(this.horaInicioMinuto).padStart(2, '0')}`;
+    const hora_termino = `${String(this.horaTerminoHora).padStart(2, '0')}:${String(this.horaTerminoMinuto).padStart(2, '0')}`;
     const diasConcatenados = this.dia.join(' - ');
 
     const { error } = await this.feriaService.updateFeria(
@@ -160,6 +168,17 @@ export class EditarFeriaModalComponent implements OnInit {
     } else {
       alert('Feria actualizada con éxito');
       this.modalCtrl.dismiss(true, 'confirm');
+    }
+  }
+
+  // Método seguro para formatear valores de hora a "00"
+  formatearHora(campo: CampoHora) {
+    const valor = parseInt(this[campo], 10);
+
+    if (!isNaN(valor)) {
+      this[campo] = valor.toString().padStart(2, '0');
+    } else {
+      this[campo] = '00';
     }
   }
 }

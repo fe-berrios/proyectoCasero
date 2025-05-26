@@ -19,13 +19,11 @@
     <ion-item lines="none" style="margin-top: 1.5rem;">
       <ion-label position="stacked">Hora de Inicio</ion-label>
       <div class="time-inputs">
-        <ion-input type="number" placeholder="HH" min="0" max="23" [(ngModel)]="horaInicioHora" name="horaInicioHora"
-          (ionChange)="validarHoras()">
-        </ion-input>
+        <ion-input type="text" maxlength="2" placeholder="HH" [(ngModel)]="horaInicioHora" name="horaInicioHora"
+          (ionBlur)="formatearHora('horaInicioHora')"></ion-input>
         <span>:</span>
-        <ion-input type="number" placeholder="MM" min="0" max="59" [(ngModel)]="horaInicioMinuto"
-          name="horaInicioMinuto" (ionChange)="validarHoras()">
-        </ion-input>
+        <ion-input type="text" maxlength="2" placeholder="MM" [(ngModel)]="horaInicioMinuto" name="horaInicioMinuto"
+          (ionBlur)="formatearHora('horaInicioMinuto')"></ion-input>
       </div>
       <ion-text color="danger" *ngIf="errorHoraInicio">{{ errorHoraInicio }}</ion-text>
     </ion-item>
@@ -34,16 +32,15 @@
     <ion-item lines="none" style="margin-top: 1rem;">
       <ion-label position="stacked">Hora de Término</ion-label>
       <div class="time-inputs">
-        <ion-input type="number" placeholder="HH" min="0" max="23" [(ngModel)]="horaTerminoHora" name="horaTerminoHora"
-          (ionChange)="validarHoras()">
-        </ion-input>
+        <ion-input type="text" maxlength="2" placeholder="HH" [(ngModel)]="horaTerminoHora" name="horaTerminoHora"
+          (ionBlur)="formatearHora('horaTerminoHora')"></ion-input>
         <span>:</span>
-        <ion-input type="number" placeholder="MM" min="0" max="59" [(ngModel)]="horaTerminoMinuto"
-          name="horaTerminoMinuto" (ionChange)="validarHoras()">
-        </ion-input>
+        <ion-input type="text" maxlength="2" placeholder="MM" [(ngModel)]="horaTerminoMinuto" name="horaTerminoMinuto"
+          (ionBlur)="formatearHora('horaTerminoMinuto')"></ion-input>
       </div>
       <ion-text color="danger" *ngIf="errorHoraTermino">{{ errorHoraTermino }}</ion-text>
     </ion-item>
+
 
     <!-- Selección de días -->
     <ion-item button lines="none" (click)="toggleDiasDropdown()" style="margin-top: 1.5rem;">
