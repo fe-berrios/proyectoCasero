@@ -36,7 +36,7 @@
 }
 
 .custom-card {
-  --background: $light-primary-color; // Verde claro de fondo
+  background-color: rgba(200, 230, 201, 0.5);
   margin-bottom: 15px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(56, 142, 60, 0.25); // sombra verde oscura con opacidad
@@ -44,7 +44,7 @@
   ion-card-title {
     font-weight: 700;
     font-size: 1.3rem;
-    color: $dark-primary-color; // Verde oscuro
+    color: $primary-text-color; // Verde oscuro
   }
 
   ion-card-header {
@@ -98,8 +98,8 @@
 
 .button-custom-color {
   position: fixed;
-  top: 20px;
-  right: 25px;
+  top: 5px;
+  right: 20px;
   --color: #{$primary-color};
   border-radius: 50%;
   display: flex;
@@ -110,8 +110,8 @@
 
 .delete-custom-color {
   position: fixed;
-  top: 55px;
-  right: 27px;
+  top: 40px;
+  right: 22px;
   --color: #{$danger-red};
   border-radius: 50%;
   display: flex;

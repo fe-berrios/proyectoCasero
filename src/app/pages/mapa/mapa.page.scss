@@ -135,9 +135,11 @@ ion-menu::part(container) {
 }
 
 .fab-ubicacion ion-fab-button {
-    --background: #{$primary-color} !important;
+    --background: rgba(76, 175, 80, 0.8) !important; // fondo transparente para que se vea el mapa
     --box-shadow: none !important;
     --color: $primary-text-color !important;
+    width: 50px !important; // ancho deseado
+    height: 50px !important; // alto deseado
 }
 
 .fab-ubicacion ion-fab-button:hover {
