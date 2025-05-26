@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { PuestoService } from 'src/app/services/puesto.service';
 
 @Component({
   standalone: false,
@@ -9,8 +10,28 @@ import { ModalController } from '@ionic/angular';
 })
 export class FeriaModalComponent {
   @Input() feria: any;
+  puestos: any[] = [];
+  isAccordionOpen = false;
+  constructor(private modalCtrl: ModalController, private puestoService: PuestoService
+  ) { }
 
-  constructor(private modalCtrl: ModalController) {}
+  async ngOnInit() {
+    await this.cargarPuestos();
+  }
+
+  async cargarPuestos() {
+    if (!this.feria?.id) return;
+    const { data, error } = await this.puestoService.getPuestosByFeria(this.feria.id);
+    if (error) {
+      console.error('Error al cargar puestos:', error.message);
+      return;
+    }
+    this.puestos = data ?? [];
+  }
+
+  toggleAccordion() {
+    this.isAccordionOpen = !this.isAccordionOpen;
+  }
 
   closeModal() {
     this.modalCtrl.dismiss();

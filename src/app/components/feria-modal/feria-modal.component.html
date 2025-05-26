@@ -9,6 +9,7 @@
 
 <ion-content class="ion-padding" [fullscreen]="true">
   <div class="feria-container">
+    <!-- Información de la feria -->
     <ion-card>
       <ion-card-header>
         <ion-card-title>Información General</ion-card-title>
@@ -16,25 +17,43 @@
 
       <ion-card-content>
         <ion-item lines="none">
-          <ion-label><strong>ID:</strong> {{ feria.id }}</ion-label>
+          <ion-label><strong>Feria:</strong> {{ feria.nombre }}</ion-label>
         </ion-item>
 
         <ion-item lines="none">
-          <ion-label><strong>Feria:</strong> "{{ feria.nombre }}"</ion-label>
+          <ion-label><strong>Hora inicio:</strong> {{ feria.hora_inicio }}</ion-label>
         </ion-item>
 
         <ion-item lines="none">
-          <ion-label><strong>Hora inicio:</strong> "{{ feria.hora_inicio }}"</ion-label>
+          <ion-label><strong>Hora término:</strong> {{ feria.hora_termino }}</ion-label>
         </ion-item>
 
         <ion-item lines="none">
-          <ion-label><strong>Hora término:</strong> "{{ feria.hora_termino }}"</ion-label>
-        </ion-item>
-
-        <ion-item lines="none">
-          <ion-label><strong>Día:</strong> "{{ feria.dia }}"</ion-label>
+          <ion-label><strong>Día(s):</strong> {{ feria.dia }}</ion-label>
         </ion-item>
       </ion-card-content>
     </ion-card>
-  </div>
-</ion-content>
+
+    <!-- Acordeón de puestos -->
+    <ion-card *ngIf="puestos.length > 0 || isAccordionOpen">
+      <ion-item class="accordion-toggle" button (click)="toggleAccordion()">
+        <ion-label><strong>Puestos</strong></ion-label>
+        <ion-icon
+          slot="end"
+          [name]="isAccordionOpen ? 'chevron-up' : 'chevron-down'"
+        ></ion-icon>
+      </ion-item>
+
+      <ion-list *ngIf="isAccordionOpen">
+        <ion-item *ngFor="let puesto of puestos">
+          <ion-label>
+            <h3>{{ puesto.nombre }}</h3>
+            <p *ngIf="puesto.descripcion">{{ puesto.descripcion }}</p>
+            <p *ngIf="puesto.ubicacion">Ubicación: {{ puesto.ubicacion }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+    <!-- Mensaje si no hay puestos -->
+    <ion-card *ngIf="puestos.length === 0 && !isAccordionOpen">
