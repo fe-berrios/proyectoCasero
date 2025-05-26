@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AgregarFeriaModalComponent } from 'src/app/components/agregar-feria-modal/agregar-feria-modal.component';
 import { FeriaService } from 'src/app/services/feria.service';
+import { EditarFeriaModalComponent } from 'src/app/components/editar-feria-modal/editar-feria-modal.component';
 
 @Component({
   standalone: false,
@@ -51,4 +52,19 @@ export class AdministrarPage implements OnInit, OnDestroy {
       await this.cargarFerias();
     }
   }
+
+  async abrirModalEditarFeria(feria: any) {
+  const modal = await this.modalCtrl.create({
+    component: EditarFeriaModalComponent,
+    componentProps: {
+      feria: feria
+    }
+  });
+  await modal.present();
+
+  const { role } = await modal.onDidDismiss();
+  if (role === 'confirm' || role === 'true') {
+    await this.cargarFerias();
+  }
+}
 }

@@ -27,6 +27,29 @@ export class FeriaService {
     ]);
   }
 
+  // Actualizar feria por id
+  async updateFeria(
+    id: number,
+    nombre: string,
+    lat: number,
+    lng: number,
+    hora_inicio: string,
+    hora_termino: string,
+    dia: string
+  ) {
+    return supabase
+      .from('ferias')
+      .update({
+        nombre,
+        lat,
+        lng,
+        hora_inicio,
+        hora_termino,
+        dia
+      })
+      .eq('id', id);
+  }
+
   // Obtener todas las ferias de la base de datos
   async getFerias() {
     return supabase.from('ferias').select('*');

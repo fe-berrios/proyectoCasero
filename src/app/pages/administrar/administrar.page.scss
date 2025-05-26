@@ -40,12 +40,29 @@
   margin-bottom: 15px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(56, 142, 60, 0.25); /* sombra verde oscura con opacidad */
-}
 
-.custom-card ion-card-title {
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: $dark-primary-color; /* Verde oscuro */
+  ion-card-title {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: $dark-primary-color; /* Verde oscuro */
+  }
+
+  ion-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px; /* espacio para el botón */
+  }
+
+  ion-card-header ion-buttons {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  ion-card-header ion-button {
+    font-size: 1.4rem;
+  }
 }
 
 .info-row {
@@ -54,13 +71,13 @@
   margin-bottom: 8px;
   font-size: 0.95rem;
   color: $primary-text-color; /* Texto principal */
-}
 
-.info-row ion-icon {
-  margin-right: 8px;
-  color: $primary-color; /* Verde primario */
-  font-size: 1.2rem;
-  min-width: 22px;
+  ion-icon {
+    margin-right: 8px;
+    color: $primary-color; /* Verde primario */
+    font-size: 1.2rem;
+    min-width: 22px;
+  }
 }
 
 .fab-custom-color {
@@ -73,6 +90,18 @@
   width: 56px;
   height: 56px;
   box-shadow: 0 4px 8px rgba(56, 142, 60, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.button-custom-color {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  --color: #{$dark-primary-color};;       // color de texto usando tu variable SCSS
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;

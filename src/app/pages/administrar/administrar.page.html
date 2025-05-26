@@ -19,7 +19,6 @@
     </ion-fab-button>
   </ion-fab>
 
-
   <!-- Lista de cards personalizada -->
   <ion-list>
     <ion-card *ngFor="let feria of ferias" class="custom-card">
@@ -40,8 +39,16 @@
           <ion-icon name="calendar-outline"></ion-icon>
           <span>Día(s): {{ feria.dia }}</span>
         </div>
+
+        <!-- Botón abajo a la derecha -->
+        <div class="edit-button-container">
+          <ion-button class = "button-custom-color" fill="clear" (click)="abrirModalEditarFeria(feria)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+        </div>
       </ion-card-content>
     </ion-card>
+
   </ion-list>
 
 </ion-content>

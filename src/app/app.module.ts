@@ -9,13 +9,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { FeriaModalComponent } from './components/feria-modal/feria-modal.component';
 import { AgregarFeriaModalComponent } from './components/agregar-feria-modal/agregar-feria-modal.component'; 
 import { PlaceSelectorModalComponent } from './components/place-selector-modal/place-selector-modal.component';
+import { EditarFeriaModalComponent } from './components/editar-feria-modal/editar-feria-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FeriaModalComponent,
     AgregarFeriaModalComponent,
-    PlaceSelectorModalComponent
+    PlaceSelectorModalComponent,
+    EditarFeriaModalComponent,
   ],
   imports: [
     ReactiveFormsModule,
