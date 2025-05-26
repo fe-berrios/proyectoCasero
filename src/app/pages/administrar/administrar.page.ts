@@ -14,7 +14,7 @@ export class AdministrarPage implements OnInit, OnDestroy {
   ferias: any[] = [];
   subscriptionChannel: any;
 
-  constructor(private modalCtrl: ModalController, private feriaService: FeriaService) {}
+  constructor(private modalCtrl: ModalController, private feriaService: FeriaService) { }
 
   async ngOnInit() {
     await this.cargarFerias();
@@ -54,17 +54,32 @@ export class AdministrarPage implements OnInit, OnDestroy {
   }
 
   async abrirModalEditarFeria(feria: any) {
-  const modal = await this.modalCtrl.create({
-    component: EditarFeriaModalComponent,
-    componentProps: {
-      feria: feria
-    }
-  });
-  await modal.present();
+    const modal = await this.modalCtrl.create({
+      component: EditarFeriaModalComponent,
+      componentProps: {
+        feria: feria
+      }
+    });
+    await modal.present();
 
-  const { role } = await modal.onDidDismiss();
-  if (role === 'confirm' || role === 'true') {
-    await this.cargarFerias();
+    const { role } = await modal.onDidDismiss();
+    if (role === 'confirm' || role === 'true') {
+      await this.cargarFerias();
+    }
   }
-}
+
+  async eliminarFeria(id: number) {
+    const confirmDelete = confirm('¿Estás seguro de que quieres eliminar esta feria?');
+    if (!confirmDelete) return;
+
+    const { error } = await this.feriaService.deleteFeria(id);
+    if (error) {
+      console.error('Error al eliminar la feria:', error);
+      alert('No se pudo eliminar la feria.');
+    } else {
+      alert('Feria eliminada con éxito.');
+      await this.cargarFerias(); // Recargar lista después de eliminar
+    }
+  }
+
 }

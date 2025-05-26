@@ -50,6 +50,14 @@ export class FeriaService {
       .eq('id', id);
   }
 
+  // Eliminar una feria por id
+  async deleteFeria(id: number) {
+    return supabase
+      .from('ferias')
+      .delete()
+      .eq('id', id);
+  }
+
   // Obtener todas las ferias de la base de datos
   async getFerias() {
     return supabase.from('ferias').select('*');

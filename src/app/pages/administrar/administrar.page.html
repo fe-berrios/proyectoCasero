@@ -40,12 +40,17 @@
           <span>Día(s): {{ feria.dia }}</span>
         </div>
 
-        <!-- Botón abajo a la derecha -->
+        <!-- Botones -->
         <div class="edit-button-container">
-          <ion-button class = "button-custom-color" fill="clear" (click)="abrirModalEditarFeria(feria)">
+          <ion-button class="button-custom-color" fill="clear" (click)="abrirModalEditarFeria(feria)">
             <ion-icon slot="icon-only" name="create-outline"></ion-icon>
           </ion-button>
+
+          <ion-button class="delete-custom-color" fill="clear" (click)="eliminarFeria(feria.id)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
         </div>
+
       </ion-card-content>
     </ion-card>
 
