@@ -31,7 +31,12 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": [
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css",
+              "src/global.scss",
+              "src/theme/variables.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -111,10 +116,12 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/global.scss", 
-                        "src/theme/variables.scss",  
-                        "src/styles.css", 
-                        "node_modules/leaflet/dist/leaflet.css" ],
+            "styles": [
+              "src/global.scss",
+              "src/theme/variables.scss",
+              "src/styles.css",
+              "node_modules/leaflet/dist/leaflet.css"
+            ],
             "scripts": []
           },
           "configurations": {

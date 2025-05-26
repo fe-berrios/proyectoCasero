@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FeriaService } from 'src/app/services/feria.service';
+import { PlaceSelectorModalComponent } from '../place-selector-modal/place-selector-modal.component';
 
 @Component({
   standalone: false,
@@ -35,7 +36,25 @@ export class AgregarFeriaModalComponent {
     { label: 'dom', value: 'dom' },
   ];
 
-  constructor(private modalCtrl: ModalController, private feriaService: FeriaService) {}
+  constructor(private modalCtrl: ModalController, private feriaService: FeriaService) { }
+
+  async openPlaceSelectorModal() {
+    const modal = await this.modalCtrl.create({
+      component: PlaceSelectorModalComponent,
+      // Opcional: pasa datos si quieres
+    });
+
+    await modal.present();
+
+    // Espera a que cierren el modal y recibe datos
+    const { data } = await modal.onWillDismiss();
+
+    if (data) {
+      // Por ejemplo, data = { lat: ..., lng: ... }
+      this.lat = data.lat;
+      this.lng = data.lng;
+    }
+  }
 
   closeModal() {
     this.modalCtrl.dismiss();

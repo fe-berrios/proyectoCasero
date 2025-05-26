@@ -9,40 +9,44 @@
 
 <ion-content class="ion-padding" [fullscreen]="true">
   <form class="admin-form">
+
+    <!-- Nombre -->
     <ion-input type="text" label="Nombre de la Feria" label-placement="floating" fill="outline" [(ngModel)]="nombre"
-      name="nombre"></ion-input>
+      name="nombre">
+    </ion-input>
 
-    <ion-input type="number" label="Latitud" label-placement="floating" fill="outline" [(ngModel)]="lat"
-      name="lat"></ion-input>
-
-    <ion-input type="number" label="Longitud" label-placement="floating" fill="outline" [(ngModel)]="lng"
-      name="lng"></ion-input>
-
-    <ion-item lines="none">
+    <!-- Hora de Inicio -->
+    <ion-item lines="none" style="margin-top: 1.5rem;">
       <ion-label position="stacked">Hora de Inicio</ion-label>
       <div class="time-inputs">
         <ion-input type="number" placeholder="HH" min="0" max="23" [(ngModel)]="horaInicioHora" name="horaInicioHora"
-          (ionChange)="validarHoras()"></ion-input>
+          (ionChange)="validarHoras()">
+        </ion-input>
         <span>:</span>
         <ion-input type="number" placeholder="MM" min="0" max="59" [(ngModel)]="horaInicioMinuto"
-          name="horaInicioMinuto" (ionChange)="validarHoras()"></ion-input>
+          name="horaInicioMinuto" (ionChange)="validarHoras()">
+        </ion-input>
       </div>
       <ion-text color="danger" *ngIf="errorHoraInicio">{{ errorHoraInicio }}</ion-text>
     </ion-item>
 
-    <ion-item lines="none">
+    <!-- Hora de Término -->
+    <ion-item lines="none" style="margin-top: 1rem;">
       <ion-label position="stacked">Hora de Término</ion-label>
       <div class="time-inputs">
-        <ion-input type="number" placeholder="HH" min="0" max="23" [(ngModel)]="horaTerminoHora"
-          name="horaTerminoHora" (ionChange)="validarHoras()"></ion-input>
+        <ion-input type="number" placeholder="HH" min="0" max="23" [(ngModel)]="horaTerminoHora" name="horaTerminoHora"
+          (ionChange)="validarHoras()">
+        </ion-input>
         <span>:</span>
         <ion-input type="number" placeholder="MM" min="0" max="59" [(ngModel)]="horaTerminoMinuto"
-          name="horaTerminoMinuto" (ionChange)="validarHoras()"></ion-input>
+          name="horaTerminoMinuto" (ionChange)="validarHoras()">
+        </ion-input>
       </div>
       <ion-text color="danger" *ngIf="errorHoraTermino">{{ errorHoraTermino }}</ion-text>
     </ion-item>
 
-    <ion-item button lines="none" (click)="toggleDiasDropdown()">
+    <!-- Selección de días -->
+    <ion-item button lines="none" (click)="toggleDiasDropdown()" style="margin-top: 1.5rem;">
       <ion-label>Día(s)</ion-label>
       <ion-note slot="end" color="medium">
         {{ dia.length > 0 ? dia.join(' - ') : 'Seleccione días' }}
@@ -60,6 +64,19 @@
       </ion-list>
     </div>
 
-    <ion-button shape="round" class="save-button" (click)="saveFeria()">Guardar Feria</ion-button>
+    <!-- Botón para seleccionar ubicación -->
+    <ion-button color="medium" shape="round" fill="outline" class="map-button" (click)="openPlaceSelectorModal()"
+      style="margin-top: 1rem; text-align: center;">
+      <!-- Texto cambia si lat y lng existen -->
+      {{ lat !== null && lng !== null
+      ? 'Ubicación: ' + lat.toFixed(5) + ', ' + lng.toFixed(5)
+      : 'Elegir Ubicación' }}
+    </ion-button>
+
+    <!-- Botón para guardar -->
+    <ion-button shape="round" class="save-button" style="margin-top: 1rem;" (click)="saveFeria()">
+      Guardar Feria
+    </ion-button>
+
   </form>
 </ion-content>

@@ -1,0 +1,28 @@
+@use 'src/theme/variables' as *;
+
+.custom-toolbar {
+  --background: #{$dark-primary-color};  // Fondo con tu color personalizado
+  --color: #{$inverse-text-color};       // Color del texto y botones
+}
+
+:host {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+ion-header {
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+  ion-title {
+    font-weight: bold;
+  }
+}
+
+.custom-button {
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+  --border-radius: 4px;
+  --padding: 10px 20px;
+}

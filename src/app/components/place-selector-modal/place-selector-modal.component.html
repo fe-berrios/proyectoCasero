@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <ion-title>Seleccionar Lugar</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div id="map" style="height: 100%; width: 100%;"></div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button class="custom-button" expand="block" (click)="confirmSelection()">
+      Confirmar selección
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
