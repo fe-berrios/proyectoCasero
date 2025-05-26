@@ -63,6 +63,11 @@ export class FeriaService {
     return supabase.from('ferias').select('*');
   }
 
+  // Obtener una feria por id
+  async getFeriaById(id: number) {
+    return supabase.from('ferias').select('*').eq('id', id).single();
+  }
+
   // Suscribirse a cambios en tiempo real en la tabla de ferias
   subscribeToFerias(callback: (feria: any) => void) {
     const channel = supabase

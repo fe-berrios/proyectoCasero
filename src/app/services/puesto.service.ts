@@ -74,6 +74,11 @@ export class PuestoService {
     return channel;
   }
 
+  // Obtener un puesto por su ID
+  async getPuestoById(id: number) {
+    return supabase.from('puestos').select('*').eq('id', id).limit(1);
+  }
+
   unsubscribeFromPuestos(channel: any) {
     supabase.removeChannel(channel);
   }

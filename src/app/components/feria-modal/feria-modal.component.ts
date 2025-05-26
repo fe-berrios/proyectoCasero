@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PuestoService } from 'src/app/services/puesto.service';
+import { PuestoDetalleModalComponent } from '../puesto-detalle-modal/puesto-detalle-modal.component';
+
 
 @Component({
   standalone: false,
@@ -17,6 +19,16 @@ export class FeriaModalComponent {
 
   async ngOnInit() {
     await this.cargarPuestos();
+  }
+
+  async abrirModalDetallePuesto(puestoId: number) {
+    const modal = await this.modalCtrl.create({
+      component: PuestoDetalleModalComponent,
+      componentProps: {
+        puestoId: puestoId
+      },
+    });
+    return await modal.present();
   }
 
   async cargarPuestos() {
