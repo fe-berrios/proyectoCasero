@@ -28,6 +28,14 @@
     <ion-input type="text" label="Teléfono" label-placement="floating" fill="outline" [(ngModel)]="profile.phone"
       name="phone"></ion-input>
 
+    <!-- Código casero solo como label, no editable -->
+    <ion-item>
+      <ion-label>
+        <h2>Código Casero</h2>
+        <p>{{ profile.codigo_casero || 'No asignado' }}</p>
+      </ion-label>
+    </ion-item>
+
     <ion-button shape="round" class="update-button" (click)="updateProfile()">
       Actualizar
     </ion-button>
