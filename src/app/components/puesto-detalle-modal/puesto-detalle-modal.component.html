@@ -9,22 +9,18 @@
 
 <ion-content class="ion-padding" [fullscreen]="true">
 
-  <!-- Contenido solo si puesto está definido -->
   <ng-container *ngIf="puesto">
 
-    <!-- Card principal con información -->
     <ion-card>
       <ion-card-header>
         <ion-card-title>{{ puesto.nombre }}</ion-card-title>
       </ion-card-header>
     </ion-card>
 
-    <!-- Imagen del puesto -->
     <div class="puesto-image-container" *ngIf="puesto.img_url">
       <img [src]="puesto.img_url" alt="Imagen del Puesto" class="puesto-image" />
     </div>
 
-    <!-- Card con descripción -->
     <ion-card *ngIf="puesto.descripcion">
       <ion-card-content>
         <ion-item lines="none">
@@ -34,7 +30,6 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Card con ubicación -->
     <ion-card *ngIf="puesto.ubicacion">
       <ion-card-content>
         <ion-item lines="none">
@@ -44,7 +39,6 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Card con nombre de feria en lugar de ID -->
     <ion-card *ngIf="nombreFeria">
       <ion-card-content>
         <ion-item lines="none">
@@ -54,6 +48,47 @@
       </ion-card-content>
     </ion-card>
 
+    <!-- Reviews -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Calificaciones</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content *ngIf="reviews.length; else sinComentarios">
+        <ion-card *ngFor="let review of reviews" class="comment-card">
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <img [src]="review.avatar_url || 'assets/icon/user-location.svg'" alt="avatar" />
+            </ion-avatar>
+
+            <ion-label>
+              <h3>{{ review.username || 'Anónimo' }}</h3>
+              <p><i>"{{ review.comentario }}"</i></p>
+
+              <div class="rating-icons">
+                <ng-container *ngFor="let i of [1,2,3,4,5]">
+                  <img 
+                    [src]="i <= review.calificacion ? 'assets/icon/rank-mark.png' : 'assets/icon/rank-unmark.png'" 
+                    alt="rating star" 
+                    class="rating-icon"
+                  />
+                </ng-container>
+              </div>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-card-content>
+
+      <ng-template #sinComentarios>
+        <ion-card-content>
+          <p>No hay comentarios aún.</p>
+        </ion-card-content>
+      </ng-template>
+
+      <ion-button expand="full" (click)="abrirModalComentario()">
+        Calificar Puesto
+      </ion-button>
+    </ion-card>
 
   </ng-container>
 
