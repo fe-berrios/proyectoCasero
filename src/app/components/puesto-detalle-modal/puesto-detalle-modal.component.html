@@ -80,12 +80,13 @@
       </ion-card-content>
 
       <ng-template #sinComentarios>
-        <ion-card-content>
-          <p>No hay comentarios aún.</p>
+        <ion-card-content class="sin-comentarios">
+          <p>Aún no hay calificaciones.</p>
+          <p>¡Sé el primero en calificar!</p>
         </ion-card-content>
       </ng-template>
 
-      <ion-button expand="full" (click)="abrirModalComentario()">
+      <ion-button shape = "round" class="comentar-button" expand="full" (click)="abrirModalComentario()">
         Calificar Puesto
       </ion-button>
     </ion-card>

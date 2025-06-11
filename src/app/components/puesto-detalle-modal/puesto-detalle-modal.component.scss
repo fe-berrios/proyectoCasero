@@ -11,6 +11,16 @@
   height: 27px;
 }
 
+.comentar-button {
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+  border-radius: 9999px;
+  width: 60%;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
 
 ion-content {
     --background: #f5f5f5;
@@ -77,4 +87,9 @@ ion-content {
 .custom-toolbar {
   --background: #{$dark-primary-color};  // Fondo con tu color personalizado
   --color: #{$inverse-text-color};       // Color del texto y botones
+}
+
+.sin-comentarios {
+  text-align: center;
+  margin-top: 20px;
 }

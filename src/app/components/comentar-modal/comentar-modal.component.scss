@@ -1,0 +1,135 @@
+@use 'src/theme/variables' as *;
+
+:host {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+ion-header,
+ion-toolbar {
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+  font-weight: 500;
+}
+
+ion-content {
+  --background: #{$light-primary-color};
+  padding: clamp(16px, 5vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// margen entre primer ion-item (comentario) y siguiente (calificación)
+ion-content ion-item:first-of-type {
+  margin-bottom: 20px;
+}
+
+ion-item {
+  --highlight-color: #{$dark-primary-color};
+  --background-focused: #f5f5f5;
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  border: 1px solid $divider-color;
+  border-radius: 8px;
+  background: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+ion-label {
+  color: $primary-text-color;
+}
+
+// Margen inferior para separar label stacked del textarea
+ion-label[position="stacked"] {
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+ion-textarea {
+  font-size: 15px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  border-radius: 8px;
+  border: 1px solid $divider-color;
+  background: white;
+
+  width: 100% !important;
+  margin-bottom: 15px !important; // margen inferior para separar del botón
+  padding: 0 !important;
+
+  textarea {
+    height: 80px !important;  // fuerza la altura
+    max-height: 80px !important;
+    min-height: 80px !important;
+    resize: none !important;   // evitar redimensionar
+    width: 100% !important;
+  }
+}
+
+ion-range {
+  display: none; // ocultamos la barra porque la reemplazamos por tomates
+}
+
+.tomates-container {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.tomate {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.tomate:hover {
+  transform: scale(1.1);
+}
+
+.enviar-button {
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+  border-radius: 9999px;
+  width: 60%;
+  display: block;     // importante para que margin auto funcione
+  margin: 1rem auto 0 auto;  // margen arriba 1rem y auto centrado horizontalmente
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+ion-item + ion-item {
+  margin-top: 10px !important;
+}
+
+ion-item + ion-button {
+  margin-top: 10px !important;
+}
+
+// Centrar verticalmente label y tomates en el ion-item de calificación
+ion-item.calificacion {
+  flex-direction: row;    // para que label y contenedor de tomates estén en línea
+  align-items: center;    // centra verticalmente
+  gap: 12px;              // espacio entre label y tomates
+  padding-left: 12px;     // igualar padding a otros ion-item si quieres
+  padding-right: 12px;
+}
+
+ion-item.calificacion ion-label {
+  flex-shrink: 0;         // evita que el label se reduzca demasiado
+  width: 100px;           // ancho fijo para el label, ajusta a tu gusto
+}

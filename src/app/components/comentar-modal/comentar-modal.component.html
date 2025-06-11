@@ -13,13 +13,18 @@
     <ion-textarea rows="4" [(ngModel)]="comentario"></ion-textarea>
   </ion-item>
 
-  <ion-item>
+  <ion-item class="calificacion">
     <ion-label>Calificación</ion-label>
-    <ion-range min="1" max="5" step="1" snaps="true" [(ngModel)]="calificacion">
-      <ion-icon slot="start" name="star-outline"></ion-icon>
-      <ion-icon slot="end" name="star"></ion-icon>
-    </ion-range>
+    <div class="tomates-container">
+      <img
+        *ngFor="let i of [1,2,3,4,5]"
+        [src]="i <= calificacion ? 'assets/icon/rank-mark.png' : 'assets/icon/rank-unmark.png'"
+        (click)="setCalificacion(i)"
+        alt="Tomate"
+        class="tomate"
+      />
+    </div>
   </ion-item>
 
-  <ion-button expand="block" (click)="enviar()">Enviar</ion-button>
+  <ion-button shape="round" class="enviar-button" style="margin-top: 1rem;" (click)="enviar()">Enviar</ion-button>
 </ion-content>

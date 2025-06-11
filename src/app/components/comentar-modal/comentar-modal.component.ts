@@ -13,7 +13,7 @@ export class ComentarModalComponent {
   @Input() puestoId!: number;
 
   comentario = '';
-  calificacion = 5;
+  calificacion = 1;
 
   constructor(
     private modalCtrl: ModalController,
@@ -21,6 +21,10 @@ export class ComentarModalComponent {
     private supabaseService: SupabaseService,
     private toastCtrl: ToastController
   ) {}
+
+  setCalificacion(valor: number) {
+    this.calificacion = valor;
+  }
 
   async enviar() {
     if (!this.comentario.trim()) {
@@ -34,7 +38,6 @@ export class ComentarModalComponent {
       return;
     }
 
-    // Verificar si ya existe review del usuario para este puesto
     const existingReview = await this.reviewsService.getReviewByUserAndPuesto(user.id, this.puestoId);
     if (existingReview) {
       this.mostrarToast('Solo puedes dejar un comentario por puesto.');
