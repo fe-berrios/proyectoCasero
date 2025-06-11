@@ -9,8 +9,6 @@ export interface Review {
   updated_at?: string
   comentario: string
   calificacion: number
-  likes?: number
-  dislikes?: number
 }
 
 @Injectable({
@@ -56,14 +54,31 @@ export class ReviewsService {
     const { data, error } = await supabase
       .from('reviews')
       .insert([review])
+      .select(); // Aquí solicitamos el dato insertado
 
     if (error) {
-      console.error('❌ Error adding review:', error)
-      return null
+      console.error('❌ Error adding review:', error);
+      return null;
     }
 
-    console.log('✅ Review añadida:', data)
-    return data?.[0] ?? null
+    console.log('✅ Review añadida:', data);
+    return data?.[0] ?? null;
+  }
+
+  async getReviewByUserAndPuesto(userId: string, puestoId: number): Promise<Review | null> {
+    const { data, error } = await supabase
+      .from('reviews')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('puesto_id', puestoId)
+      .limit(1)
+      .single();
+
+    if (error && error.code !== 'PGRST116') { // 'PGRST116' = no rows found, es normal
+      console.error('❌ Error fetching review by user and puesto:', error);
+      return null;
+    }
+    return data ?? null;
   }
 
   async getProfilesByIds(userIds: string[]): Promise<{ id: string, username: string, avatar_url: string }[]> {

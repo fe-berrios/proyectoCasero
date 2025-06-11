@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { PuestoService } from 'src/app/services/puesto.service';
 import { FeriaService } from 'src/app/services/feria.service';
 import { ReviewsService, Review } from 'src/app/services/reviews.service';
+import { SupabaseService } from 'src/app/services/supabase.service';
+import { ComentarModalComponent } from '../comentar-modal/comentar-modal.component';
 
 interface ReviewWithUser extends Review {
   username?: string;
@@ -25,9 +27,11 @@ export class PuestoDetalleModalComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
+    private toastCtrl: ToastController,
     private puestoService: PuestoService,
     private feriaService: FeriaService,
-    private reviewsService: ReviewsService
+    private reviewsService: ReviewsService,
+    private supabaseService: SupabaseService  // <-- aquí inyectamos
   ) {}
 
   async ngOnInit() {
@@ -61,7 +65,6 @@ export class PuestoDetalleModalComponent implements OnInit {
     const userIds = Array.from(new Set(reviews.map(r => r.user_id)));
     const profiles = await this.reviewsService.getProfilesByIds(userIds);
 
-    // Mapear username y avatar_url a cada review
     this.reviews = reviews.map(r => {
       const profile = profiles.find(p => p.id === r.user_id);
       return {
@@ -72,11 +75,46 @@ export class PuestoDetalleModalComponent implements OnInit {
     });
   }
 
-  abrirModalComentario() {
-    // Placeholder para abrir modal de nuevo comentario
+  async abrirModalComentario() {
+    // Obtener usuario usando el SupabaseService (igual que en tu modal comentar)
+    const user = await this.supabaseService.user;
+    if (!user) {
+      await this.mostrarToast('Debes iniciar sesión para calificar.');
+      return;
+    }
+
+    // Verificar si ya tiene review para este puesto
+    const reviewExistente = await this.reviewsService.getReviewByUserAndPuesto(user.id, this.puestoId);
+    if (reviewExistente) {
+      await this.mostrarToast('Ya has calificado este puesto.');
+      return;
+    }
+
+    console.log('🟢 Abriendo modal de comentario...');
+
+    const modal = await this.modalCtrl.create({
+      component: ComentarModalComponent,
+      componentProps: { puestoId: this.puestoId },
+    });
+
+    await modal.present();
+
+    const { data: refrescar } = await modal.onWillDismiss();
+    if (refrescar) {
+      await this.cargarReviewsConUsuarios();
+    }
   }
 
   cerrarModal() {
     this.modalCtrl.dismiss();
+  }
+
+  private async mostrarToast(mensaje: string) {
+    const toast = await this.toastCtrl.create({
+      message: mensaje,
+      duration: 2000,
+      position: 'bottom',
+    });
+    await toast.present();
   }
 }
