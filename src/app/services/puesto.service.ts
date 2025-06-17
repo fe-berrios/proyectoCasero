@@ -13,7 +13,8 @@ export class PuestoService {
     feria_id: number,
     casero_id: string,
     img_url: string,
-    ubicacion: string
+    ubicacion: string,
+    tipo_productos: string
   ) {
     return supabase.from('puestos').insert([{
       nombre,
@@ -22,8 +23,10 @@ export class PuestoService {
       casero_id,
       img_url,
       ubicacion,
+      tipo_productos // <--- nuevo campo
     }]);
   }
+
 
   // Obtener todos los puestos
   async getPuestos() {
@@ -43,7 +46,8 @@ export class PuestoService {
     feria_id: number,
     casero_id: string,
     img_url: string,
-    ubicacion: string
+    ubicacion: string,
+    tipo_productos: string // <--- nuevo campo
   ) {
     return supabase.from('puestos').update({
       nombre,
@@ -51,7 +55,8 @@ export class PuestoService {
       feria_id,
       casero_id,
       img_url,
-      ubicacion
+      ubicacion,
+      tipo_productos // <--- nuevo campo
     }).eq('id', id);
   }
 
@@ -85,7 +90,7 @@ export class PuestoService {
 
   //subir imagen a Supabase Storage
   private bucket = 'ferias-images';
-  
+
   async uploadImage(file: File): Promise<string | null> {
     if (!file) return null;
 

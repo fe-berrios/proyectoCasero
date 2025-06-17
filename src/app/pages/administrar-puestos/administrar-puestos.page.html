@@ -41,6 +41,12 @@
           <span>Ubicación: {{ puesto.ubicacion }}</span>
         </div>
 
+        <!-- Nuevo: Mostrar tipos de productos -->
+        <div class="info-row" *ngIf="puesto.tipo_productos">
+          <ion-icon name="pricetags-outline"></ion-icon>
+          <span>Productos: {{ puesto.tipo_productos }}</span>
+        </div>
+
         <div class="info-row" *ngIf="puesto.feria_id">
           <ion-icon name="storefront-outline"></ion-icon>
           <span>ID Feria: {{ puesto.feria_id }}</span>
@@ -51,7 +57,6 @@
           <span>ID Casero: {{ puesto.casero_id }}</span>
         </div>
 
-        <!-- Botones -->
         <div class="edit-button-container">
           <ion-button fill="clear" (click)="abrirModalEditarPuesto(puesto)">
             <ion-icon slot="icon-only" name="create-outline"></ion-icon>
@@ -61,8 +66,8 @@
             <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
           </ion-button>
         </div>
-
       </ion-card-content>
+
     </ion-card>
   </ion-list>
 

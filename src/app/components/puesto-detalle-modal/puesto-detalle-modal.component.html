@@ -8,7 +8,6 @@
 </ion-header>
 
 <ion-content class="ion-padding" [fullscreen]="true">
-
   <ng-container *ngIf="puesto">
 
     <ion-card>
@@ -20,6 +19,16 @@
     <div class="puesto-image-container" *ngIf="puesto.img_url">
       <img [src]="puesto.img_url" alt="Imagen del Puesto" class="puesto-image" />
     </div>
+
+    <!-- Badges tipo de producto -->
+    <ion-card *ngIf="tipoBadges.length > 0">
+      <ion-card-content class="badges-container">
+        <div class="badge" *ngFor="let tipo of tipoBadges">
+          <img [src]="tipo.imagen" [alt]="tipo.nombre" />
+          <span>{{ tipo.nombre }}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
 
     <ion-card *ngIf="puesto.descripcion">
       <ion-card-content>
@@ -34,7 +43,7 @@
       <ion-card-content>
         <ion-item lines="none">
           <ion-icon name="pin-outline" slot="start"></ion-icon>
-          <ion-label>Ubicación: {{ puesto.ubicacion }}</ion-label>
+          <ion-label>{{puesto.ubicacion }}</ion-label>
         </ion-item>
       </ion-card-content>
     </ion-card>
@@ -67,11 +76,8 @@
 
               <div class="rating-icons">
                 <ng-container *ngFor="let i of [1,2,3,4,5]">
-                  <img 
-                    [src]="i <= review.calificacion ? 'assets/icon/rank-mark.png' : 'assets/icon/rank-unmark.png'" 
-                    alt="rating star" 
-                    class="rating-icon"
-                  />
+                  <img [src]="i <= review.calificacion ? 'assets/icon/rank-mark.png' : 'assets/icon/rank-unmark.png'"
+                    alt="rating star" class="rating-icon" />
                 </ng-container>
               </div>
             </ion-label>
@@ -86,11 +92,10 @@
         </ion-card-content>
       </ng-template>
 
-      <ion-button shape = "round" class="comentar-button" expand="full" (click)="abrirModalComentario()">
+      <ion-button shape="round" class="comentar-button" expand="full" (click)="abrirModalComentario()">
         Calificar Puesto
       </ion-button>
     </ion-card>
 
   </ng-container>
-
 </ion-content>

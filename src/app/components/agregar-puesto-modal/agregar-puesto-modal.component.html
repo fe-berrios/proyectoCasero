@@ -10,91 +10,60 @@
 <ion-content class="ion-padding" [fullscreen]="true">
   <form class="admin-form">
 
-    <ion-input
-      type="text"
-      label="Nombre del Puesto"
-      label-placement="floating"
-      fill="outline"
-      [(ngModel)]="nombre"
-      name="nombre"
-    ></ion-input>
+    <ion-input type="text" label="Nombre del Puesto" label-placement="floating" fill="outline" [(ngModel)]="nombre"
+      name="nombre"></ion-input>
 
-    <ion-textarea
-      label="Descripción"
-      label-placement="floating"
-      fill="outline"
-      [(ngModel)]="descripcion"
-      name="descripcion"
-      rows="3"
-    ></ion-textarea>
+    <ion-textarea label="Descripción" label-placement="floating" fill="outline" [(ngModel)]="descripcion"
+      name="descripcion" rows="3"></ion-textarea>
 
-    <ion-input
-      type="text"
-      label="ID Casero"
-      label-placement="floating"
-      fill="outline"
-      [(ngModel)]="casero_id"
-      name="casero_id"
-    ></ion-input>
+    <ion-input type="text" label="ID Casero" label-placement="floating" fill="outline" [(ngModel)]="casero_id"
+      name="casero_id"></ion-input>
 
-    <ion-input
-      type="text"
-      label="URL de Imagen"
-      label-placement="floating"
-      fill="outline"
-      [(ngModel)]="img_url"
-      name="img_url"
-    ></ion-input>
+    <ion-input type="text" label="URL de Imagen" label-placement="floating" fill="outline" [(ngModel)]="img_url"
+      name="img_url"></ion-input>
 
-    <ion-input
-      type="text"
-      label="Ubicación"
-      label-placement="floating"
-      fill="outline"
-      [(ngModel)]="ubicacion"
-      name="ubicacion"
-    ></ion-input>
+    <ion-input type="text" label="Ubicación" label-placement="floating" fill="outline" [(ngModel)]="ubicacion"
+      name="ubicacion"></ion-input>
 
-    <!-- Botón acordeón para desplegar/ocultar listado ferias -->
+    <!-- Acordeón Feria -->
     <ion-item button (click)="toggleAccordion()">
       <ion-label>
         {{ feria_id ? nombreFeriaSeleccionada : 'Seleccionar Feria' }}
       </ion-label>
-      <ion-icon
-        slot="end"
-        [name]="isAccordionOpen ? 'chevron-up' : 'chevron-down'"
-      ></ion-icon>
+      <ion-icon slot="end" [name]="isAccordionOpen ? 'chevron-up' : 'chevron-down'"></ion-icon>
     </ion-item>
 
-    <!-- Contenido acordeón -->
     <div *ngIf="isAccordionOpen" class="accordion-content" style="margin-top: 0.5rem;">
-      <ion-searchbar
-        [(ngModel)]="filtroFerias"
-        name="filtroFerias"
-        (ionInput)="actualizarFiltro($event)"
-        debounce="300"
-        placeholder="Buscar feria..."
-      ></ion-searchbar>
+      <ion-searchbar [(ngModel)]="filtroFerias" name="filtroFerias" (ionInput)="actualizarFiltro($event)" debounce="300"
+        placeholder="Buscar feria..."></ion-searchbar>
 
       <ion-list>
-        <ion-item
-          *ngFor="let feria of feriasFiltradas"
-          button
-          detail="false"
-          (click)="seleccionarFeria(feria)"
-          [class.selected]="feria_id === feria.id"
-        >
+        <ion-item *ngFor="let feria of feriasFiltradas" button detail="false" (click)="seleccionarFeria(feria)"
+          [class.selected]="feria_id === feria.id">
           {{ feria.nombre }}
         </ion-item>
       </ion-list>
     </div>
 
-    <ion-button
-      shape="round"
-      class="save-button"
-      style="margin-top: 1rem;"
-      (click)="savePuesto()"
-    >
+    <!-- Acordeón Tipos de Productos -->
+    <ion-item button (click)="toggleTiposAccordion()">
+      <ion-label>
+        {{ tiposSeleccionados.length > 0 ? 'Tipos Seleccionados' : 'Seleccionar Tipos de Productos' }}
+      </ion-label>
+      <ion-icon slot="end" [name]="isTiposAccordionOpen ? 'chevron-up' : 'chevron-down'"></ion-icon>
+    </ion-item>
+
+    <div *ngIf="isTiposAccordionOpen" class="accordion-content" style="margin-top: 0.5rem;">
+      <ion-list>
+        <ion-item *ngFor="let tipo of tiposDisponibles">
+          <ion-checkbox slot="start" [checked]="tiposSeleccionados.includes(tipo)"
+            (ionChange)="toggleTipoProducto(tipo)"></ion-checkbox>
+          <ion-label>{{ tipo }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <ion-button shape="round" class="save-button" style="margin-top: 1rem;" (click)="savePuesto()">
       Guardar Puesto
     </ion-button>
   </form>

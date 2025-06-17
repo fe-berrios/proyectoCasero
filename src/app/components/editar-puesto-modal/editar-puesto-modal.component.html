@@ -58,7 +58,7 @@
       name="ubicacion"
     ></ion-input>
 
-    <!-- Selector de feria (editable si deseas cambiarlo) -->
+    <!-- Acordeón Selección de Feria -->
     <ion-item button (click)="toggleAccordion()">
       <ion-label>
         {{ feria_id ? nombreFeriaSeleccionada : 'Seleccionar Feria' }}
@@ -91,6 +91,29 @@
       </ion-list>
     </div>
 
+    <!-- Acordeón Tipos de Productos -->
+    <ion-item button (click)="toggleTiposAccordion()">
+      <ion-label>Tipos de Productos</ion-label>
+      <ion-icon
+        slot="end"
+        [name]="isTiposAccordionOpen ? 'chevron-up' : 'chevron-down'"
+      ></ion-icon>
+    </ion-item>
+
+    <div *ngIf="isTiposAccordionOpen" class="accordion-content" style="margin-top: 0.5rem;">
+      <ion-list>
+        <ion-item *ngFor="let tipo of tiposDisponibles">
+          <ion-checkbox
+            slot="start"
+            [checked]="tiposSeleccionados.includes(tipo)"
+            (ionChange)="toggleTipoProducto(tipo)"
+          ></ion-checkbox>
+          <ion-label>{{ tipo }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <!-- Botón Guardar -->
     <ion-button
       shape="round"
       class="save-button"

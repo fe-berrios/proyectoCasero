@@ -24,6 +24,7 @@ export class PuestoDetalleModalComponent implements OnInit {
   nombreFeria: string | null = null;
 
   reviews: ReviewWithUser[] = [];
+  tipoBadges: { nombre: string, imagen: string }[] = [];
 
   constructor(
     private modalCtrl: ModalController,
@@ -31,8 +32,8 @@ export class PuestoDetalleModalComponent implements OnInit {
     private puestoService: PuestoService,
     private feriaService: FeriaService,
     private reviewsService: ReviewsService,
-    private supabaseService: SupabaseService  // <-- aquí inyectamos
-  ) {}
+    private supabaseService: SupabaseService
+  ) { }
 
   async ngOnInit() {
     await this.cargarPuesto();
@@ -44,8 +45,27 @@ export class PuestoDetalleModalComponent implements OnInit {
     if (error) return;
     if (data?.length) {
       this.puesto = data[0];
+
       if (this.puesto.feria_id) {
         await this.cargarNombreFeria(this.puesto.feria_id);
+      }
+
+      // Procesar badges
+      const tiposTexto = (this.puesto.tipo_productos || '').toLowerCase();
+      this.tipoBadges = [];
+
+      const tiposDisponibles = [
+        { nombre: 'Frutas', imagen: 'assets/types/type1.png' },
+        { nombre: 'Verduras', imagen: 'assets/types/type2.png' },
+        { nombre: 'Abarrotes', imagen: 'assets/types/type3.png' },
+        { nombre: 'Ropa', imagen: 'assets/types/type4.png' },
+        { nombre: 'Otros', imagen: 'assets/types/type5.png' },
+      ];
+
+      for (const tipo of tiposDisponibles) {
+        if (tiposTexto.includes(tipo.nombre.toLowerCase())) {
+          this.tipoBadges.push(tipo);
+        }
       }
     }
   }
@@ -76,21 +96,17 @@ export class PuestoDetalleModalComponent implements OnInit {
   }
 
   async abrirModalComentario() {
-    // Obtener usuario usando el SupabaseService (igual que en tu modal comentar)
     const user = await this.supabaseService.user;
     if (!user) {
       await this.mostrarToast('Debes iniciar sesión para calificar.');
       return;
     }
 
-    // Verificar si ya tiene review para este puesto
     const reviewExistente = await this.reviewsService.getReviewByUserAndPuesto(user.id, this.puestoId);
     if (reviewExistente) {
       await this.mostrarToast('Ya has calificado este puesto.');
       return;
     }
-
-    console.log('🟢 Abriendo modal de comentario...');
 
     const modal = await this.modalCtrl.create({
       component: ComentarModalComponent,

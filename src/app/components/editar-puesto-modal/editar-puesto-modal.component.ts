@@ -19,15 +19,20 @@ export class EditarPuestoModalComponent implements OnInit {
   ubicacion = '';
   feria_id: number | null = null;
 
+  tipo_productos = ''; // original
+  tiposDisponibles = ['Frutas', 'Verduras', 'Abarrotes', 'Ropa', 'Otros'];
+  tiposSeleccionados: string[] = [];
+
   ferias: any[] = [];
   feriasFiltradas: any[] = [];
   filtroFerias = '';
   isAccordionOpen = false;
+  isTiposAccordionOpen = false;
 
   constructor(
     private modalCtrl: ModalController,
     private puestoService: PuestoService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     this.nombre = this.puesto.nombre;
@@ -37,7 +42,25 @@ export class EditarPuestoModalComponent implements OnInit {
     this.ubicacion = this.puesto.ubicacion;
     this.feria_id = this.puesto.feria_id;
 
+    this.tipo_productos = this.puesto.tipo_productos || '';
+    this.tiposSeleccionados = this.tipo_productos
+      ? this.tipo_productos.split(' - ').map(t => t.trim())
+      : [];
+
     await this.cargarFerias();
+  }
+
+  toggleTipoProducto(tipo: string) {
+    const index = this.tiposSeleccionados.indexOf(tipo);
+    if (index > -1) {
+      this.tiposSeleccionados.splice(index, 1);
+    } else {
+      this.tiposSeleccionados.push(tipo);
+    }
+  }
+
+  toggleTiposAccordion() {
+    this.isTiposAccordionOpen = !this.isTiposAccordionOpen;
   }
 
   async cargarFerias() {
@@ -52,7 +75,9 @@ export class EditarPuestoModalComponent implements OnInit {
 
   actualizarFiltro(event: any) {
     const valor = event.target.value?.toLowerCase() || '';
-    this.feriasFiltradas = this.ferias.filter(f => f.nombre.toLowerCase().includes(valor));
+    this.feriasFiltradas = this.ferias.filter(f =>
+      f.nombre.toLowerCase().includes(valor)
+    );
   }
 
   toggleAccordion() {
@@ -81,6 +106,8 @@ export class EditarPuestoModalComponent implements OnInit {
       return;
     }
 
+    const tipo_productos = this.tiposSeleccionados.join(' - ');
+
     const { error } = await this.puestoService.updatePuesto(
       this.puesto.id,
       this.nombre,
@@ -88,7 +115,8 @@ export class EditarPuestoModalComponent implements OnInit {
       this.feria_id,
       this.casero_id,
       this.img_url,
-      this.ubicacion
+      this.ubicacion,
+      tipo_productos
     );
 
     if (error) {
@@ -119,7 +147,4 @@ export class EditarPuestoModalComponent implements OnInit {
     const publicUrlData = supabase.storage.from(bucket).getPublicUrl(filePath);
     this.img_url = publicUrlData.data.publicUrl;
   }
-
-
-
 }
