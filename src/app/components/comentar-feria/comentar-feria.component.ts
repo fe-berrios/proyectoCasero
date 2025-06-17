@@ -6,6 +6,7 @@ import { ComentarFeriaService } from '../../services/comentar-feria.service'
   standalone: false,
   selector: 'app-comentar-feria',
   templateUrl: './comentar-feria.component.html',
+  styleUrls: ['./comentar-feria.component.scss'],  // <--- aquí el SCSS
 })
 export class ComentarFeriaComponent {
   @Input() feriaId!: number
