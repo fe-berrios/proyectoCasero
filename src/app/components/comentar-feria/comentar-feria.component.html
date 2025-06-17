@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <ion-title>Detalles de la Feria</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-textarea [(ngModel)]="comentario" placeholder="Escribe tu comentario..." autoGrow="true"
+      rows="6"></ion-textarea>
+  </ion-item>
+
+  <ion-button class="enviar-button" expand="block" (click)="enviarComentario()" [disabled]="enviando">
+    {{ enviando ? 'Enviando...' : 'Enviar' }}
+  </ion-button>
+</ion-content>

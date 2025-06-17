@@ -136,7 +136,7 @@ ion-menu::part(container) {
 }
 
 .fab-ubicacion ion-fab-button {
-    --background: rgba(76, 175, 80, 0.8) !important; // fondo transparente para que se vea el mapa
+    --background: #{$light-primary-color}; // fondo transparente para que se vea el mapa
     --box-shadow: none !important;
     --color: $primary-text-color !important;
     width: 50px !important; // ancho deseado
@@ -173,33 +173,37 @@ ion-menu::part(container) {
     justify-content: center;
     gap: 0px;
     padding-top: 10px;
+    background-color: transparent;
 
     h1 {
         font-size: 2rem;
         font-weight: bold;
         color: $primary-text-color;
+        background: transparent;
     }
 
     img {
         height: 40px;
         width: auto;
+        background: transparent;
     }
 }
 
 .fab-menu-small {
     position: relative;
-    top: 18px;
+    top: 15px;
     left: 9px;
     width: 35px !important; // ancho deseado
     height: 35px !important; // alto deseado
     min-width: 35px !important;
     min-height: 35px !important;
     --border-radius: 10px; // opcional, para que siga con esquinas redondeadas pero menos grandes
-    --background: #{$primary-color} !important; // fondo transparente para que se vea el mapa
+    --background: transparent !important; // fondo transparente para que se vea el mapa
     --border-radius: 50% !important; // Para que sea redondo
+    --box-shadow: none !important; // Sin sombra para que se vea el mapa
 
     ion-icon {
-        font-size: 20px !important; // ícono proporcional al botón pequeño
+        font-size: 35px !important; // ícono proporcional al botón pequeño
         background-color: transparent;
         color: black
     }

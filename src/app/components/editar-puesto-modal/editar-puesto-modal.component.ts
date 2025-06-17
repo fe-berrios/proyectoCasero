@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PuestoService } from 'src/app/services/puesto.service';
 import { supabase } from 'src/app/supabase_client';
+import { SupabaseService, Profile } from 'src/app/services/supabase.service';
 
 @Component({
   standalone: false,
@@ -19,7 +20,7 @@ export class EditarPuestoModalComponent implements OnInit {
   ubicacion = '';
   feria_id: number | null = null;
 
-  tipo_productos = ''; // original
+  tipo_productos = '';
   tiposDisponibles = ['Frutas', 'Verduras', 'Abarrotes', 'Ropa', 'Otros'];
   tiposSeleccionados: string[] = [];
 
@@ -29,9 +30,12 @@ export class EditarPuestoModalComponent implements OnInit {
   isAccordionOpen = false;
   isTiposAccordionOpen = false;
 
+  isAdmin = false;
+
   constructor(
     private modalCtrl: ModalController,
-    private puestoService: PuestoService
+    private puestoService: PuestoService,
+    private supabaseService: SupabaseService
   ) {}
 
   async ngOnInit() {
@@ -46,6 +50,12 @@ export class EditarPuestoModalComponent implements OnInit {
     this.tiposSeleccionados = this.tipo_productos
       ? this.tipo_productos.split(' - ').map(t => t.trim())
       : [];
+
+    // Obtener estado de admin
+    const { data, error } = await this.supabaseService.profile;
+    if (data) {
+      this.isAdmin = data.admin_status === true;
+    }
 
     await this.cargarFerias();
   }

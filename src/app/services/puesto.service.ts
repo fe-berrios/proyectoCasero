@@ -38,6 +38,15 @@ export class PuestoService {
     return supabase.from('puestos').select('*').eq('feria_id', feria_id);
   }
 
+  // Obtener puestos por casero
+  async getPuestosByCasero(casero_id: string) {
+  return await supabase
+    .from('puestos')
+    .select('*')
+    .eq('casero_id', casero_id)
+    .order('id', { ascending: false });
+}
+
   // Actualizar un puesto
   async updatePuesto(
     id: number,

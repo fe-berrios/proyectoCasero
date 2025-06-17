@@ -38,21 +38,85 @@ ion-content {
         text-align: center;
       }
     }
+  }
 
-    ion-item {
-      --background: transparent;
-      --inner-padding-end: 0;
-      --inner-padding-start: 0;
-      font-size: 16px;
+  // Solo aplicamos estilos transparentes a los items del contenido del card
+  ion-card ion-card-content ion-item {
+    --background: transparent;
+    --inner-padding-end: 0;
+    --inner-padding-start: 0;
+    font-size: 16px;
 
-      ion-label {
-        color: $primary-text-color;
-      }
+    ion-label {
+      color: $primary-text-color;
+    }
+
+    ion-icon {
+      color: $primary-color; // Color de íconos dentro del contenido
     }
   }
 }
 
+// Botón de comentar
+.comentario-button {
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+  --border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
+  margin: 12px auto;
+  display: block;
+  width: fit-content;
+  padding: 0 24px;
+  font-size: 18px;
+}
+
+// Encabezado del acordeón de comentarios
+.comentarios-header {
+  --background: #{$light-primary-color};
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+  ion-label {
+    color: $primary-text-color;
+    font-weight: bold;
+  }
+
+  ion-icon {
+    color: $primary-color; // Iconos del acordeón
+  }
+}
+
+// Encabezado del acordeón de puestos
+.accordion-toggle {
+  --background: #{$light-primary-color};
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+  ion-label {
+    color: $primary-text-color;
+    font-weight: bold;
+  }
+
+  ion-icon {
+    color: $primary-color; // Iconos del acordeón
+  }
+}
+
 .custom-toolbar {
-  --background: #{$dark-primary-color};  // Fondo con tu color personalizado
-  --color: #{$inverse-text-color};       // Color del texto y botones
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+}
+
+.rating-icons {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.rating-icon {
+  width: 20%;
+  height: 20%;
 }

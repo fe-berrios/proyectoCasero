@@ -14,6 +14,7 @@ import { AgregarPuestoModalComponent } from './components/agregar-puesto-modal/a
 import { EditarPuestoModalComponent } from './components/editar-puesto-modal/editar-puesto-modal.component';
 import { PuestoDetalleModalComponent } from './components/puesto-detalle-modal/puesto-detalle-modal.component';
 import { ComentarModalComponent } from './components/comentar-modal/comentar-modal.component';
+import { ComentarFeriaComponent } from './components/comentar-feria/comentar-feria.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ComentarModalComponent } from './components/comentar-modal/comentar-mod
     AgregarPuestoModalComponent,
     EditarPuestoModalComponent,
     PuestoDetalleModalComponent,
-    ComentarModalComponent
+    ComentarModalComponent,
+    ComentarFeriaComponent
   ],
   imports: [
     ReactiveFormsModule,

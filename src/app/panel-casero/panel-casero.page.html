@@ -1,13 +1,49 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>panel-casero</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">panel-casero</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <!-- Botón de volver atrás -->
+  <div class="back-button-container">
+    <ion-buttons>
+      <ion-back-button defaultHref="/mapa"></ion-back-button>
+    </ion-buttons>
+  </div>
+  <!-- Encabezado -->
+  <div class="admin-header">
+    <h2>Mis Puestos</h2>
+  </div>
+
+  <!-- Lista de cards personalizada -->
+  <ion-list>
+    <ion-card *ngFor="let puesto of puestos" class="custom-card">
+      <ion-card-header>
+        <ion-card-title>{{ puesto.nombre }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="info-row" *ngIf="puesto.descripcion">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span>{{ puesto.descripcion }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="puesto.ubicacion">
+          <ion-icon name="pin-outline"></ion-icon>
+          <span>Ubicación: {{ puesto.ubicacion }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="puesto.tipo_productos">
+          <ion-icon name="pricetags-outline"></ion-icon>
+          <span>Productos: {{ puesto.tipo_productos }}</span>
+        </div>
+
+        <div class="info-row" *ngIf="puesto.feria_id">
+          <ion-icon name="storefront-outline"></ion-icon>
+          <span>ID Feria: {{ puesto.feria_id }}</span>
+        </div>
+
+        <div class="edit-button-container">
+          <ion-button fill="clear" (click)="abrirModalEditarPuesto(puesto)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>

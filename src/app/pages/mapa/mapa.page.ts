@@ -19,6 +19,7 @@ export class MapaPage implements OnInit, OnDestroy {
   markers: leaflet.Marker[] = [];
   subscription: any;
   isAdmin: boolean = false; // NUEVA variable para controlar visibilidad
+  isCasero: boolean = false;
   loading: boolean = true;  // Para manejar la carga del perfil y evitar flicker
   userName: string = '';
   profileImgUrl: string = 'assets/profile_pics/loading.svg'; // Valor por defecto
@@ -39,15 +40,17 @@ export class MapaPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    // Inicializa el mapa y carga las ferias al entrar en la vista
     this.initMap();
     this.loadFerias();
     this.subscribeToNewFerias();
 
-    // Verifica si el usuario es admin
     this.supabase.profile.then((response) => {
-      this.isAdmin = response.data?.admin_status === true;
-      this.loading = false; // Una vez cargado el perfil, ya no estamos en carga
+      const profile = response.data;
+      this.isAdmin = profile?.admin_status === true;
+      this.isCasero = profile?.casero_status === true; // <-- Agregado
+      this.userName = profile?.full_name || 'Usuario';
+      this.profileImgUrl = profile?.avatar_url || 'assets/profile_pics/loading.svg';
+      this.loading = false;
     });
 
     this.supabase.profile.then((response) => {
@@ -73,7 +76,7 @@ export class MapaPage implements OnInit, OnDestroy {
   openMenu() {
     this.menuCtrl.open('main-menu');  // usa el menuId que definiste en el ion-menu
   }
-  
+
   private initMap(): void {
     this.map = leaflet.map('map', {
       zoomControl: false,
