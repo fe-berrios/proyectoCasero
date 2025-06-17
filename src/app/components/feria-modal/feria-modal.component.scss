@@ -38,34 +38,61 @@ ion-content {
         text-align: center;
       }
     }
+  }
 
-    ion-item {
-      --background: transparent;
-      --inner-padding-end: 0;
-      --inner-padding-start: 0;
-      font-size: 16px;
+  // Solo aplicamos estilos transparentes a los items del contenido del card
+  ion-card ion-card-content ion-item {
+    --background: transparent;
+    --inner-padding-end: 0;
+    --inner-padding-start: 0;
+    font-size: 16px;
 
-      ion-label {
-        color: $primary-text-color;
-      }
+    ion-label {
+      color: $primary-text-color;
     }
   }
 }
 
-.custom-toolbar {
-  --background: #{$dark-primary-color};  // Fondo con tu color personalizado
-  --color: #{$inverse-text-color};       // Color del texto y botones
-}
-
+// Botón de comentar
 .comentario-button {
-  --background: #{$primary-color};
+  --background: #{$dark-primary-color};
   --color: #{$inverse-text-color};
   --border-radius: 8px;
-  font-weight: bold;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 
-  margin: 12px auto; // centrado horizontal
-  display: block; // necesario para que `margin: auto` funcione
-  width: fit-content; // evita que se estire al 100%
+  margin: 12px auto;
+  display: block;
+  width: fit-content;
   padding: 0 24px;
-  font-size: 14px;
+  font-size: 18px; // ← puedes ajustar si lo quieres aún más grande
+}
+
+// Encabezado del acordeón de comentarios
+.comentarios-header {
+  --background: #{$light-primary-color};
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+  ion-label {
+    color: $primary-text-color;
+    font-weight: bold;
+  }
+}
+
+// Encabezado del acordeón de puestos (mantener coherencia si quieres)
+.accordion-toggle {
+  --background: #{$light-primary-color};
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+  ion-label {
+    color: $primary-text-color;
+    font-weight: bold;
+  }
+}
+
+.custom-toolbar {
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
 }

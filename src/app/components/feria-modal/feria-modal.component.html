@@ -56,7 +56,7 @@
 
     <!-- Acordeón de comentarios -->
     <ion-card>
-      <ion-item class="accordion-toggle" button (click)="toggleComentariosAccordion()">
+      <ion-item class="accordion-toggle comentarios-header" button (click)="toggleComentariosAccordion()">
         <ion-label><strong>Comentarios</strong></ion-label>
         <ion-icon slot="end" [name]="isComentariosAccordionOpen ? 'chevron-up' : 'chevron-down'"></ion-icon>
       </ion-item>
@@ -73,3 +73,6 @@
 
     <!-- Mensaje si no hay puestos -->
     <ion-card *ngIf="puestos.length === 0 && !isAccordionOpen">
+      <ion-card-content>
+        <p>No hay puestos disponibles en esta feria.</p>
+      </ion-card-content>
