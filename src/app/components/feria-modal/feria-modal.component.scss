@@ -56,3 +56,16 @@ ion-content {
   --background: #{$dark-primary-color};  // Fondo con tu color personalizado
   --color: #{$inverse-text-color};       // Color del texto y botones
 }
+
+.comentario-button {
+  --background: #{$primary-color};
+  --color: #{$inverse-text-color};
+  --border-radius: 8px;
+  font-weight: bold;
+
+  margin: 12px auto; // centrado horizontal
+  display: block; // necesario para que `margin: auto` funcione
+  width: fit-content; // evita que se estire al 100%
+  padding: 0 24px;
+  font-size: 14px;
+}

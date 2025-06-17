@@ -54,5 +54,22 @@
       </ion-list>
     </ion-card>
 
+    <!-- Acordeón de comentarios -->
+    <ion-card>
+      <ion-item class="accordion-toggle" button (click)="toggleComentariosAccordion()">
+        <ion-label><strong>Comentarios</strong></ion-label>
+        <ion-icon slot="end" [name]="isComentariosAccordionOpen ? 'chevron-up' : 'chevron-down'"></ion-icon>
+      </ion-item>
+
+      <ion-list *ngIf="isComentariosAccordionOpen">
+        <ion-item lines="none">
+          <ion-button class="comentario-button" expand="block" (click)="abrirModalComentario()">
+            Comentar
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+
     <!-- Mensaje si no hay puestos -->
     <ion-card *ngIf="puestos.length === 0 && !isAccordionOpen">
