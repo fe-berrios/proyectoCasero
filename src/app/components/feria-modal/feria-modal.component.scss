@@ -50,6 +50,10 @@ ion-content {
     ion-label {
       color: $primary-text-color;
     }
+
+    ion-icon {
+      color: $primary-color; // Color de íconos dentro del contenido
+    }
   }
 }
 
@@ -65,7 +69,7 @@ ion-content {
   display: block;
   width: fit-content;
   padding: 0 24px;
-  font-size: 18px; // ← puedes ajustar si lo quieres aún más grande
+  font-size: 18px;
 }
 
 // Encabezado del acordeón de comentarios
@@ -78,9 +82,13 @@ ion-content {
     color: $primary-text-color;
     font-weight: bold;
   }
+
+  ion-icon {
+    color: $primary-color; // Iconos del acordeón
+  }
 }
 
-// Encabezado del acordeón de puestos (mantener coherencia si quieres)
+// Encabezado del acordeón de puestos
 .accordion-toggle {
   --background: #{$light-primary-color};
   border-top-left-radius: 12px;
@@ -90,9 +98,25 @@ ion-content {
     color: $primary-text-color;
     font-weight: bold;
   }
+
+  ion-icon {
+    color: $primary-color; // Iconos del acordeón
+  }
 }
 
 .custom-toolbar {
   --background: #{$dark-primary-color};
   --color: #{$inverse-text-color};
+}
+
+.rating-icons {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.rating-icon {
+  width: 20%;
+  height: 20%;
 }

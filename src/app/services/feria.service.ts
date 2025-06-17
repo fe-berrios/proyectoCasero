@@ -6,7 +6,7 @@ import { supabase } from '../supabase_client';
 })
 export class FeriaService {
 
-  // Guardar una feria en la base de datos
+  // Guardar una feria en la base de datos (sin calificación, sigue igual)
   async saveFeria(
     nombre: string,
     lat: number,
@@ -27,7 +27,7 @@ export class FeriaService {
     ]);
   }
 
-  // Actualizar feria por id
+  // Actualizar feria por id (sin calificación, sigue igual)
   async updateFeria(
     id: number,
     nombre: string,
@@ -50,7 +50,7 @@ export class FeriaService {
       .eq('id', id);
   }
 
-  // Eliminar una feria por id
+  // Eliminar una feria por id (sin calificación, sigue igual)
   async deleteFeria(id: number) {
     return supabase
       .from('ferias')
@@ -58,17 +58,17 @@ export class FeriaService {
       .eq('id', id);
   }
 
-  // Obtener todas las ferias de la base de datos
+  // Obtener todas las ferias con calificación desde la vista
   async getFerias() {
-    return supabase.from('ferias').select('*');
+    return supabase.from('feria_con_calificacion').select('*');
   }
 
-  // Obtener una feria por id
+  // Obtener una feria por id con calificación desde la vista
   async getFeriaById(id: number) {
-    return supabase.from('ferias').select('*').eq('id', id).single();
+    return supabase.from('feria_con_calificacion').select('*').eq('id', id).single();
   }
 
-  // Suscribirse a cambios en tiempo real en la tabla de ferias
+  // Suscribirse a cambios en tiempo real en la tabla de ferias (esto sigue con la tabla real)
   subscribeToFerias(callback: (feria: any) => void) {
     const channel = supabase
       .channel('ferias-changes')

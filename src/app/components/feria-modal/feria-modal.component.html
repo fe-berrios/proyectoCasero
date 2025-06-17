@@ -12,14 +12,10 @@
     <!-- Información de la feria -->
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Información General</ion-card-title>
+        <ion-card-title>{{ feria.nombre }}</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
-        <ion-item lines="none">
-          <ion-label><strong>Feria:</strong> {{ feria.nombre }}</ion-label>
-        </ion-item>
-
         <ion-item lines="none">
           <ion-label><strong>Hora inicio:</strong> {{ feria.hora_inicio }}</ion-label>
         </ion-item>
@@ -33,6 +29,29 @@
         </ion-item>
       </ion-card-content>
     </ion-card>
+
+    <!-- Calificación de Feria -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Calificación</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ng-container *ngIf="feria.calificacion !== null && feria.calificacion !== undefined; else sinCalificacion">
+          <div class="rating-icons">
+            <ng-container *ngFor="let i of [1,2,3,4,5]">
+              <img [src]="i <= feria.calificacion ? 'assets/icon/rank-mark.png' : 'assets/icon/rank-unmark.png'"
+                alt="estrella" class="rating-icon" />
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <ng-template #sinCalificacion>
+          <p style="text-align: center; margin-top: 3px;">Aún no hay calificaciones.</p>
+        </ng-template>
+      </ion-card-content>
+    </ion-card>
+
 
     <!-- Acordeón de puestos -->
     <ion-card *ngIf="puestos.length > 0 || isAccordionOpen">
@@ -53,6 +72,12 @@
 
       </ion-list>
     </ion-card>
+    <!-- Mensaje si no hay puestos -->
+    <ion-card *ngIf="puestos.length === 0 && !isAccordionOpen">
+      <ion-card-content>
+        <p>No hay puestos disponibles en esta feria.</p>
+      </ion-card-content>
+    </ion-card>
 
     <!-- Acordeón de comentarios -->
     <ion-card>
@@ -67,12 +92,6 @@
             Comentar
           </ion-button>
         </ion-item>
+        <!-- Aquí puedes agregar más comentarios si es necesario -->
       </ion-list>
     </ion-card>
-
-
-    <!-- Mensaje si no hay puestos -->
-    <ion-card *ngIf="puestos.length === 0 && !isAccordionOpen">
-      <ion-card-content>
-        <p>No hay puestos disponibles en esta feria.</p>
-      </ion-card-content>
