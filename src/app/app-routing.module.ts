@@ -36,7 +36,11 @@ const routes: Routes = [
     path: 'administrar-puestos',
     loadChildren: () => import('./pages/administrar-puestos/administrar-puestos.module').then( m => m.AdministrarPuestosPageModule),
     canActivate: [adminGuard]
+  },  {
+    path: 'panel-casero',
+    loadChildren: () => import('./panel-casero/panel-casero.module').then( m => m.PanelCaseroPageModule)
   },
+
 
  
 ];
