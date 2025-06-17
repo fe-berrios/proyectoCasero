@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { adminGuard } from './guards/admin.guard';
+import { caseroGuard } from './guards/casero.guard';
 
 const routes: Routes = [
   {
@@ -36,9 +37,11 @@ const routes: Routes = [
     path: 'administrar-puestos',
     loadChildren: () => import('./pages/administrar-puestos/administrar-puestos.module').then( m => m.AdministrarPuestosPageModule),
     canActivate: [adminGuard]
-  },  {
+  },
+  {
     path: 'panel-casero',
-    loadChildren: () => import('./panel-casero/panel-casero.module').then( m => m.PanelCaseroPageModule)
+    loadChildren: () => import('./panel-casero/panel-casero.module').then( m => m.PanelCaseroPageModule),
+    canActivate: [caseroGuard]
   },
 
 

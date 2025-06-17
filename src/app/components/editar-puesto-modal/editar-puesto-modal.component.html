@@ -28,7 +28,9 @@
       rows="3"
     ></ion-textarea>
 
+    <!-- Solo mostrar a admins -->
     <ion-input
+      *ngIf="isAdmin"
       type="text"
       label="ID Casero"
       label-placement="floating"

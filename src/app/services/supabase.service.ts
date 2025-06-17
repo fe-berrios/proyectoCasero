@@ -10,7 +10,8 @@ export interface Profile {
   avatar_url: string
   full_name: string
   admin_status?: boolean
-  codigo_casero?: string 
+  codigo_casero?: string
+  casero_status?: boolean  // <-- Agregado casero_status opcional
 }
 
 @Injectable({
@@ -35,7 +36,11 @@ export class SupabaseService {
     return this.user
       .then((user) => user?.id)
       .then((id) =>
-        supabase.from('profiles').select(`username, full_name, phone, avatar_url, admin_status, codigo_casero`).eq('id', id).single()
+        supabase
+          .from('profiles')
+          .select(`username, full_name, phone, avatar_url, admin_status, codigo_casero, casero_status`) // <-- Agregado casero_status aquí
+          .eq('id', id)
+          .single()
       )
   }
 
