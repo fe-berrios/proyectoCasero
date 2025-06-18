@@ -40,7 +40,7 @@ const routes: Routes = [
   },
   {
     path: 'panel-casero',
-    loadChildren: () => import('./panel-casero/panel-casero.module').then( m => m.PanelCaseroPageModule),
+    loadChildren: () => import('./pages/panel-casero/panel-casero.module').then( m => m.PanelCaseroPageModule),
     canActivate: [caseroGuard]
   },
   {
