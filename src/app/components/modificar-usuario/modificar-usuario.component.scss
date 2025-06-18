@@ -1,0 +1,40 @@
+@use 'src/theme/variables' as *;
+
+:host {
+  font-family: 'Roboto', sans-serif;
+}
+
+.admin-form {
+  padding: 20px clamp(16px, 5vw, 32px);
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  ion-input,
+  ion-textarea,
+  ion-select {
+    --highlight-color: #{$dark-primary-color};
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+
+  ion-label {
+    font-size: 14px;
+  }
+}
+
+.save-button {
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+  border-radius: 9999px;
+  width: 60%;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.custom-toolbar {
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+}

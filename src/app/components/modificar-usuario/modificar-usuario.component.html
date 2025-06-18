@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <ion-title>Editar Usuario</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+  <form class="admin-form">
+
+    <ion-input type="text" label="Nombre completo" label-placement="floating" fill="outline"
+      [(ngModel)]="usuario.full_name" name="full_name"></ion-input>
+
+    <ion-input type="text" label="Username" label-placement="floating" fill="outline" [(ngModel)]="usuario.username"
+      name="username"></ion-input>
+
+    <ion-input type="text" label="Teléfono" label-placement="floating" fill="outline" [(ngModel)]="usuario.phone"
+      name="phone"></ion-input>
+
+    <ion-item lines="none">
+      <ion-label>Admin</ion-label>
+      <ion-toggle [(ngModel)]="usuario.admin_status" name="admin_status"></ion-toggle>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label>Casero</ion-label>
+      <ion-toggle [(ngModel)]="usuario.casero_status" name="casero_status"></ion-toggle>
+    </ion-item>
+
+    <ion-button shape="round" class="save-button" style="margin-top: 1rem;" (click)="guardarCambios()">
+      Guardar Cambios
+    </ion-button>
+  </form>
+</ion-content>

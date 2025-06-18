@@ -12,11 +12,8 @@
   </div>
 
   <!-- Barra busqueda -->
-  <ion-searchbar
-    placeholder="Buscar por nombre o usuario"
-    [(ngModel)]="searchTerm"
-    (ionInput)="filtrarUsuarios()"
-  ></ion-searchbar>
+  <ion-searchbar placeholder="Buscar por nombre o codigo casero" [(ngModel)]="searchTerm"
+    (ionInput)="filtrarUsuarios()"></ion-searchbar>
 
   <!-- Lista Usuarios -->
   <ion-list *ngIf="usuariosFiltrados.length > 0">
@@ -27,9 +24,14 @@
       <ion-label>
         <h2>{{ user.full_name || 'Sin nombre' }}</h2>
         <p>{{ user.username }}</p>
+        <p>Codigo Casero: {{ user.codigo_casero }}</p>
         <p *ngIf="user.admin_status">🛡️ Admin</p>
         <p *ngIf="user.casero_status">🍅 Casero</p>
       </ion-label>
+
+      <ion-button fill="clear" slot="end" (click)="abrirModalEditarUsuario(user.id)">
+        <ion-icon class="edit-icon" name="create-outline"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>
 

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { supabase } from 'src/app/supabase_client';
+import { ModalController } from '@ionic/angular';
+import { ModificarUsuarioComponent } from 'src/app/components/modificar-usuario/modificar-usuario.component';
+
 
 @Component({
   standalone: false,
@@ -7,11 +10,14 @@ import { supabase } from 'src/app/supabase_client';
   templateUrl: './administrar-usuarios.page.html',
   styleUrls: ['./administrar-usuarios.page.scss'],
 })
+
+
 export class AdministrarUsuariosPage implements OnInit {
   usuarios: any[] = [];
   usuariosFiltrados: any[] = [];
   searchTerm: string = '';
 
+  constructor(private modalCtrl: ModalController) {}
   async ngOnInit() {
     const { data, error } = await supabase
       .from('profiles')
@@ -40,7 +46,24 @@ export class AdministrarUsuariosPage implements OnInit {
     const term = this.searchTerm.toLowerCase();
     this.usuariosFiltrados = this.usuarios.filter(user =>
       (user.full_name || '').toLowerCase().includes(term) ||
-      (user.username || '').toLowerCase().includes(term)
+      (user.username || '').toLowerCase().includes(term) ||
+      (user.codigo_casero || '').toLowerCase().includes(term)
     );
+  }
+
+  async abrirModalEditarUsuario(userId: string) {
+    const modal = await this.modalCtrl.create({
+      component: ModificarUsuarioComponent,
+      componentProps: {
+        userId: userId
+      },
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data?.recargar) {
+      await this.ngOnInit(); // Recargar lista si fue editado
+    }
   }
 }
