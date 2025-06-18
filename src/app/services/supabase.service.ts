@@ -24,6 +24,10 @@ export class SupabaseService {
     private toastCtrl: ToastController
   ) { }
 
+  public get client() {
+    return supabase; // or whatever your Supabase client instance is named
+  }
+
   // Obtiene el usuario actual (async)
   get user() {
     return supabase.auth.getUser().then(({ data }) => data?.user);
