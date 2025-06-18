@@ -17,6 +17,7 @@ export class ModificarUsuarioComponent implements OnInit {
     phone: '',
     admin_status: false,
     casero_status: false,
+    banned: false,  // Agregado
   };
 
   cargando = false;
@@ -50,6 +51,7 @@ export class ModificarUsuarioComponent implements OnInit {
       phone: this.usuario.phone,
       admin_status: this.usuario.admin_status,
       casero_status: this.usuario.casero_status,
+      banned: this.usuario.banned,  // Agregado
     });
 
     if (error) {

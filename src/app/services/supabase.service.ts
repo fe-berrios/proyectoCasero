@@ -12,6 +12,7 @@ export interface Profile {
   admin_status?: boolean;
   codigo_casero?: string;
   casero_status?: boolean;  // <-- Agregado casero_status opcional
+  banned?: boolean;  // <-- Agregado campo banned opcional
 }
 
 @Injectable({
@@ -45,7 +46,7 @@ export class SupabaseService {
       .then((id) =>
         supabase
           .from('profiles')
-          .select(`username, full_name, phone, avatar_url, admin_status, codigo_casero, casero_status`) // <-- Agregado casero_status aquí
+          .select(`username, full_name, phone, avatar_url, admin_status, codigo_casero, casero_status, banned`) // <-- Agregado casero_status aquí
           .eq('id', id)
           .single()
       );
