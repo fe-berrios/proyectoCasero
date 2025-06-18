@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { Profile, SupabaseService } from 'src/app/services/supabase.service'
 import { AlertController } from '@ionic/angular'
+import { ModalController } from '@ionic/angular';
+import { SolicitarCaseroComponent } from 'src/app/components/solicitar-casero/solicitar-casero.component';
+
 
 @Component({
   standalone: false,
@@ -22,7 +25,8 @@ export class AccountPage implements OnInit {
   constructor(
     private readonly supabase: SupabaseService,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -89,9 +93,15 @@ export class AccountPage implements OnInit {
   }
 
 
-  async signOut() {
-    console.log('testing?')
-    await this.supabase.signOut()
-    this.router.navigate(['/'], { replaceUrl: true })
+  async abrirModalSolicitudCasero() {
+    const modal = await this.modalController.create({
+      component: SolicitarCaseroComponent,
+      componentProps: {
+        // Puedes pasar datos si lo necesitas
+      },
+    });
+
+    await modal.present();
   }
+
 }
