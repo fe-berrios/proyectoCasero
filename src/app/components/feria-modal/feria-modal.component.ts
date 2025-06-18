@@ -23,7 +23,7 @@ export class FeriaModalComponent {
   constructor(
     private modalCtrl: ModalController,
     private puestoService: PuestoService,
-    private supabaseService: SupabaseService // <--- inyecta correctamente
+    private supabaseService: SupabaseService 
   ) { }
 
   async ngOnInit() {

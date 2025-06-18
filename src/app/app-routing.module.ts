@@ -43,6 +43,12 @@ const routes: Routes = [
     loadChildren: () => import('./panel-casero/panel-casero.module').then( m => m.PanelCaseroPageModule),
     canActivate: [caseroGuard]
   },
+  {
+    path: 'administrar-usuarios',
+    loadChildren: () => import('./pages/administrar-usuarios/administrar-usuarios.module').then( m => m.AdministrarUsuariosPageModule),
+    canActivate: [adminGuard]
+  },
+
 
 
  
