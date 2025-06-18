@@ -1,13 +1,40 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>administrar-usuarios</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">administrar-usuarios</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Botón de volver atrás -->
+  <div class="back-button-container">
+    <ion-buttons>
+      <ion-back-button defaultHref="/mapa"></ion-back-button>
+    </ion-buttons>
+  </div>
+
+  <!-- Encabezado -->
+  <div class="admin-header">
+    <h2>Administrar Usuarios</h2>
+  </div>
+
+  <!-- Barra busqueda -->
+  <ion-searchbar
+    placeholder="Buscar por nombre o usuario"
+    [(ngModel)]="searchTerm"
+    (ionInput)="filtrarUsuarios()"
+  ></ion-searchbar>
+
+  <!-- Lista Usuarios -->
+  <ion-list *ngIf="usuariosFiltrados.length > 0">
+    <ion-item *ngFor="let user of usuariosFiltrados">
+      <ion-avatar slot="start">
+        <img [src]="user.avatar_url || 'assets/profile_pics/loading.svg'" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ user.full_name || 'Sin nombre' }}</h2>
+        <p>{{ user.username }}</p>
+        <p *ngIf="user.admin_status">🛡️ Admin</p>
+        <p *ngIf="user.casero_status">🍅 Casero</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-text *ngIf="usuariosFiltrados.length === 0">
+    <p class="ion-text-center">No se encontraron usuarios</p>
+  </ion-text>
+
 </ion-content>

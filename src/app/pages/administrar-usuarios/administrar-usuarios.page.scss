@@ -1,0 +1,32 @@
+@use 'src/theme/variables' as *;
+
+:host {
+  font-family: 'Roboto', sans-serif;
+}
+
+.back-button-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+
+  ion-back-button {
+    --color: #{$inverse-text-color};
+    --background: transparent;
+    --box-shadow: none;
+    --padding-start: 0;
+  }
+}
+
+.admin-header {
+  text-align: center;
+  padding: 60px 20px 20px 20px;
+  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+  color: $inverse-text-color;
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+}
