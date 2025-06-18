@@ -102,9 +102,22 @@
           </ng-template>
 
           <ion-label>
-            <h3>{{ c.full_name }}</h3>
+            <h3><strong>{{ c.full_name }}</strong></h3>
             <p>{{ c.comentario }}</p>
             <small>{{ c.created_at | date: 'short' }}</small>
+
+            <!-- Botones de like/dislike -->
+            <div class="like-dislike-buttons" style="margin-top: 8px;">
+              <ion-button class="like-button" size="small" fill="clear" (click)="toggleLikeDislike(c.id, 'like')">
+                <ion-icon [name]="c.userLiked ? 'thumbs-up' : 'thumbs-up-outline'"></ion-icon>
+                <span>{{ c.likes || 0 }}</span>
+              </ion-button>
+
+              <ion-button class="dislike-button" size="small" fill="clear" (click)="toggleLikeDislike(c.id, 'dislike')">
+                <ion-icon [name]="c.userDisliked ? 'thumbs-down' : 'thumbs-down-outline'"></ion-icon>
+                <span>{{ c.dislikes || 0 }}</span>
+              </ion-button>
+            </div>
           </ion-label>
         </ion-item>
 
