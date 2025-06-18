@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { supabase } from 'src/app/supabase_client';
+import { SupabaseService, Profile } from 'src/app/services/supabase.service';
 
 @Component({
   standalone: false,
@@ -11,7 +11,7 @@ import { supabase } from 'src/app/supabase_client';
 export class ModificarUsuarioComponent implements OnInit {
   @Input() userId!: string;
 
-  usuario: any = {
+  usuario: Partial<Profile> = {
     full_name: '',
     username: '',
     phone: '',
@@ -19,41 +19,48 @@ export class ModificarUsuarioComponent implements OnInit {
     casero_status: false,
   };
 
-  constructor(private modalCtrl: ModalController) {}
+  cargando = false;
+
+  constructor(
+    private modalCtrl: ModalController,
+    private supabaseService: SupabaseService
+  ) {}
 
   async ngOnInit() {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', this.userId)
-      .single();
+    this.cargando = true;
+
+    const { data, error } = await this.supabaseService.getProfileById(this.userId);
 
     if (error) {
       console.error('Error al cargar usuario:', error.message);
-      return;
+      await this.supabaseService.createNotice('No se pudo cargar el usuario');
+    } else {
+      this.usuario = data;
     }
 
-    this.usuario = data;
+    this.cargando = false;
   }
 
   async guardarCambios() {
-    const { error } = await supabase
-      .from('profiles')
-      .update({
-        full_name: this.usuario.full_name,
-        username: this.usuario.username,
-        phone: this.usuario.phone,
-        admin_status: this.usuario.admin_status,
-        casero_status: this.usuario.casero_status,
-      })
-      .eq('id', this.userId);
+    this.cargando = true;
+
+    const { error } = await this.supabaseService.updateProfileById(this.userId, {
+      full_name: this.usuario.full_name,
+      username: this.usuario.username,
+      phone: this.usuario.phone,
+      admin_status: this.usuario.admin_status,
+      casero_status: this.usuario.casero_status,
+    });
 
     if (error) {
       console.error('Error al guardar usuario:', error.message);
-      return;
+      await this.supabaseService.createNotice('No se pudieron guardar los cambios');
+    } else {
+      await this.supabaseService.createNotice('Usuario actualizado correctamente');
+      this.modalCtrl.dismiss({ recargar: true });
     }
 
-    this.modalCtrl.dismiss({ recargar: true });
+    this.cargando = false;
   }
 
   cerrarModal() {

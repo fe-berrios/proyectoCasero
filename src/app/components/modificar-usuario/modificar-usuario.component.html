@@ -8,6 +8,12 @@
 </ion-header>
 
 <ion-content class="ion-padding" [fullscreen]="true">
+  <!-- Avatar -->
+  <div class="avatar-container" *ngIf="usuario.avatar_url">
+    <img class="avatar" [src]="usuario.avatar_url" alt="Avatar" onerror="this.src='assets/profile_pics/loading.svg'" />
+  </div>
+
+  <!-- Formulario de edición -->
   <form class="admin-form">
 
     <ion-input type="text" label="Nombre completo" label-placement="floating" fill="outline"

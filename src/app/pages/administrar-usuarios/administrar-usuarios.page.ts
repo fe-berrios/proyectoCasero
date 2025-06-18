@@ -3,22 +3,24 @@ import { supabase } from 'src/app/supabase_client';
 import { ModalController } from '@ionic/angular';
 import { ModificarUsuarioComponent } from 'src/app/components/modificar-usuario/modificar-usuario.component';
 
-
 @Component({
   standalone: false,
   selector: 'app-administrar-usuarios',
   templateUrl: './administrar-usuarios.page.html',
   styleUrls: ['./administrar-usuarios.page.scss'],
 })
-
-
 export class AdministrarUsuariosPage implements OnInit {
   usuarios: any[] = [];
   usuariosFiltrados: any[] = [];
   searchTerm: string = '';
 
   constructor(private modalCtrl: ModalController) {}
+
   async ngOnInit() {
+    await this.cargarUsuarios();
+  }
+
+  async cargarUsuarios() {
     const { data, error } = await supabase
       .from('profiles')
       .select(`
@@ -51,19 +53,18 @@ export class AdministrarUsuariosPage implements OnInit {
     );
   }
 
-  async abrirModalEditarUsuario(userId: string) {
+  async abrirModal(id: string) {
     const modal = await this.modalCtrl.create({
       component: ModificarUsuarioComponent,
-      componentProps: {
-        userId: userId
-      },
+      componentProps: { userId: id }, // ✅ corrección clave
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (result.data) {
+        this.cargarUsuarios(); // recarga lista si hubo cambios
+      }
     });
 
     await modal.present();
-
-    const { data } = await modal.onDidDismiss();
-    if (data?.recargar) {
-      await this.ngOnInit(); // Recargar lista si fue editado
-    }
   }
 }

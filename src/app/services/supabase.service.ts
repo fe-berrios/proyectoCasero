@@ -22,7 +22,7 @@ export class SupabaseService {
   constructor(
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController
-  ) {}
+  ) { }
 
   // Obtiene el usuario actual (async)
   get user() {
@@ -45,6 +45,23 @@ export class SupabaseService {
           .eq('id', id)
           .single()
       );
+  }
+
+  // Obtiene el perfil de cualquier usuario por ID (solo para admins)
+  getProfileById(id: string) {
+    return supabase
+      .from('profiles')
+      .select('username, full_name, phone, avatar_url, admin_status, codigo_casero, casero_status')
+      .eq('id', id)
+      .single();
+  }
+
+  // Actualiza cualquier perfil por ID (solo para admins)
+  updateProfileById(id: string, profile: Partial<Profile>) {
+    return supabase
+      .from('profiles')
+      .update({ ...profile, updated_at: new Date() })
+      .eq('id', id);
   }
 
   // Listener para cambios en el estado de autenticación
