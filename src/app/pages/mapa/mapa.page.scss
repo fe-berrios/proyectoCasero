@@ -32,7 +32,7 @@
     right: 0;
     max-height: 200px;
     overflow-y: auto;
-    background: $light-primary-color;
+    background: $inverse-text-color;
     border: 1px solid #ccc;
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -40,7 +40,7 @@
     /* aún más arriba que el buscador */
 
     ion-item {
-        --background: $light-primary-color;
+        --background: $inverse-text-color;
         --color: #000; // Asegura que el texto sea visible
         color: #000;
 
@@ -136,7 +136,7 @@ ion-menu::part(container) {
 }
 
 .fab-ubicacion ion-fab-button {
-    --background: #{$light-primary-color}; // fondo transparente para que se vea el mapa
+    --background: #{$inverse-text-color}; // fondo transparente para que se vea el mapa
     --box-shadow: none !important;
     --color: $primary-text-color !important;
     width: 50px !important; // ancho deseado
@@ -153,7 +153,7 @@ ion-menu::part(container) {
 }
 
 .custom-button {
-    --background: #{$light-primary-color};
+    --background: #{$inverse-text-color};
     --color: $primary-text-color; // Texto blanco
     --background-hover: darken(#{$dark-primary-color}, 5%);
     --background-activated: darken(#{$dark-primary-color}, 10%);
@@ -210,9 +210,9 @@ ion-menu::part(container) {
 }
 
 .custom-searchbar {
-    --background: #{$light-primary-color};
+    --background: #{$inverse-text-color};
     --color: black;
-    --placeholder-color: grey;
+    --placeholder-color: black;
     --icon-color: black;
     --clear-button-color: black;
 
