@@ -32,12 +32,23 @@
     right: 0;
     max-height: 200px;
     overflow-y: auto;
-    background: white;
+    background: $light-primary-color;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1200;
     /* aún más arriba que el buscador */
+
+    ion-item {
+        --background: $light-primary-color;
+        --color: #000; // Asegura que el texto sea visible
+        color: #000;
+
+        // Estilo para hover (si se puede con mouse o focus)
+        &:hover {
+            --background: darken($primary-color, 5%);
+        }
+    }
 }
 
 /* Contenedor de los botones */
@@ -51,17 +62,6 @@
     justify-content: space-around;
     z-index: 1000;
     /* mantiene el z-index menor que buscador para que no lo tapen */
-}
-
-/* Estilo para el ion-searchbar */
-ion-searchbar {
-    top: 15px;
-    --border-radius: 20px;
-    --background: #{$light-primary-color};
-    --color: #{$light-primary-color};
-    --box-shadow: none;
-    --padding-start: 10px;
-    color: $light-primary-color;
 }
 
 /* Estilo para los botones */
@@ -207,4 +207,14 @@ ion-menu::part(container) {
         background-color: transparent;
         color: black
     }
+}
+
+.custom-searchbar {
+    --background: #{$light-primary-color};
+    --color: black;
+    --placeholder-color: grey;
+    --icon-color: black;
+    --clear-button-color: black;
+
+    --border-radius: 20px;
 }
