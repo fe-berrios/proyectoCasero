@@ -135,10 +135,15 @@ ion-menu::part(container) {
     box-shadow: 4px 0px 16px gray;
 }
 
+.fab-ubicacion ion-fab-button ion-icon {
+  font-size: 30px !important; // o el tamaño que quieras
+}
+
 .fab-ubicacion ion-fab-button {
-    --background: #{$inverse-text-color}; // fondo transparente para que se vea el mapa
+    --background: rgba(255, 255, 255, 0.5);
     --box-shadow: none !important;
     --color: $primary-text-color !important;
+    font-size: 50px !important; // tamaño del ícono
     width: 50px !important; // ancho deseado
     height: 50px !important; // alto deseado
 }

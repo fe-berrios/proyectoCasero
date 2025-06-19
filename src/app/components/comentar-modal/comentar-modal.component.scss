@@ -15,7 +15,7 @@ ion-toolbar {
 }
 
 ion-content {
-  --background: #{$light-primary-color};
+  --background: #{$inverse-text-color};
   padding: clamp(16px, 5vw, 32px);
   display: flex;
   flex-direction: column;
