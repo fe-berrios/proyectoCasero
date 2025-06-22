@@ -12,7 +12,7 @@
     <h2>Administrar Puestos</h2>
   </div>
 
-  <!-- Selector de feria -->
+  <!-- Filtro por feria -->
   <ion-item>
     <ion-label>Filtrar por feria</ion-label>
     <ion-select [(ngModel)]="feria_id" (ionChange)="onFeriaSeleccionada()" interface="popover" placeholder="Todas">
@@ -20,6 +20,18 @@
       <ion-select-option *ngFor="let feria of ferias" [value]="feria.id">
         {{ feria.nombre }}
       </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Filtro por estado -->
+  <ion-item>
+    <ion-label>Filtrar por estado</ion-label>
+    <ion-select [(ngModel)]="estadoSeleccionado" (ionChange)="onEstadoSeleccionado()" interface="popover"
+      placeholder="Todos">
+      <ion-select-option [value]="null">Todos los estados</ion-select-option>
+      <ion-select-option value="pendiente">Pendiente</ion-select-option>
+      <ion-select-option value="aceptado">Aceptado</ion-select-option>
+      <ion-select-option value="rechazado">Rechazado</ion-select-option>
     </ion-select>
   </ion-item>
 
@@ -55,6 +67,10 @@
         <div class="info-row" *ngIf="puesto.casero_id">
           <ion-icon name="person-circle-outline"></ion-icon>
           <span>ID Casero: {{ puesto.casero_id }}</span>
+        </div>
+
+        <div class="estado-badge" [ngClass]="puesto.estado_solicitud">
+          Estado: {{ puesto.estado_solicitud | titlecase }}
         </div>
 
         <div class="edit-button-container">

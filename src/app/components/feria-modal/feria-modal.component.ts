@@ -113,7 +113,7 @@ export class FeriaModalComponent {
 
   async cargarPuestos() {
     if (!this.feria?.id) return;
-    const { data, error } = await this.puestoService.getPuestosByFeria(this.feria.id);
+    const { data, error } = await this.puestoService.getPuestosAceptadosByFeria(this.feria.id);
     if (error) {
       console.error('Error al cargar puestos:', error.message);
       return;

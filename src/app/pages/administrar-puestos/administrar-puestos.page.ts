@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { PuestoService } from 'src/app/services/puesto.service';
 import { AgregarPuestoModalComponent } from 'src/app/components/agregar-puesto-modal/agregar-puesto-modal.component';
 import { EditarPuestoModalComponent } from 'src/app/components/editar-puesto-modal/editar-puesto-modal.component';
-import { supabase } from 'src/app/supabase_client'; // Asegúrate de tener esto importado
+import { supabase } from 'src/app/supabase_client';
 
 @Component({
   standalone: false,
@@ -13,9 +13,11 @@ import { supabase } from 'src/app/supabase_client'; // Asegúrate de tener esto 
 })
 export class AdministrarPuestosPage implements OnInit {
   puestos: any[] = [];
-  ferias: any[] = [];
+  todosLosPuestos: any[] = [];
 
-  feria_id: number | null = null; // null significa "todas las ferias"
+  ferias: any[] = [];
+  feria_id: number | null = null;
+  estadoSeleccionado: string | null = null;
 
   constructor(
     private puestoService: PuestoService,
@@ -37,21 +39,28 @@ export class AdministrarPuestosPage implements OnInit {
   }
 
   async cargarPuestos() {
+    let data, error;
+
     if (this.feria_id === null) {
-      const { data, error } = await this.puestoService.getPuestos();
-      if (error) {
-        console.error('Error al cargar puestos:', error);
-        return;
-      }
-      this.puestos = data ?? [];
+      ({ data, error } = await this.puestoService.getPuestos());
     } else {
-      const { data, error } = await this.puestoService.getPuestosByFeria(this.feria_id);
-      if (error) {
-        console.error('Error al cargar puestos por feria:', error);
-        return;
-      }
-      this.puestos = data ?? [];
+      ({ data, error } = await this.puestoService.getPuestosByFeria(this.feria_id));
     }
+
+    if (error) {
+      console.error('Error al cargar puestos:', error);
+      return;
+    }
+
+    this.todosLosPuestos = data ?? [];
+    this.filtrarPuestosLocalmente();
+  }
+
+  filtrarPuestosLocalmente() {
+    this.puestos = this.todosLosPuestos.filter(p => {
+      const coincideEstado = this.estadoSeleccionado ? p.estado_solicitud === this.estadoSeleccionado : true;
+      return coincideEstado;
+    });
   }
 
   async eliminarPuesto(id: number) {
@@ -98,6 +107,10 @@ export class AdministrarPuestosPage implements OnInit {
   }
 
   async onFeriaSeleccionada() {
-    await this.cargarPuestos(); // recarga puestos al cambiar la feria
+    await this.cargarPuestos(); // se recargan los puestos y se aplica el filtro local de estado
+  }
+
+  onEstadoSeleccionado() {
+    this.filtrarPuestosLocalmente(); // no hace falta recargar desde backend
   }
 }

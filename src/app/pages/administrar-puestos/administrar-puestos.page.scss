@@ -120,3 +120,28 @@
   z-index: 1000;
 }
 
+.estado-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.9em;
+  margin-top: 8px;
+  font-weight: bold;
+  text-align: center;
+  width: fit-content;
+}
+
+.estado-badge.aceptado {
+  background-color: $light-primary-color;
+  color: $primary-color;
+}
+
+.estado-badge.pendiente {
+  background-color: $light-primary-color;
+  color: $accent-color;
+}
+
+.estado-badge.rechazado {
+  background-color: $light-primary-color;
+  color: $danger-red;
+}

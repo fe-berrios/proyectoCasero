@@ -1,5 +1,5 @@
 <ion-content [fullscreen]="true">
-    <!-- Botón de volver atrás -->
+  <!-- Botón de volver atrás -->
   <div class="back-button-container">
     <ion-buttons>
       <ion-back-button defaultHref="/mapa"></ion-back-button>
@@ -36,6 +36,10 @@
         <div class="info-row" *ngIf="puesto.feria_id">
           <ion-icon name="storefront-outline"></ion-icon>
           <span>ID Feria: {{ puesto.feria_id }}</span>
+        </div>
+
+        <div class="estado-badge" [ngClass]="puesto.estado_solicitud">
+          Estado: {{ puesto.estado_solicitud | titlecase }}
         </div>
 
         <div class="edit-button-container">
