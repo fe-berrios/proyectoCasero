@@ -19,7 +19,7 @@ export class SolicitarCaseroComponent {
     private alertCtrl: AlertController,
     private supabaseService: SupabaseService,
     private solicitudCaseroService: SolicitudCaseroService
-  ) {}
+  ) { }
 
   async enviarSolicitud() {
     const user = await this.supabaseService.user;
@@ -42,9 +42,18 @@ export class SolicitarCaseroComponent {
     });
 
     if (error) {
+      let message = 'No se pudo enviar la solicitud. Intenta nuevamente.';
+
+      // Detectar error 409 - conflicto por unique constraint
+      if (error.code === '23505') {
+        if (error.message?.includes('solicitud_casero_user_id_key')) {
+          message = 'Ya has enviado una solicitud anteriormente.';
+        }
+      }
+
       const alert = await this.alertCtrl.create({
         header: 'Error',
-        message: 'No se pudo enviar la solicitud. Intenta nuevamente.',
+        message,
         buttons: ['OK'],
       });
       await alert.present();
@@ -58,6 +67,7 @@ export class SolicitarCaseroComponent {
       this.modalCtrl.dismiss();
     }
   }
+
 
   cerrarModal() {
     this.modalCtrl.dismiss();

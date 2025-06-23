@@ -11,6 +11,10 @@ export class SolicitudCaseroService {
     telefono: string;
     email: string;
   }) {
-    return supabase.from('solicitud_casero').insert([data]);
+    console.log('Enviando solicitud con:', data);
+    const result = await supabase.from('solicitud_casero').insert([data]).select('*'); // Para obtener más feedback
+    console.log('Resultado:', result);
+    return result;
   }
+
 }
