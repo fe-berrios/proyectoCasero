@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { AgregarPuestoModalComponent } from 'src/app/components/agregar-puesto-modal/agregar-puesto-modal.component';
 import { EditarPuestoModalComponent } from 'src/app/components/editar-puesto-modal/editar-puesto-modal.component';
 import { supabase } from 'src/app/supabase_client';
+import { SolicitudPuestoModalComponent } from 'src/app/components/solicitud-puesto-modal/solicitud-puesto-modal.component';
 
 @Component({
   standalone: false,
@@ -86,9 +87,9 @@ export class PanelCaseroPage implements OnInit {
     }
   }
 
-  async openAgregarPuestoModal() {
+  async openSolicitudPuestoModal() {
     const modal = await this.modalCtrl.create({
-      component: AgregarPuestoModalComponent,
+      component: SolicitudPuestoModalComponent,
       componentProps: {
         casero_id: this.codigoCasero, // importante: pasar codigo_casero, no user ID
       },
