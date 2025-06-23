@@ -19,7 +19,7 @@ import { ModificarUsuarioComponent } from './components/modificar-usuario/modifi
 import { SolicitarCaseroComponent } from './components/solicitar-casero/solicitar-casero.component';
 import { SolicitudPuestoModalComponent } from './components/solicitud-puesto-modal/solicitud-puesto-modal.component';
 import { SolicitudesPuestosComponent } from './components/solicitudes-puestos/solicitudes-puestos.component';
-
+import { SolicitudesCaseroComponent } from './components/solicitudes-casero/solicitudes-casero.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +35,8 @@ import { SolicitudesPuestosComponent } from './components/solicitudes-puestos/so
     ModificarUsuarioComponent,
     SolicitarCaseroComponent,
     SolicitudPuestoModalComponent,
-    SolicitudesPuestosComponent 
+    SolicitudesPuestosComponent,
+    SolicitudesCaseroComponent
   ],
   imports: [
     ReactiveFormsModule,

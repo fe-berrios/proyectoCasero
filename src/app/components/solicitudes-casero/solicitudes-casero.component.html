@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <ion-title>Solicitudes de Casero</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="admin-form">
+  <ion-card *ngFor="let solicitud of solicitudes">
+    <ion-card-header>
+      <ion-card-title>{{ solicitud.email }}</ion-card-title>
+      <ion-card-subtitle>{{ solicitud.telefono }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p><strong>Comentario:</strong> {{ solicitud.comentario }}</p>
+      <p><strong>User ID:</strong> {{ solicitud.user_id }}</p>
+      <p><strong>Fecha:</strong> {{ solicitud.created_at | date: 'short' }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-text *ngIf="solicitudes.length === 0" color="medium">
+    No hay solicitudes por el momento.
+  </ion-text>
+</ion-content>

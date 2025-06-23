@@ -35,3 +35,19 @@
   color: $dark-primary-color;
   font-size: 25px;
 }
+
+.solicitud-custom-color {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  --background: #{$primary-color};
+  --color: #{$inverse-text-color};
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; // más bajo para que quede debajo
+}

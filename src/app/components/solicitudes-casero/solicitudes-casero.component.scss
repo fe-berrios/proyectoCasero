@@ -1,0 +1,21 @@
+@use 'src/theme/variables' as *;
+
+:host {
+  font-family: 'Roboto', sans-serif;
+}
+
+ion-card {
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #{$dark-primary-color};
+}
+
+.custom-toolbar {
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+}
+
+ion-card-title {
+  font-size: 18px;
+  color: #{$dark-primary-color};
+}

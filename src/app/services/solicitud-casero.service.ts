@@ -11,10 +11,20 @@ export class SolicitudCaseroService {
     telefono: string;
     email: string;
   }) {
-    console.log('Enviando solicitud con:', data);
-    const result = await supabase.from('solicitud_casero').insert([data]).select('*'); // Para obtener más feedback
-    console.log('Resultado:', result);
+    const result = await supabase.from('solicitud_casero').insert([data]).select('*');
     return result;
   }
 
+  async obtenerSolicitudes() {
+    const { data, error } = await supabase
+      .from('solicitud_casero')
+      .select('id, user_id, comentario, telefono, email, created_at')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
 }

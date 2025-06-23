@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { supabase } from 'src/app/supabase_client';
 import { ModalController } from '@ionic/angular';
 import { ModificarUsuarioComponent } from 'src/app/components/modificar-usuario/modificar-usuario.component';
+import { SolicitudesCaseroComponent } from 'src/app/components/solicitudes-casero/solicitudes-casero.component';
 
 @Component({
   standalone: false,
@@ -67,4 +68,16 @@ export class AdministrarUsuariosPage implements OnInit {
 
     await modal.present();
   }
+
+      async openSolicitudesCasero() {
+      const modal = await this.modalCtrl.create({
+        component: SolicitudesCaseroComponent,
+      });
+      await modal.present();
+  
+      const { role } = await modal.onWillDismiss();
+      if (role === 'confirm') {
+        await this.cargarUsuarios();
+      }
+    }
 }
