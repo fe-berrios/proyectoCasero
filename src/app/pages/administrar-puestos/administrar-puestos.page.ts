@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { PuestoService } from 'src/app/services/puesto.service';
 import { AgregarPuestoModalComponent } from 'src/app/components/agregar-puesto-modal/agregar-puesto-modal.component';
 import { EditarPuestoModalComponent } from 'src/app/components/editar-puesto-modal/editar-puesto-modal.component';
+import { SolicitudesPuestosComponent } from 'src/app/components/solicitudes-puestos/solicitudes-puestos.component';
 import { supabase } from 'src/app/supabase_client';
 
 @Component({
@@ -94,6 +95,21 @@ export class AdministrarPuestosPage implements OnInit {
   async openAgregarPuestoModal() {
     const modal = await this.modalCtrl.create({
       component: AgregarPuestoModalComponent,
+      componentProps: {
+        feria_id: this.feria_id,
+      },
+    });
+    await modal.present();
+
+    const { role } = await modal.onWillDismiss();
+    if (role === 'confirm') {
+      await this.cargarPuestos();
+    }
+  }
+
+    async openSolicitudesPuestos() {
+    const modal = await this.modalCtrl.create({
+      component: SolicitudesPuestosComponent,
       componentProps: {
         feria_id: this.feria_id,
       },

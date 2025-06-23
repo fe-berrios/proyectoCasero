@@ -18,6 +18,7 @@ import { ComentarFeriaComponent } from './components/comentar-feria/comentar-fer
 import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
 import { SolicitarCaseroComponent } from './components/solicitar-casero/solicitar-casero.component';
 import { SolicitudPuestoModalComponent } from './components/solicitud-puesto-modal/solicitud-puesto-modal.component';
+import { SolicitudesPuestosComponent } from './components/solicitudes-puestos/solicitudes-puestos.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SolicitudPuestoModalComponent } from './components/solicitud-puesto-mod
     ComentarFeriaComponent,
     ModificarUsuarioComponent,
     SolicitarCaseroComponent,
-    SolicitudPuestoModalComponent
+    SolicitudPuestoModalComponent,
+    SolicitudesPuestosComponent 
   ],
   imports: [
     ReactiveFormsModule,

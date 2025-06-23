@@ -84,8 +84,8 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  --background: #{$primary-color}; // color de fondo usando tu variable SCSS
-  --color: #{$inverse-text-color}; // color de texto usando tu variable SCSS
+  --background: #{$primary-color};
+  --color: #{$inverse-text-color};
   border-radius: 50%;
   width: 45px;
   height: 45px;
@@ -93,8 +93,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 999; // más bajo para que quede debajo
 }
+
+.solicitud-custom-color {
+  position: fixed;
+  bottom: 75px; // 20px + 45px (alto del fab) + 10px (espacio)
+  right: 20px;
+  --background: #{$accent-color};
+  --color: #{$inverse-text-color};
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; // más alto para que quede arriba
+}
+
 
 .button-custom-color {
   position: fixed;
