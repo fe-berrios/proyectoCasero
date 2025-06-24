@@ -61,7 +61,8 @@
   </div>
 
   <div class="buscador">
-    <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onSearchChange()" placeholder="Buscar feria" class="custom-searchbar">
+    <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onSearchChange()" placeholder="Buscar feria"
+      class="custom-searchbar">
     </ion-searchbar>
 
     <!-- Lista de sugerencias -->
@@ -80,6 +81,13 @@
 
   <div id="map"></div>
 
+  <!-- FAB para cambiar el estilo del mapa, ahora en bottom -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fab-cambiar-mapa">
+    <ion-fab-button class="fab-menu-small" (click)="alternarTileLayer()">
+      <ion-icon name="layers"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
   <!-- FAB de ubicación -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fab-ubicacion">
     <ion-fab-button (click)="centrarEnUsuario()">

@@ -27,6 +27,9 @@ export class MapaPage implements OnInit, OnDestroy {
   suggestedFerias: any[] = [];
   userLocationMarker: leaflet.Marker | null = null;
   watchId: string | null = null;
+  tileLayers: leaflet.TileLayer[] = [];
+  currentTileLayerIndex: number = 0;
+
 
 
   constructor(
@@ -85,10 +88,22 @@ export class MapaPage implements OnInit, OnDestroy {
       renderer: leaflet.canvas(),
     });
 
-    leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // Define solo dos capas base
+    const openStreetMap = leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '© OpenStreetMap',
-    }).addTo(this.map);
+    });
+
+    const stadiaSatellite = leaflet.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.jpg', {
+      minZoom: 0,
+      maxZoom: 20,
+      attribution: '© OpenStreetMap',
+    });
+
+    this.tileLayers = [openStreetMap, stadiaSatellite];
+
+    // Agregar la capa inicial
+    this.tileLayers[0].addTo(this.map);
 
     setTimeout(() => {
       this.map?.invalidateSize();
@@ -330,9 +345,7 @@ export class MapaPage implements OnInit, OnDestroy {
       this.mostrarToast('No se pudo obtener la ubicación. Verifica permisos y configuración.');
     }
   }
-
-
-
+  // Método para mostrar un toast
   private async mostrarToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,
@@ -341,4 +354,20 @@ export class MapaPage implements OnInit, OnDestroy {
     });
     toast.present();
   }
+
+  alternarTileLayer() {
+    if (!this.map || this.tileLayers.length === 0) return;
+
+    // Remover la capa actual
+    this.map.removeLayer(this.tileLayers[this.currentTileLayerIndex]);
+
+    // Calcular el siguiente índice circularmente
+    this.currentTileLayerIndex = (this.currentTileLayerIndex + 1) % this.tileLayers.length;
+
+    // Agregar la nueva capa
+    this.tileLayers[this.currentTileLayerIndex].addTo(this.map);
+
+    this.mostrarToast('Mapa cambiado');
+  }
+
 }
