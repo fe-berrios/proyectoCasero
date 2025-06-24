@@ -15,7 +15,7 @@ export class AdministrarUsuariosPage implements OnInit {
   usuariosFiltrados: any[] = [];
   searchTerm: string = '';
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(private modalCtrl: ModalController) { }
 
   async ngOnInit() {
     await this.cargarUsuarios();
@@ -69,15 +69,17 @@ export class AdministrarUsuariosPage implements OnInit {
     await modal.present();
   }
 
-      async openSolicitudesCasero() {
-      const modal = await this.modalCtrl.create({
-        component: SolicitudesCaseroComponent,
-      });
-      await modal.present();
-  
-      const { role } = await modal.onWillDismiss();
-      if (role === 'confirm') {
-        await this.cargarUsuarios();
-      }
+  async openSolicitudesCasero() {
+    const modal = await this.modalCtrl.create({
+      component: SolicitudesCaseroComponent,
+    });
+    await modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm' && data?.recargar) {
+      await this.cargarUsuarios();
     }
+  }
+
 }

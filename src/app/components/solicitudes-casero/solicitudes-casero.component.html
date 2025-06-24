@@ -8,20 +8,52 @@
 </ion-header>
 
 <ion-content class="admin-form">
-  <ion-card *ngFor="let solicitud of solicitudes">
-    <ion-card-header>
-      <ion-card-title>{{ solicitud.email }}</ion-card-title>
-      <ion-card-subtitle>{{ solicitud.telefono }}</ion-card-subtitle>
-    </ion-card-header>
 
+  <!-- Filtro por estado -->
+  <ion-item>
+    <ion-label>Filtrar por estado</ion-label>
+    <ion-select [(ngModel)]="estadoSeleccionado" (ionChange)="onEstadoSeleccionado()" interface="popover"
+      placeholder="Todos">
+      <ion-select-option [value]="null">Todos los estados</ion-select-option>
+      <ion-select-option value="aceptado">Aceptado</ion-select-option>
+      <ion-select-option value="pendiente">Pendiente</ion-select-option>
+      <ion-select-option value="rechazado">Rechazado</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Lista de solicitudes -->
+  <ion-card *ngFor="let solicitud of solicitudes" [ngClass]="{
+    'estado-aceptado': solicitud.status === 'aceptado',
+    'estado-pendiente': solicitud.status === 'pendiente' || !solicitud.status,
+    'estado-rechazado': solicitud.status === 'rechazado'
+  }">
     <ion-card-content>
-      <p><strong>Comentario:</strong> {{ solicitud.comentario }}</p>
+      <ion-card-title>{{ solicitud.profiles?.full_name || 'Sin nombre' }}</ion-card-title>
       <p><strong>User ID:</strong> {{ solicitud.user_id }}</p>
+      <p><strong>Codigo Casero:</strong>{{ solicitud.profiles?.codigo_casero }}</p>
       <p><strong>Fecha:</strong> {{ solicitud.created_at | date: 'short' }}</p>
+
+      <!-- Badge de estado -->
+      <ion-badge class="custom-badge" [color]="
+        solicitud.status === 'aceptado' ? 'success' :
+        solicitud.status === 'rechazado' ? 'danger' :
+        'warning'
+      ">
+        {{ (solicitud.status || 'pendiente') | titlecase }}
+      </ion-badge>
+
+      <!-- Botón para revisar -->
+      <div class="check-button-container">
+        <ion-button class="check-button" fill="clear" (click)="abrirModal(solicitud.user_id)">
+          <ion-icon class="check-icon" name="checkbox-sharp"></ion-icon>
+          <span class="check-text">Revisar Solicitud</span>
+        </ion-button>
+      </div>
     </ion-card-content>
   </ion-card>
 
   <ion-text *ngIf="solicitudes.length === 0" color="medium">
     No hay solicitudes por el momento.
   </ion-text>
+
 </ion-content>

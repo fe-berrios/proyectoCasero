@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <ion-title>Revisar Solicitud</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!loading" class="ion-padding solicitud-content">
+  <h2>{{ perfil?.full_name || solicitud?.email }}</h2>
+  <p><strong>Estado:</strong> {{ solicitud?.status }}</p>
+
+  <p><strong>Email:</strong> {{ solicitud?.email }}</p>
+  <p><strong>Telefono:</strong> {{ solicitud?.telefono }}</p>
+  <p><strong>User ID:</strong> {{ userId }}</p>
+  <p><strong>Comentario:</strong> {{ solicitud?.comentario }}</p>
+
+  <div class="buttons-container">
+    <ion-button shape="round" class="accept-button" (click)="aceptarSolicitud()">
+      Aceptar Solicitud
+    </ion-button>
+
+    <ion-button shape="round" class="pending-button" (click)="pendienteSolicitud()">
+      Dejar Pendiente
+    </ion-button>
+
+    <ion-button shape="round" class="deny-button" (click)="rechazarSolicitud()">
+      Rechazar Solicitud
+    </ion-button>
+  </div>
+</ion-content>
+
+<ion-spinner *ngIf="loading" class="ion-padding"></ion-spinner>

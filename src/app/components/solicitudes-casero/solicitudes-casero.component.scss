@@ -7,8 +7,22 @@
 ion-card {
   margin-bottom: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #{$dark-primary-color};
+  border-left: 5px solid transparent;
+  /* default */
 }
+
+ion-card.estado-aceptado {
+  border-left-color: $primary-color; // color para aceptado
+}
+
+ion-card.estado-pendiente {
+  border-left-color: $accent-color; // color para pendiente
+}
+
+ion-card.estado-rechazado {
+  border-left-color: $danger-red; // color para rechazado
+}
+
 
 .custom-toolbar {
   --background: #{$dark-primary-color};
@@ -17,5 +31,48 @@ ion-card {
 
 ion-card-title {
   font-size: 18px;
-  color: #{$dark-primary-color};
+  color: #{$primary-text-color};
+}
+
+.check-button-container {
+  margin-top: 0px;
+  display: flex;
+  justify-content: flex-start; // alinea a la izquierda
+}
+
+.check-button {
+  padding-left: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+  --background: transparent;
+}
+
+.check-icon {
+  color: $primary-text-color;
+  font-size: 20px;
+}
+
+.check-text {
+  color: $primary-text-color;
+  margin-left: 6px;
+}
+
+
+.estado-badge.aceptado {
+  background-color: $light-primary-color;
+  color: $primary-color;
+}
+
+.estado-badge.pendiente {
+  background-color: $light-primary-color;
+  color: $accent-color;
+}
+
+.estado-badge.rechazado {
+  background-color: $light-primary-color;
+  color: $danger-red;
+}
+
+.custom-badge{
+  margin-top: 10px;
 }

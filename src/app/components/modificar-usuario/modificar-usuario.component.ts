@@ -25,7 +25,7 @@ export class ModificarUsuarioComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private supabaseService: SupabaseService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     this.cargando = true;
@@ -59,13 +59,14 @@ export class ModificarUsuarioComponent implements OnInit {
       await this.supabaseService.createNotice('No se pudieron guardar los cambios');
     } else {
       await this.supabaseService.createNotice('Usuario actualizado correctamente');
-      this.modalCtrl.dismiss({ recargar: true });
+      this.modalCtrl.dismiss({ recargar: true }, 'confirm');
+
     }
 
     this.cargando = false;
   }
 
   cerrarModal() {
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss(null, 'cancel');
   }
 }

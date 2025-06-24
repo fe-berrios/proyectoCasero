@@ -18,7 +18,7 @@ export class AdministrarPuestosPage implements OnInit {
 
   ferias: any[] = [];
   feria_id: number | null = null;
-  estadoSeleccionado: string | null = null;
+  estadoSeleccionado: string = 'aceptado';
 
   constructor(
     private puestoService: PuestoService,
