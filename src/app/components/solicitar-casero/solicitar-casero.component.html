@@ -22,6 +22,9 @@
       name="comentario" rows="4">
     </ion-textarea>
 
+    <ion-label>Documento (imagen o PDF)</ion-label>
+    <input type="file" (change)="onFileSelected($event)" accept="image/*,application/pdf" />
+
     <ion-button shape="round" expand="full" fill="solid" class="save-button" (click)="enviarSolicitud()">
       Enviar Solicitud
     </ion-button>
