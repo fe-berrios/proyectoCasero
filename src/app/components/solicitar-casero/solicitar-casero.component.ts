@@ -100,4 +100,14 @@ export class SolicitarCaseroComponent {
   cerrarModal() {
     this.modalCtrl.dismiss();
   }
+
+  async mostrarInfoDocumento() {
+  const alert = await this.alertCtrl.create({
+    header: '¿Qué documento subir?',
+    message: 'Aquí debes subir la patente municipal, carnet de feriante, permiso, o cualquier comprobante que acredite que eres un locatario.',
+    buttons: ['Entendido'],
+  });
+
+  await alert.present();
+}
 }

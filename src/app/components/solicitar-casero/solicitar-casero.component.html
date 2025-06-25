@@ -22,7 +22,14 @@
       name="comentario" rows="4">
     </ion-textarea>
 
-    <ion-label>Documento (imagen o PDF)</ion-label>
+    <!-- Label + ícono -->
+    <div class="label-with-info">
+      <ion-label>Documento (imagen o PDF)</ion-label>
+      <ion-button fill="clear" size="small" (click)="mostrarInfoDocumento()" class="info-button"
+        aria-label="Información del documento">
+        <ion-icon name="information-circle"></ion-icon>
+      </ion-button>
+    </div>
     <input type="file" (change)="onFileSelected($event)" accept="image/*,application/pdf" />
 
     <ion-button shape="round" expand="full" fill="solid" class="save-button" (click)="enviarSolicitud()">

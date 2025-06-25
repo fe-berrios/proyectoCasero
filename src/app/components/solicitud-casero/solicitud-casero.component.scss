@@ -90,3 +90,29 @@
     }
 
 }
+
+.document-card {
+    ion-card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    ion-button {
+        margin-top: 8px;
+        font-size: 0.95rem;
+        height: 40px;
+        --border-radius: 20px;
+    }
+}
+
+.download-button {
+    --background: #{ $primary-text-color };
+    --color: #{ $inverse-text-color };
+}
+
+.view-button {
+    --background: #{ $secondary-text-color };
+    --color: #{ $inverse-text-color };
+}
