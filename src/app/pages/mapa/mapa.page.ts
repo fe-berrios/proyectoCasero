@@ -29,6 +29,9 @@ export class MapaPage implements OnInit, OnDestroy {
   watchId: string | null = null;
   tileLayers: leaflet.TileLayer[] = [];
   currentTileLayerIndex: number = 0;
+  private shouldCenterOnLocation: boolean = false;
+
+
 
 
 
@@ -295,7 +298,9 @@ export class MapaPage implements OnInit, OnDestroy {
       }
 
       if (permission.location === 'granted') {
-        // Si ya hay un watch en curso, no lo reiniciamos
+        this.shouldCenterOnLocation = true;  // ✅ Habilitar centrado solo una vez
+
+        // Si ya hay un watch activo, no lo duplicamos
         if (this.watchId) return;
 
         this.watchId = await Geolocation.watchPosition(
@@ -315,11 +320,15 @@ export class MapaPage implements OnInit, OnDestroy {
               const lat = position.coords.latitude;
               const lng = position.coords.longitude;
 
-              // Mover mapa
-              this.map!.flyTo([lat, lng], 18, {
-                animate: true,
-                duration: 1,
-              });
+              // ✅ Solo centrar la primera vez
+              if (this.shouldCenterOnLocation && this.map) {
+                this.map.flyTo([lat, lng], 18, {
+                  animate: true,
+                  duration: 1,
+                });
+
+                this.shouldCenterOnLocation = false; // ❌ Ya no volver a centrar
+              }
 
               // Crear o mover el marcador del usuario
               if (!this.userLocationMarker) {
@@ -345,6 +354,7 @@ export class MapaPage implements OnInit, OnDestroy {
       this.mostrarToast('No se pudo obtener la ubicación. Verifica permisos y configuración.');
     }
   }
+
   // Método para mostrar un toast
   private async mostrarToast(message: string) {
     const toast = await this.toastCtrl.create({
