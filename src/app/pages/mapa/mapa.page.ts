@@ -7,6 +7,7 @@ import { FeriaModalComponent } from 'src/app/components/feria-modal/feria-modal.
 import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { MenuController } from '@ionic/angular';
+import { App } from '@capacitor/app';
 
 @Component({
   standalone: false,
@@ -49,6 +50,7 @@ export class MapaPage implements OnInit, OnDestroy {
     this.initMap();
     this.loadFerias();
     this.subscribeToNewFerias();
+    this.handleBackButton();
 
     this.supabase.profile.then((response) => {
       const profile = response.data;
@@ -69,6 +71,7 @@ export class MapaPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    App.removeAllListeners();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -435,6 +438,15 @@ export class MapaPage implements OnInit, OnDestroy {
     });
 
     await alert.present();
+  }
+
+  handleBackButton() {
+    App.addListener('backButton', ({ canGoBack }) => {
+      // Solo salir si estás en la página del mapa
+      if (this.router.url === '/mapa') {
+        App.exitApp(); // ❌ Cierra la app
+      }
+    });
   }
 
 }
