@@ -4,7 +4,7 @@ import { FeriaService } from 'src/app/services/feria.service';
 import { Router } from '@angular/router';
 import { SupabaseService } from 'src/app/services/supabase.service';
 import { FeriaModalComponent } from 'src/app/components/feria-modal/feria-modal.component';
-import { ModalController, AlertController, ToastController } from '@ionic/angular';
+import { ModalController, Platform, AlertController, ToastController } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { MenuController } from '@ionic/angular';
 import { App } from '@capacitor/app';
@@ -43,14 +43,30 @@ export class MapaPage implements OnInit, OnDestroy {
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private platform: Platform,
   ) { }
 
+  // Idealmente en ngAfterViewInit()
+  ngAfterViewInit() {
+    this.platform.ready().then(() => {
+      App.addListener('backButton', async () => {
+        const topModal = await this.modalCtrl.getTop();
+
+        if (topModal) {
+          // Si hay un modal abierto, ciérralo
+          await topModal.dismiss();
+        } else {
+          // Si no hay modal, salir de la app
+          App.exitApp();
+        }
+      });
+    });
+  }
   ngOnInit() {
     this.initMap();
     this.loadFerias();
     this.subscribeToNewFerias();
-    this.handleBackButton();
 
     this.supabase.profile.then((response) => {
       const profile = response.data;
@@ -438,15 +454,6 @@ export class MapaPage implements OnInit, OnDestroy {
     });
 
     await alert.present();
-  }
-
-  handleBackButton() {
-    App.addListener('backButton', ({ canGoBack }) => {
-      // Solo salir si estás en la página del mapa
-      if (this.router.url === '/mapa') {
-        App.exitApp(); // ❌ Cierra la app
-      }
-    });
   }
 
 }
