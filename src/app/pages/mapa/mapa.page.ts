@@ -369,5 +369,62 @@ export class MapaPage implements OnInit, OnDestroy {
 
     this.mostrarToast('Mapa cambiado');
   }
+  // Método para cargar ferias filtradas por calificación
+  private async loadFeriasByRating(minRating: number) {
+    let query = this.supabase.client.from('feria_con_calificacion').select('*');
+
+    if (minRating > 0) {
+      query = query.gte('calificacion', minRating);
+    }
+
+    const { data: ferias, error } = await query;
+
+    if (error) {
+      console.error('Error al cargar ferias con calificación:', error);
+      this.mostrarToast('Error al cargar ferias filtradas');
+      return;
+    }
+
+    this.clearMarkers();
+
+    ferias?.forEach((feria: any) => {
+      this.addMarker(feria);
+    });
+  }
+
+  //Metodo para mostrar un alert para filtrar por calificación
+  public async filtrarPorCalificacion() {
+    const alert = await this.alertCtrl.create({
+      header: 'Filtrar por calificación mínima',
+      inputs: [
+        { type: 'radio', label: '🍅', value: 1 },
+        { type: 'radio', label: '🍅🍅', value: 2 },
+        { type: 'radio', label: '🍅🍅🍅', value: 3 },
+        { type: 'radio', label: '🍅🍅🍅🍅', value: 4 },
+        { type: 'radio', label: '🍅🍅🍅🍅🍅', value: 5 },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: async () => {
+            await this.loadFeriasByRating(0);
+          },
+        },
+        {
+          text: 'Aceptar',
+          handler: async (selectedRating) => {
+            if (selectedRating !== undefined) {
+              await this.loadFeriasByRating(selectedRating);
+            } else {
+              this.mostrarToast('Por favor selecciona una calificación');
+            }
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
 
 }
