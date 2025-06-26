@@ -16,6 +16,9 @@ export class PlaceSelectorModalComponent implements OnInit, AfterViewInit, OnDes
   selectedLat: number | null = null;
   selectedLng: number | null = null;
 
+  selectedCityOrTown: string | null = null;
+  selectedState: string | null = null;
+
   private customIcon = leaflet.icon({
     iconUrl: 'assets/icon/feria-marker.png',
     iconSize: [25, 25],
@@ -35,9 +38,7 @@ export class PlaceSelectorModalComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnDestroy() {
-    if (this.map) {
-      this.map.remove();
-    }
+    this.map?.remove();
   }
 
   private initMap(): void {
@@ -50,13 +51,36 @@ export class PlaceSelectorModalComponent implements OnInit, AfterViewInit, OnDes
       attribution: '© OpenStreetMap contributors',
     }).addTo(this.map);
 
+    // ✅ Crear instancia de Nominatim con htmlTemplate personalizado
     // @ts-ignore
-    const geocoder = new (leaflet.Control as any).Geocoder({
+    const nominatimGeocoder = new (leaflet.Control.Geocoder as any).Nominatim({
+      geocodingQueryParams: {
+        countrycodes: 'cl',
+      },
+      htmlTemplate: (result: any) => {
+        const address = result.address || result.properties?.address || {};
+        const parts = [
+          result.name,
+          address.city || address.town || address.village || '',
+          address.state || '',
+          address.country || '',
+        ].filter(Boolean);
+        return parts.join(', ');
+      }
+    });
+
+    // ✅ Crear control con geocoder personalizado
+    // @ts-ignore
+    const geocoderControl = (leaflet.Control as any).geocoder({
+      geocoder: nominatimGeocoder,
+      placeholder: 'Buscar dirección',
       defaultMarkGeocode: false,
     }).addTo(this.map);
 
-    geocoder.on('markgeocode', (e: any) => {
+    // ✅ Manejar evento de selección de resultado
+    geocoderControl.on('markgeocode', (e: any) => {
       const latlng = e.geocode.center;
+      const address = e.geocode.properties?.address || e.geocode.address || {};
 
       if (this.marker) {
         this.marker.setLatLng(latlng);
@@ -68,11 +92,16 @@ export class PlaceSelectorModalComponent implements OnInit, AfterViewInit, OnDes
 
       this.selectedLat = latlng.lat;
       this.selectedLng = latlng.lng;
+      this.selectedCityOrTown = address.city || address.town || address.village || null;
+      this.selectedState = address.state || null;
+
       console.log('Ubicación seleccionada (geocoder):', this.selectedLat, this.selectedLng);
+      console.log('Ciudad/Comuna:', this.selectedCityOrTown);
+      console.log('Estado/Región:', this.selectedState);
     });
 
-    // Selección con click en el mapa
-    this.map.on('click', (e: leaflet.LeafletMouseEvent) => {
+    // ✅ Manejar click manual en el mapa
+    this.map.on('click', async (e: leaflet.LeafletMouseEvent) => {
       const latlng = e.latlng;
 
       if (this.marker) {
@@ -84,13 +113,39 @@ export class PlaceSelectorModalComponent implements OnInit, AfterViewInit, OnDes
       this.selectedLat = latlng.lat;
       this.selectedLng = latlng.lng;
       this.map?.setView(latlng, this.map.getZoom());
+
+      await this.reverseGeocode(latlng.lat, latlng.lng);
+
       console.log('Ubicación seleccionada (click):', this.selectedLat, this.selectedLng);
+      console.log('Ciudad/Comuna:', this.selectedCityOrTown);
+      console.log('Estado/Región:', this.selectedState);
     });
+  }
+
+  private async reverseGeocode(lat: number, lng: number): Promise<void> {
+    try {
+      const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1&accept-language=es&countrycodes=cl`;
+      const response = await fetch(url);
+      const data = await response.json();
+      const address = data.address || {};
+
+      this.selectedCityOrTown = address.city || address.town || address.village || null;
+      this.selectedState = address.state || null;
+    } catch (error) {
+      console.error('Error en reverse geocode:', error);
+      this.selectedCityOrTown = null;
+      this.selectedState = null;
+    }
   }
 
   confirmSelection() {
     if (this.selectedLat !== null && this.selectedLng !== null) {
-      this.modalCtrl.dismiss({ lat: this.selectedLat, lng: this.selectedLng });
+      this.modalCtrl.dismiss({
+        lat: this.selectedLat,
+        lng: this.selectedLng,
+        cityOrTown: this.selectedCityOrTown,
+        state: this.selectedState,
+      });
     } else {
       alert('Por favor selecciona una ubicación en el mapa antes de confirmar.');
     }
