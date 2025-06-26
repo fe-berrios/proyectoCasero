@@ -1,3 +1,59 @@
-<p>
-  solicitudes-puestos works!
-</p>
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <ion-title>Solicitudes de Puesto</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="admin-form">
+
+  <!-- Filtro por estado -->
+  <ion-item>
+    <ion-label>Filtrar por estado</ion-label>
+    <ion-select [(ngModel)]="estadoSeleccionado" (ionChange)="onEstadoSeleccionado()" interface="popover"
+      placeholder="Todos">
+      <ion-select-option [value]="null">Todos los estados</ion-select-option>
+      <ion-select-option value="aceptado">Aceptado</ion-select-option>
+      <ion-select-option value="pendiente">Pendiente</ion-select-option>
+      <ion-select-option value="rechazado">Rechazado</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Lista de solicitudes -->
+  <ion-card *ngFor="let solicitud of solicitudes" [ngClass]="{
+    'estado-aceptado': solicitud.status === 'aceptado',
+    'estado-pendiente': solicitud.status === 'pendiente' || !solicitud.status,
+    'estado-rechazado': solicitud.status === 'rechazado'
+  }">
+    <ion-card-content>
+      <ion-card-title>{{ solicitud.puesto?.nombre || 'Sin nombre de puesto' }}</ion-card-title>
+      <p><strong>Feria:</strong> {{ solicitud.puesto?.feria?.nombre || 'Sin feria' }}</p>
+      <p><strong>Solicitante:</strong> {{ solicitud.user?.full_name || 'Sin nombre' }}</p>
+      <p><strong>Fecha:</strong> {{ solicitud.created_at | date: 'short' }}</p>
+
+      <!-- Badge de estado -->
+      <ion-badge class="custom-badge" [color]="
+        solicitud.status === 'aceptado' ? 'success' :
+        solicitud.status === 'rechazado' ? 'danger' :
+        'warning'
+      ">
+        {{ (solicitud.status || 'pendiente') | titlecase }}
+      </ion-badge>
+
+      <!-- Botón para revisar -->
+      <div class="check-button-container">
+        <ion-button class="check-button" fill="clear" (click)="abrirModal(solicitud.id)">
+          <ion-icon class="check-icon" name="checkbox-sharp"></ion-icon>
+          <span class="check-text">Revisar Solicitud</span>
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-text *ngIf="solicitudes.length === 0" color="medium">
+    No hay solicitudes por el momento.
+  </ion-text>
+
+</ion-content>
