@@ -32,10 +32,6 @@ export class MapaPage implements OnInit, OnDestroy {
   currentTileLayerIndex: number = 0;
   private shouldCenterOnLocation: boolean = false;
 
-
-
-
-
   constructor(
     private router: Router,
     private readonly supabase: SupabaseService,
@@ -63,6 +59,7 @@ export class MapaPage implements OnInit, OnDestroy {
       });
     });
   }
+  
   ngOnInit() {
     this.initMap();
     this.loadFerias();
