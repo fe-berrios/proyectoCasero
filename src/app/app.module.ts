@@ -21,6 +21,8 @@ import { SolicitudPuestoModalComponent } from './components/solicitud-puesto-mod
 import { SolicitudesPuestosComponent } from './components/solicitudes-puestos/solicitudes-puestos.component';
 import { SolicitudesCaseroComponent } from './components/solicitudes-casero/solicitudes-casero.component';
 import { SolicitudCaseroComponent } from './components/solicitud-casero/solicitud-casero.component';
+import { SolicitudPuestoDetalleComponent } from './components/solicitud-puesto-detalle/solicitud-puesto-detalle.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +41,7 @@ import { SolicitudCaseroComponent } from './components/solicitud-casero/solicitu
     SolicitudesPuestosComponent,
     SolicitudesCaseroComponent,
     SolicitudCaseroComponent,
+    SolicitudPuestoDetalleComponent
   ],
   imports: [
     ReactiveFormsModule,

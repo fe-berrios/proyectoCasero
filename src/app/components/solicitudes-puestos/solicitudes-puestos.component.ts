@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { supabase } from 'src/app/supabase_client';
+import { SolicitudPuestoDetalleComponent } from '../solicitud-puesto-detalle/solicitud-puesto-detalle.component';
 
 @Component({
   standalone: false,
@@ -13,7 +14,7 @@ export class SolicitudesPuestosComponent implements OnInit {
   todasLasSolicitudes: any[] = [];
   estadoSeleccionado: string | null = 'pendiente';
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(private modalCtrl: ModalController) { }
 
   async ngOnInit() {
     await this.cargarSolicitudes();
@@ -46,9 +47,20 @@ export class SolicitudesPuestosComponent implements OnInit {
     this.modalCtrl.dismiss({ recargar: true }, 'confirm');
   }
 
-  abrirModal(id: number) {
-    console.log('Abrir modal con solicitud id:', id);
-    // Aquí implementa el modal para detalles si tienes
+  async abrirModal(id: number) {
+    const modal = await this.modalCtrl.create({
+      component: SolicitudPuestoDetalleComponent,
+      componentProps: { solicitudId: id },
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (result.data?.recargar) {
+        // Aquí puedes recargar la lista de solicitudes si quieres
+        this.cargarSolicitudes();
+      }
+    });
+
+    await modal.present();
   }
 
   onEstadoSeleccionado() {

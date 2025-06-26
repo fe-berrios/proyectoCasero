@@ -1,0 +1,107 @@
+@use 'src/theme/variables' as *;
+
+.custom-toolbar {
+  --background: #{ $dark-primary-color };
+  --color: #{ $inverse-text-color };
+}
+
+.solicitud-content {
+  max-width: 480px;
+  margin: 0 auto;
+  color: #{ $dark-primary-color };
+
+  h2 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 0.2rem;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+
+  .buttons-container {
+    margin-top: 2rem;
+    display: flex;
+    gap: 0;
+    justify-content: center;
+
+    ion-button.accept-button,
+    ion-button.deny-button,
+    ion-button.pending-button {
+      flex: 1;
+      height: 36px;
+      font-size: 0.9rem;
+      border-radius: 9999px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s ease;
+      margin: 0;
+      padding: 0;
+      --padding-start: 8px;
+      --padding-end: 8px;
+    }
+
+    ion-button.deny-button,
+    ion-button.pending-button {
+      margin-left: 6px;
+    }
+
+    ion-button.accept-button {
+      --background: #{ $dark-primary-color };
+      --color: #{ $inverse-text-color };
+
+      &:hover {
+        --background: #{ lighten($dark-primary-color, 10%) };
+      }
+    }
+
+    ion-button.deny-button {
+      --background: #{ $danger-red };
+      --color: #{ $inverse-text-color };
+
+      &:hover {
+        --background: #{ lighten($danger-red, 10%) };
+      }
+    }
+
+    ion-button.pending-button {
+      --background: #{ $accent-color };
+      --color: #{ $inverse-text-color };
+
+      &:hover {
+        --background: #{ lighten($accent-color, 10%) };
+      }
+    }
+  }
+}
+
+.document-card {
+  ion-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  ion-button {
+    margin-top: 8px;
+    font-size: 0.95rem;
+    height: 40px;
+    --border-radius: 20px;
+  }
+}
+
+.download-button {
+  --background: #{ $primary-text-color };
+  --color: #{ $inverse-text-color };
+}
+
+.view-button {
+  --background: #{ $secondary-text-color };
+  --color: #{ $inverse-text-color };
+}
