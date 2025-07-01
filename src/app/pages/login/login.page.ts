@@ -12,6 +12,7 @@ import { supabase } from 'src/app/supabase_client'
 })
 export class LoginPage {
   email = ''
+  showPassword = false
 
   constructor(
     private readonly supabase: SupabaseService,
