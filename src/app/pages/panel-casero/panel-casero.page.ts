@@ -13,7 +13,9 @@ import { SolicitudPuestoModalComponent } from 'src/app/components/solicitud-pues
 })
 export class PanelCaseroPage implements OnInit {
   puestos: any[] = [];
+  todosLosPuestos: any[] = [];
   codigoCasero: string | null = null;
+  estadoSeleccionado: string = 'aceptado';
 
   constructor(private modalCtrl: ModalController) {}
 
@@ -57,7 +59,8 @@ export class PanelCaseroPage implements OnInit {
       return;
     }
 
-    this.puestos = data ?? [];
+    this.todosLosPuestos = data ?? []; // ✅ CORREGIDO: Guardar los puestos originales
+    this.filtrarPuestosLocalmente();
   }
 
   async eliminarPuesto(id: number) {
@@ -100,5 +103,22 @@ export class PanelCaseroPage implements OnInit {
     if (role === 'confirm') {
       await this.cargarMisPuestos();
     }
+  }
+
+  filtrarPuestosLocalmente() {
+    this.puestos = this.todosLosPuestos.filter(p => {
+      const coincideEstado = this.estadoSeleccionado
+        ? p.estado_solicitud === this.estadoSeleccionado
+        : true;
+      return coincideEstado;
+    });
+  }
+
+  async onFeriaSeleccionada() {
+    await this.cargarMisPuestos(); // se recargan los puestos y se aplica el filtro local de estado
+  }
+
+  onEstadoSeleccionado() {
+    this.filtrarPuestosLocalmente(); // no hace falta recargar desde backend
   }
 }

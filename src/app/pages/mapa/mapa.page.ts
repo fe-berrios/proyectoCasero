@@ -4,9 +4,10 @@ import { FeriaService } from 'src/app/services/feria.service';
 import { Router } from '@angular/router';
 import { SupabaseService } from 'src/app/services/supabase.service';
 import { FeriaModalComponent } from 'src/app/components/feria-modal/feria-modal.component';
-import { ModalController, AlertController, ToastController } from '@ionic/angular';
+import { ModalController, Platform, AlertController, ToastController } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { MenuController } from '@ionic/angular';
+import { App } from '@capacitor/app';
 
 @Component({
   standalone: false,
@@ -29,8 +30,7 @@ export class MapaPage implements OnInit, OnDestroy {
   watchId: string | null = null;
   tileLayers: leaflet.TileLayer[] = [];
   currentTileLayerIndex: number = 0;
-
-
+  private shouldCenterOnLocation: boolean = false;
 
   constructor(
     private router: Router,
@@ -39,9 +39,27 @@ export class MapaPage implements OnInit, OnDestroy {
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private platform: Platform,
   ) { }
 
+  // Idealmente en ngAfterViewInit()
+  ngAfterViewInit() {
+    this.platform.ready().then(() => {
+      App.addListener('backButton', async () => {
+        const topModal = await this.modalCtrl.getTop();
+
+        if (topModal) {
+          // Si hay un modal abierto, ciérralo
+          await topModal.dismiss();
+        } else {
+          // Si no hay modal, salir de la app
+          App.exitApp();
+        }
+      });
+    });
+  }
+  
   ngOnInit() {
     this.initMap();
     this.loadFerias();
@@ -66,6 +84,7 @@ export class MapaPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    App.removeAllListeners();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -295,7 +314,9 @@ export class MapaPage implements OnInit, OnDestroy {
       }
 
       if (permission.location === 'granted') {
-        // Si ya hay un watch en curso, no lo reiniciamos
+        this.shouldCenterOnLocation = true;  // ✅ Habilitar centrado solo una vez
+
+        // Si ya hay un watch activo, no lo duplicamos
         if (this.watchId) return;
 
         this.watchId = await Geolocation.watchPosition(
@@ -315,11 +336,15 @@ export class MapaPage implements OnInit, OnDestroy {
               const lat = position.coords.latitude;
               const lng = position.coords.longitude;
 
-              // Mover mapa
-              this.map!.flyTo([lat, lng], 18, {
-                animate: true,
-                duration: 1,
-              });
+              // ✅ Solo centrar la primera vez
+              if (this.shouldCenterOnLocation && this.map) {
+                this.map.flyTo([lat, lng], 18, {
+                  animate: true,
+                  duration: 1,
+                });
+
+                this.shouldCenterOnLocation = false; // ❌ Ya no volver a centrar
+              }
 
               // Crear o mover el marcador del usuario
               if (!this.userLocationMarker) {
@@ -345,6 +370,7 @@ export class MapaPage implements OnInit, OnDestroy {
       this.mostrarToast('No se pudo obtener la ubicación. Verifica permisos y configuración.');
     }
   }
+
   // Método para mostrar un toast
   private async mostrarToast(message: string) {
     const toast = await this.toastCtrl.create({
@@ -368,6 +394,63 @@ export class MapaPage implements OnInit, OnDestroy {
     this.tileLayers[this.currentTileLayerIndex].addTo(this.map);
 
     this.mostrarToast('Mapa cambiado');
+  }
+  // Método para cargar ferias filtradas por calificación
+  private async loadFeriasByRating(minRating: number) {
+    let query = this.supabase.client.from('feria_con_calificacion').select('*');
+
+    if (minRating > 0) {
+      query = query.gte('calificacion', minRating);
+    }
+
+    const { data: ferias, error } = await query;
+
+    if (error) {
+      console.error('Error al cargar ferias con calificación:', error);
+      this.mostrarToast('Error al cargar ferias filtradas');
+      return;
+    }
+
+    this.clearMarkers();
+
+    ferias?.forEach((feria: any) => {
+      this.addMarker(feria);
+    });
+  }
+
+  //Metodo para mostrar un alert para filtrar por calificación
+  public async filtrarPorCalificacion() {
+    const alert = await this.alertCtrl.create({
+      header: 'Filtrar por calificación mínima',
+      inputs: [
+        { type: 'radio', label: '🍅', value: 1 },
+        { type: 'radio', label: '🍅🍅', value: 2 },
+        { type: 'radio', label: '🍅🍅🍅', value: 3 },
+        { type: 'radio', label: '🍅🍅🍅🍅', value: 4 },
+        { type: 'radio', label: '🍅🍅🍅🍅🍅', value: 5 },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: async () => {
+            await this.loadFeriasByRating(0);
+          },
+        },
+        {
+          text: 'Aceptar',
+          handler: async (selectedRating) => {
+            if (selectedRating !== undefined) {
+              await this.loadFeriasByRating(selectedRating);
+            } else {
+              this.mostrarToast('Por favor selecciona una calificación');
+            }
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
 }

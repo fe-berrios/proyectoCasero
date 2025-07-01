@@ -76,7 +76,7 @@
   <div class="botones-badges">
     <ion-button class="custom-button" (click)="openDaySelector()">Día</ion-button>
     <ion-button class="custom-button" (click)="filterByHorario()">Horario</ion-button>
-    <ion-button class="custom-button">Puesto</ion-button>
+    <ion-button class="custom-button" (click)="filtrarPorCalificacion()">Calificación</ion-button>
   </div>
 
   <div id="map"></div>
@@ -87,7 +87,7 @@
       <ion-icon name="layers"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
+
   <!-- FAB de ubicación -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fab-ubicacion">
     <ion-fab-button (click)="centrarEnUsuario()">
