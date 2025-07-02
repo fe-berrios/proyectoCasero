@@ -3,42 +3,36 @@
     <div class="profile-container">
       <img [src]="profileImgUrl" alt="Foto de perfil" class="profile-img" />
       <div class="profile-info" *ngIf="!loading">
-        <h2><strong>{{ userName }}</strong></h2>
+        <div class="profile-greeting">¡Hola, {{ userName || 'Usuario' }}!</div>
       </div>
     </div>
 
     <ion-list class="menu-options">
-
       <!-- Botones Publicos -->
-      <ion-item routerLink="/account">
+      <ion-item class="menu-item" routerLink="/account">
         <ion-icon name="person" slot="start"></ion-icon>
         <ion-label>Mi Perfil</ion-label>
       </ion-item>
-
       <!-- Botones Administrador -->
-      <ion-item *ngIf="isAdmin" routerLink="/administrar">
+      <ion-item class="menu-item" *ngIf="isAdmin" routerLink="/administrar">
         <ion-icon name="settings" slot="start"></ion-icon>
         <ion-label>Administrar Ferias</ion-label>
       </ion-item>
-
-      <ion-item *ngIf="isAdmin" routerLink="/administrar-puestos">
+      <ion-item class="menu-item" *ngIf="isAdmin" routerLink="/administrar-puestos">
         <ion-icon name="storefront" slot="start"></ion-icon>
         <ion-label>Administrar Puestos</ion-label>
       </ion-item>
-
-      <ion-item *ngIf="isAdmin" routerLink="/administrar-usuarios">
+      <ion-item class="menu-item" *ngIf="isAdmin" routerLink="/administrar-usuarios">
         <ion-icon name="people" slot="start"></ion-icon>
         <ion-label>Administrar Usuarios</ion-label>
       </ion-item>
-
       <!-- Botones Casero -->
-      <ion-item *ngIf="isCasero" routerLink="/panel-casero">
+      <ion-item class="menu-item" *ngIf="isCasero" routerLink="/panel-casero">
         <ion-icon name="cog" slot="start"></ion-icon>
         <ion-label>Panel Casero</ion-label>
       </ion-item>
-
       <!-- Boton Cerrar Sesion -->
-      <ion-item (click)="signOut()">
+      <ion-item class="menu-item" (click)="signOut()">
         <ion-icon name="log-out" slot="start"></ion-icon>
         <ion-label>Cerrar sesión</ion-label>
       </ion-item>
@@ -47,23 +41,24 @@
 </ion-menu>
 
 <ion-content id="main-content" [fullscreen]="true">
-  <!-- FAB para abrir el menú -->
-  <ion-fab vertical="top" horizontal="start" slot="fixed">
-    <ion-fab-button class="fab-menu-small" (click)="openMenu()">
-      <ion-icon name="menu"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-  <!-- Logo de la app -->
-  <div class="logo-mapa">
-    <h1>CASER</h1>
-    <img src="../../../assets/tomate.png" alt="Logo de Caser" />
-  </div>
-
+  <!-- Eliminar FAB menú y logo-mapa, solo dejar la barra de búsqueda -->
   <div class="buscador">
-    <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onSearchChange()" placeholder="Buscar feria"
-      class="custom-searchbar">
-    </ion-searchbar>
+    <div class="custom-searchbar">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        placeholder="Buscar feria"
+        class="search-input"
+        autocomplete="off"
+      />
+      <img
+        src="assets/icon/casero_logo.png"
+        alt="Logo Casero"
+        class="casero-logo"
+        (click)="onProfileClick()"
+      />
+    </div>
 
     <!-- Lista de sugerencias -->
     <ion-list *ngIf="suggestedFerias.length > 0" class="autocomplete-list">

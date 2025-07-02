@@ -12,14 +12,57 @@
     /* Asegura que el mapa esté en el fondo */
 }
 
-/* Contenedor del buscador */
+/* Google Maps-style search bar */
 .buscador {
-    position: absolute;
-    top: 65px;
-    left: 10px;
-    right: 10px;
-    z-index: 1100;
-    /* aumenté este z-index para que esté sobre los botones */
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.custom-searchbar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  padding: 6px 12px 6px 18px;
+  width: 95%;
+  max-width: 420px;
+  pointer-events: auto;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1.08rem;
+  font-family: 'Inter', sans-serif !important;
+  padding: 8px 0;
+  color: #222;
+}
+
+.search-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2.5px solid #4caf50;
+  margin-left: 12px;
+  object-fit: cover;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  transition: box-shadow 0.2s;
+  background: #fff;
+}
+.search-avatar:active {
+  box-shadow: 0 0 0 2px #4caf50;
 }
 
 /* Contenedor de la lista de sugerencias */
@@ -53,15 +96,17 @@
 
 /* Contenedor de los botones */
 .botones-badges {
-    position: absolute;
-    top: 135px;
-    /* Ajusta para que esté debajo del buscador */
-    left: 10px;
-    right: 10px;
-    display: flex;
-    justify-content: space-around;
-    z-index: 1000;
-    /* mantiene el z-index menor que buscador para que no lo tapen */
+  position: absolute;
+  top: calc(30px + 52px + 6px); /* searchbar top + height + margin */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  z-index: 1000;
+  font-family: 'Inter', sans-serif !important;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 /* Estilo para los botones */
@@ -71,6 +116,24 @@ ion-button {
     --color: rgb(0, 0, 0);
     --box-shadow: none;
     font-weight: bold;
+}
+
+ion-button.custom-button {
+  --border-radius: 18px;
+  --background: #fff;
+  --color: #222;
+  --box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.98rem;
+  font-weight: 500;
+  padding: 0 18px;
+  min-width: 0;
+  height: 36px;
+  margin: 0;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Asegura que el contenido ocupe todo el espacio */
@@ -86,48 +149,79 @@ ion-content {
 
 /* Estilo menu */
 .custom-menu {
-    --background: #f8fbff;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
+  --background: $light-primary-color;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  font-family: 'Inter', sans-serif !important;
 }
 
 .profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(135deg, $dark-primary-color, $primary-color);
-    padding: 20px;
-    color: $primary-text-color;
-    margin-bottom: 20px;
-    clip-path: path("M0,0 H100% V80 Q50% 100% 0 80 Z");
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, $dark-primary-color 60%, $primary-color 100%);
+  padding: 32px 0 22px 0;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  color: $inverse-text-color;
+  margin-bottom: 0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
 }
 
 .profile-img {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-    border: 3px solid $light-primary-color;
-    background-color: $accent-color;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 3px solid $light-primary-color;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
 }
 
-.profile-info h2 {
-    font-size: 16px;
-    margin: 0;
+.profile-greeting {
+  font-size: 1.18rem;
+  font-weight: 600;
+  margin-top: 2px;
+  color: $inverse-text-color;
+  font-family: 'Inter', sans-serif !important;
+  text-align: center;
 }
 
-.profile-info p {
-    font-size: 12px;
-    margin: 0;
-    opacity: 0.8;
+.menu-options {
+  margin-top: 18px;
+  padding: 0 12px;
+  font-family: 'Inter', sans-serif !important;
 }
 
-.menu-options ion-item {
-    --background: transparent;
-    border-radius: 10px;
-    margin-bottom: 10px;
+.menu-item {
+  --background: #fff;
+  --border-radius: 18px;
+  --color: $primary-text-color;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1.01rem;
+  font-weight: 500;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  min-height: 48px;
+}
+
+.menu-item ion-icon {
+  font-size: 1.3em;
+  margin-right: 12px;
+  color: $primary-color;
+}
+
+.menu-item ion-label {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1.01rem;
+  font-weight: 500;
+  color: $primary-text-color;
 }
 
 ion-menu::part(container) {
@@ -219,16 +313,12 @@ ion-menu::part(container) {
     }
 }
 
-.custom-searchbar {
-    --background: #{$inverse-text-color};
-    --color: black;
-    --placeholder-color: black;
-    --icon-color: black;
-    --clear-button-color: black;
-
-    --border-radius: 20px;
+/* Remove default searchbar styles if present */
+ion-searchbar, .custom-searchbar ion-icon, .custom-searchbar .mic-icon {
+  display: none !important;
 }
 
+/* Leaflet attribution control style */
 .leaflet-control-attribution {
   font-size: 8px !important;
   opacity: 0.7 !important;
@@ -241,4 +331,31 @@ ion-menu::part(container) {
   box-shadow: none !important;
   transform-origin: bottom right;
   transform: scale(0.7) !important; /* Reduce tamaño con transform */
+}
+
+/* Logo Casero en barra de búsqueda */
+.casero-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%; /* Para mantener proporción, pero sin borde */
+  object-fit: contain;
+  margin-left: 12px;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.15s;
+  padding: 0;
+}
+.casero-logo:active {
+  filter: brightness(0.92);
+}
+
+/* Ajuste para la barra de búsqueda */
+.custom-searchbar {
+  font-family: 'Inter', sans-serif !important;
+}
+
+.search-input {
+  font-family: 'Inter', sans-serif !important;
 }

@@ -370,4 +370,8 @@ export class MapaPage implements OnInit, OnDestroy {
     this.mostrarToast('Mapa cambiado');
   }
 
+  onProfileClick() {
+    this.menuCtrl.open('main-menu');
+  }
+
 }
