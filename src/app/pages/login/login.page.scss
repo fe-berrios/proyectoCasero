@@ -1,4 +1,14 @@
 @use 'src/theme/variables' as *;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+.login-content {
+  --background: #fff;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .contenedor{
     display: flex;
@@ -6,6 +16,7 @@
     align-items: center;
     flex-direction: column;
     background-color: $primary-color;
+    overflow: visible;
  
     background-position: cover;
     background-repeat: repeat;  /* Evita que se repita */
@@ -25,17 +36,29 @@
     flex-direction: row;
     margin-bottom: 0px;
 }
-
-h1{
-    color: $inverse-text-color;
-    font-size: 50px;
-    font-weight: bold;
-    text-align: center;
-    padding-top: 0PX;
+.logo-img {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 8px;
 }
+
+h1 {
+  color: $inverse-text-color;
+  font-size: 65px;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 0px;
+
+  /* Borde negro real en letras */
+  -webkit-text-stroke: 1.5px $primary-text-color;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+
 img{
-    width: 50px;
-    height: 50px;
+    width: 65px;
+    height: 65px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -65,10 +88,62 @@ img{
     font-size: 18px;
     border-radius: 8px;
 }
-
-label{
-font-size: 20px;
-padding: 10PX 0PX 10PX 0PX;
+.input-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.input {
+  background: rgba(0, 128, 0, 0.3);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 16px;
+  color: #212121;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  margin-bottom: 4px;
+}
+.input:focus {
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+.button {
+  background: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 0;
+  width: 100%;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.button:hover {
+  background: #2e7031;
+}
+.extra-texts {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 15px;
+  color: #757575;
+  font-family: 'Inter', sans-serif;
+}
+.link {
+  color: #388e3c;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+label {
+  font-size: 10px;
+  color: #212121;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 0px;
+  margin-left: 2px;
 }
 h6{
     color: $dark-primary-color;
@@ -77,4 +152,182 @@ h6{
     text-align: center;
     padding-top: 0PX;
     cursor: pointer;
+}
+.floating-label {
+  position: relative;
+  width: 100%;
+}
+.floating-label .input {
+  border-radius: 12px;
+  border: 1.5px solid #388e3c;
+  background: rgba(0, 128, 0, 0.08);
+  padding: 18px 40px 8px 12px;
+  font-size: 16px;
+  color: #212121;
+  width: 100%;
+  transition: border 0.2s;
+}
+.floating-label label {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  font-size: 10px;
+  color: #388e3c;
+  background: transparent;
+  pointer-events: none;
+  transition: 0.2s;
+  z-index: 2;
+}
+.floating-label .input:focus + label,
+.floating-label .input:not(:placeholder-shown) + label {
+  top: 4px;
+  left: 12px;
+  font-size: 10px;
+  color: #388e3c;
+  background: #fff;
+  padding: 0 2px;
+}
+.password-group {
+  position: relative;
+}
+.toggle-eye {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-80%);
+  font-size: 22px;
+  color: #1ba000 !important;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: color 0.2s;
+  z-index: 2;
+}
+.login-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #222;
+  text-align: center;
+  margin-top: 18px;
+  margin-bottom: 0px;
+}
+.login-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 24px;
+  margin-top: 4px;
+}
+.input-item {
+  --background: rgba(0, 128, 0, 0.08);
+  --border-radius: 12px;
+  --highlight-background: transparent;
+  --min-height: 48px;
+  --padding-start: 0;
+  --padding-end: 0;
+  margin-bottom: 12px;
+  box-shadow: none;
+}
+.input-item,
+ion-item.input-item {
+  --background: #f5f5f5 !important;
+  --border-radius: 24px !important;
+  --highlight-background: transparent;
+  --min-height: 54px;
+  --padding-start: 0;
+  --padding-end: 0;
+  margin-bottom: 18px;
+  box-shadow: none !important;
+  border: none !important;
+  font-family: 'Inter', sans-serif;
+}
+ion-input.input-solid {
+  --background: #f5f5f5 !important;
+  --border-radius: 24px !important;
+  --padding-start: 18px;
+  --padding-end: 44px;
+  font-size: 16px;
+  color: #212121;
+  font-family: 'Inter', sans-serif;
+  border-radius: 24px !important;
+  background: #f5f5f5 !important;
+  box-shadow: none !important;
+  border: none !important;
+  min-height: 54px;
+}
+ion-label,
+ion-input,
+ion-input::part(native) {
+  font-family: 'Inter', sans-serif !important;
+}
+ion-input.input-solid .label-text-wrapper,
+ion-input.input-solid .label-floating {
+  font-size: 13px;
+  color: #757575;
+  font-family: 'Inter', sans-serif;
+}
+ion-input.input-solid .native-input {
+  font-size: 16px;
+  color: #212121;
+  font-family: 'Inter', sans-serif;
+}
+.toggle-eye {
+  font-size: 22px;
+  color: #1ba000 !important;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: color 0.2s;
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-60%);
+  z-index: 2;
+}
+.login-btn {
+  background: #388e3c;
+  color: #ffffff;
+  border: none;
+  border-radius: 28px;
+  width: 100%;
+  font-size: 18px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  margin-top: 18px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  box-shadow: none;
+  transition: background 0.2s;
+}
+.login-btn:hover {
+  background: #388e3c;
+}
+.forgot-text {
+  margin-top: 0px;
+  text-align: center;
+  font-size: 15px;
+}
+.forgot-link {
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+}
+.register-footer {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  width: 100vw;
+  text-align: center;
+  font-size: 15px;
+  color: #222;
+  font-family: 'Inter', sans-serif;
+}
+.register-link {
+  color: #c8e6c9;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
 }
