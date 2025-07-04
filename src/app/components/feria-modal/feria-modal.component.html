@@ -12,9 +12,15 @@
     <!-- Información de la feria -->
     <ion-card>
       <ion-card-header>
-        <ion-card-title>{{ feria.nombre }}</ion-card-title>
+        <ion-item lines="none" class="feria-header-item">
+          <ion-label>
+            <ion-card-title>{{ feria.nombre }}</ion-card-title>
+          </ion-label>
+          <ion-button fill="clear" slot="end" (click)="toggleFavorita()" *ngIf="userId" class="bookmark-button">
+            <ion-icon [name]="esFavorita ? 'bookmark' : 'bookmark-outline'" class="bookmark-icon"></ion-icon>
+          </ion-button>
+        </ion-item>
       </ion-card-header>
-
       <ion-card-content>
         <ion-item lines="none">
           <ion-label><strong>Hora inicio:</strong> {{ feria.hora_inicio }}</ion-label>
@@ -90,7 +96,7 @@
             <p>No hay comentarios aún.</p>
           </ion-label>
         </ion-item>
-        
+
         <ion-item *ngFor="let c of comentarios" lines="full" class="comentario-item">
           <ion-avatar slot="start" *ngIf="c.avatar_url; else defaultAvatar">
             <img [src]="c.avatar_url" />

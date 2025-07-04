@@ -5,6 +5,7 @@ import { PuestoDetalleModalComponent } from '../puesto-detalle-modal/puesto-deta
 import { ComentarFeriaComponent } from '../comentar-feria/comentar-feria.component';
 import { supabase } from 'src/app/supabase_client'; // Asegúrate de que la ruta sea correcta
 import { SupabaseService } from 'src/app/services/supabase.service'; // Asegúrate de que la ruta sea correcta
+import { FeriaService } from 'src/app/services/feria.service';
 
 @Component({
   standalone: false,
@@ -19,16 +20,21 @@ export class FeriaModalComponent {
   isComentariosAccordionOpen = true;
   comentarios: any[] = [];
   userId: string | null = null;
+  esFavorita: boolean = false;
 
   constructor(
     private modalCtrl: ModalController,
     private puestoService: PuestoService,
-    private supabaseService: SupabaseService 
+    private supabaseService: SupabaseService,
+    private feriaService: FeriaService
   ) { }
 
   async ngOnInit() {
     const user = await this.supabaseService.user;
     this.userId = user ? user.id : null;
+    if (this.userId) {
+      this.esFavorita = await this.feriaService.esFeriaFavorita(this.userId, this.feria.id);
+    }
     console.log('Usuario actual:', user);
 
     await this.cargarPuestos();
@@ -127,6 +133,12 @@ export class FeriaModalComponent {
 
   closeModal() {
     this.modalCtrl.dismiss();
+  }
+
+  async toggleFavorita() {
+    if (!this.userId) return;
+    await this.feriaService.toggleFeriaFavorita(this.userId, this.feria.id, this.esFavorita);
+    this.esFavorita = !this.esFavorita;
   }
 
   // Método para manejar like/dislike con lógica de intercambio y eliminación

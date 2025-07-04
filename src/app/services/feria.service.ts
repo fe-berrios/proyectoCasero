@@ -86,4 +86,32 @@ export class FeriaService {
   unsubscribeFromFerias(channel: any) {
     supabase.removeChannel(channel);
   }
+
+  // Agregar o quitar feria de favoritos
+  async toggleFeriaFavorita(userId: string, feriaId: number, isFavorita: boolean) {
+    if (isFavorita) {
+      // Quitar de favoritos
+      return supabase
+        .from('ferias_fav')
+        .delete()
+        .eq('user_id', userId)
+        .eq('feria_id', feriaId);
+    } else {
+      // Agregar a favoritos
+      return supabase
+        .from('ferias_fav')
+        .insert([{ user_id: userId, feria_id: feriaId }]);
+    }
+  }
+
+  // Consultar si la feria es favorita del usuario
+  async esFeriaFavorita(userId: string, feriaId: number) {
+    const { data, error } = await supabase
+      .from('ferias_fav')
+      .select('id')
+      .eq('user_id', userId)
+      .eq('feria_id', feriaId)
+      .single();
+    return !!data;
+  }
 }
