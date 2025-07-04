@@ -31,6 +31,7 @@ export class MapaPage implements OnInit, OnDestroy {
   tileLayers: leaflet.TileLayer[] = [];
   currentTileLayerIndex: number = 0;
   private shouldCenterOnLocation: boolean = false;
+  private backButtonListener: any;
 
   constructor(
     private router: Router,
@@ -46,20 +47,22 @@ export class MapaPage implements OnInit, OnDestroy {
   // Idealmente en ngAfterViewInit()
   ngAfterViewInit() {
     this.platform.ready().then(() => {
-      App.addListener('backButton', async () => {
+      this.backButtonListener = App.addListener('backButton', async () => {
         const topModal = await this.modalCtrl.getTop();
 
         if (topModal) {
-          // Si hay un modal abierto, ciérralo
           await topModal.dismiss();
-        } else {
-          // Si no hay modal, salir de la app
+          return;
+        }
+
+        // ✅ Solo salir de la app si estamos en /mapa
+        if (this.router.url === '/mapa') {
           App.exitApp();
         }
       });
     });
   }
-  
+
   ngOnInit() {
     this.initMap();
     this.loadFerias();
@@ -73,22 +76,15 @@ export class MapaPage implements OnInit, OnDestroy {
       this.profileImgUrl = profile?.avatar_url || 'assets/profile_pics/loading.svg';
       this.loading = false;
     });
-
-    this.supabase.profile.then((response) => {
-      const profile = response.data;
-      this.isAdmin = profile?.admin_status === true;
-      this.userName = profile?.full_name || 'Usuario';
-      this.profileImgUrl = profile?.avatar_url || 'assets/profile_pics/loading.svg';
-      this.loading = false;
-    });
   }
 
   ngOnDestroy() {
-    App.removeAllListeners();
+    if (this.backButtonListener) {
+      this.backButtonListener.remove();
+    }
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-
     if (this.watchId) {
       Geolocation.clearWatch({ id: this.watchId });
       this.watchId = null;
