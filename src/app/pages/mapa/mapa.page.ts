@@ -181,6 +181,9 @@ export class MapaPage implements OnInit, OnDestroy {
         {
           text: 'Cancelar',
           role: 'cancel',
+          handler: async () => {
+            await this.loadFeriasByRating(0);
+          },
         },
         {
           text: 'Aceptar',
@@ -225,6 +228,9 @@ export class MapaPage implements OnInit, OnDestroy {
         {
           text: 'Cancelar',
           role: 'cancel',
+          handler: async () => {
+            await this.loadFeriasByRating(0);
+          },
         },
         {
           text: 'Aceptar',
@@ -392,8 +398,6 @@ export class MapaPage implements OnInit, OnDestroy {
 
     // Agregar la nueva capa
     this.tileLayers[this.currentTileLayerIndex].addTo(this.map);
-
-    this.mostrarToast('Mapa cambiado');
   }
   // Método para cargar ferias filtradas por calificación
   private async loadFeriasByRating(minRating: number) {

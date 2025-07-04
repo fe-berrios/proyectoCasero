@@ -47,20 +47,9 @@
 <ion-content id="main-content" [fullscreen]="true">
   <div class="buscador">
     <div class="custom-searchbar">
-      <input
-        type="text"
-        [(ngModel)]="searchTerm"
-        (input)="onSearchChange()"
-        placeholder="Buscar feria"
-        class="search-input"
-        autocomplete="off"
-      />
-      <img
-        src="assets/icon/casero_logo.png"
-        alt="Logo Casero"
-        class="casero-logo"
-        (click)="onProfileClick()"
-      />
+      <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" placeholder="Buscar feria"
+        class="search-input" autocomplete="off" />
+      <img src="assets/icon/casero_logo.png" alt="Logo Casero" class="casero-logo" (click)="onProfileClick()" />
     </div>
 
     <!-- Lista de sugerencias -->
