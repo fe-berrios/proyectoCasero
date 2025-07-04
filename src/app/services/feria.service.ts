@@ -114,4 +114,12 @@ export class FeriaService {
       .single();
     return !!data;
   }
+
+  // Obtener las ferias favoritas del usuario autenticado
+  async getFeriasFavoritas(userId: string) {
+    return supabase
+      .from('ferias_fav')
+      .select('feria_id, feria_con_calificacion:feria_id(*)')
+      .eq('user_id', userId);
+  }
 }

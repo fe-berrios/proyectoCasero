@@ -1,13 +1,54 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>ferias-fav</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">ferias-fav</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+  <!-- Botón de volver atrás -->
+  <div class="back-button-container">
+    <ion-buttons>
+      <ion-back-button defaultHref="/mapa"></ion-back-button>
+    </ion-buttons>
+  </div>
+
+  <!-- Encabezado -->
+  <div class="admin-header">
+    <h2>Ferias Favoritas</h2>
+  </div>
+
+  <!-- Lista de cards personalizada -->
+  <ion-list>
+    <ion-card *ngFor="let feria of feriasFav" class="custom-card" (click)="abrirFeriaModal(feria)">
+      <ion-card-header>
+        <ion-card-title style="flex: 1;">{{ feria.nombre }}</ion-card-title>
+        <ion-button fill="clear" (click)="confirmarEliminarFavorito($event, feria)" class="bookmark-button">
+          <ion-icon name="bookmark" class="bookmark-icon"></ion-icon>
+        </ion-button>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="info-row">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span>Día(s): {{ feria.dia }}</span>
+        </div>
+        <div class="info-row">
+          <ion-icon name="time-outline"></ion-icon>
+          <span>Horario: {{ feria.hora_inicio }} - {{ feria.hora_termino }}</span>
+        </div>
+        <ng-container *ngIf="feria.calificacion !== null && feria.calificacion !== undefined">
+          <div class="info-row">
+            <ion-icon name="star"></ion-icon>
+            <span>
+              <ng-container *ngFor="let i of [1,2,3,4,5]">
+                <img [src]="i <= feria.calificacion ? 'assets/icon/rank-mark.png' : 'assets/icon/rank-unmark.png'"
+                  alt="estrella" class="rating-icon" />
+              </ng-container>
+            </span>
+          </div>
+        </ng-container>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ng-template #sinFavoritas>
+    <ion-text color="medium">
+      <p style="text-align:center; margin-top: 2em;">No tienes ferias favoritas aún.</p>
+    </ion-text>
+  </ng-template>
+
 </ion-content>
