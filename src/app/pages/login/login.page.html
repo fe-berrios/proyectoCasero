@@ -18,38 +18,10 @@
           class="input-solid"
         ></ion-input>
       </ion-item>
-      <ion-item lines="none" class="input-item">
-        <ion-input
-          label="Contraseña"
-          labelPlacement="floating"
-          [type]="showPassword ? 'text' : 'password'"
-          fill="solid"
-          name="password"
-          required
-          class="input-solid"
-        ></ion-input>
-        <ion-icon
-          slot="end"
-          name="eye"
-          *ngIf="!showPassword"
-          class="toggle-eye"
-          (click)="showPassword = true"
-        ></ion-icon>
-        <ion-icon
-          slot="end"
-          name="eye-off"
-          *ngIf="showPassword"
-          class="toggle-eye"
-          (click)="showPassword = false"
-        ></ion-icon>
-      </ion-item>
       <button expand="full" class="button login-btn" type="submit">ENTRAR</button>
-      <div class="forgot-text">
-        <span class="forgot-link">¿Olvidaste tu contraseña?</span>
-      </div>
     </form>
-    <div class="register-footer">
-      <span>¿No tienes cuenta? <span class="register-link">¡Regístrate!</span></span>
+    <div class="magic-link-info">
+      <span>Ingresa tu correo y te enviaremos un enlace para Iniciar sesión o Crear una cuenta.</span>
     </div>
   </div>
 </ion-content>
