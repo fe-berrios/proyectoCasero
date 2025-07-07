@@ -288,8 +288,6 @@ export class MapaPage implements OnInit, OnDestroy {
     this.searchTerm = feria.nombre;
     this.suggestedFerias = [];
     this.flyToFeria(feria);
-    this.clearMarkers();
-    this.addMarker(feria);
   }
 
   flyToFeria(feria: any) {
