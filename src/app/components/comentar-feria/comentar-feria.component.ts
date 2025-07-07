@@ -35,4 +35,8 @@ export class ComentarFeriaComponent {
   cancelar() {
     this.modalCtrl.dismiss()
   }
+
+  get isComentarioInvalido(): boolean {
+    return /[<>{}\[\]"'/\\]/.test(this.comentario);
+  }
 }

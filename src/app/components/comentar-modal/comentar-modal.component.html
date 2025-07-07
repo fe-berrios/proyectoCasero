@@ -8,23 +8,26 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-label position="stacked">Comentario</ion-label>
-    <ion-textarea rows="4" [(ngModel)]="comentario"></ion-textarea>
-  </ion-item>
+  <div class="comment-container">
+    <ion-textarea [(ngModel)]="comentario" placeholder="Escribe tu comentario..." autoGrow="true"
+      rows="6"></ion-textarea>
+  </div>
+
+  <div class="error-message" *ngIf="isComentarioInvalido">
+    El comentario no puede contener los símbolos &lt; &gt; {{ '{' }} {{ '}' }} [ ] " ' / \
+  </div>
 
   <ion-item class="calificacion">
     <ion-label>Calificación</ion-label>
     <div class="tomates-container">
-      <img
-        *ngFor="let i of [1,2,3,4,5]"
+      <img *ngFor="let i of [1,2,3,4,5]"
         [src]="i <= calificacion ? 'assets/icon/rank-mark.png' : 'assets/icon/rank-unmark.png'"
-        (click)="setCalificacion(i)"
-        alt="Tomate"
-        class="tomate"
-      />
+        (click)="setCalificacion(i)" alt="Tomate" class="tomate" />
     </div>
   </ion-item>
 
-  <ion-button shape="round" class="enviar-button" style="margin-top: 1rem;" (click)="enviar()">Enviar</ion-button>
+  <ion-button shape="round" class="enviar-button" style="margin-top: 1rem;" (click)="enviar()"
+    [disabled]="isComentarioInvalido">
+    Enviar
+  </ion-button>
 </ion-content>

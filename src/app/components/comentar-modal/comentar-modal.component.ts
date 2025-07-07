@@ -26,9 +26,17 @@ export class ComentarModalComponent {
     this.calificacion = valor;
   }
 
+  get isComentarioInvalido(): boolean {
+    return /[<>{}\[\]"'/\\]/.test(this.comentario);
+  }
+
   async enviar() {
     if (!this.comentario.trim()) {
       this.mostrarToast('Por favor escribe un comentario.');
+      return;
+    }
+    if (this.isComentarioInvalido) {
+      this.mostrarToast('El comentario no puede contener los símbolos < > { } [ ] " \' / \\');
       return;
     }
 

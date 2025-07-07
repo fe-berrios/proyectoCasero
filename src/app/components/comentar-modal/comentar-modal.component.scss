@@ -133,3 +133,15 @@ ion-item.calificacion ion-label {
   flex-shrink: 0;         // evita que el label se reduzca demasiado
   width: 100px;           // ancho fijo para el label, ajusta a tu gusto
 }
+
+.error-message {
+  color: #{$danger-red};
+  font-size: 13px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.comment-container {
+  width: 95%;
+  margin: 0 auto;
+}

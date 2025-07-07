@@ -110,4 +110,23 @@ export class AgregarPuestoModalComponent implements OnInit {
       this.modalCtrl.dismiss(true, 'confirm');
     }
   }
+
+  async subirImagen(event: any) {
+    const archivo = event.target.files[0];
+    if (!archivo) return;
+
+    const bucket = 'imagenes-puestos';
+    const filePath = `puestos/${Date.now()}_${archivo.name}`;
+
+    const { data, error } = await supabase.storage.from(bucket).upload(filePath, archivo);
+
+    if (error) {
+      console.error('Error subiendo imagen:', error);
+      alert('Error al subir la imagen: ' + JSON.stringify(error));
+      return;
+    }
+
+    const publicUrlData = supabase.storage.from(bucket).getPublicUrl(filePath);
+    this.img_url = publicUrlData.data.publicUrl;
+  }
 }

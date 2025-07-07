@@ -8,12 +8,16 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
+  <div class="comment-container">
     <ion-textarea [(ngModel)]="comentario" placeholder="Escribe tu comentario..." autoGrow="true"
       rows="6"></ion-textarea>
-  </ion-item>
-
-  <ion-button class="enviar-button" expand="block" (click)="enviarComentario()" [disabled]="enviando">
+  </div>
+  
+  <div class="error-message" *ngIf="isComentarioInvalido">
+    El comentario no puede contener los símbolos &lt; &gt; {{ '{' }} {{ '}' }} [ ] " ' / \
+  </div>
+  <ion-button class="enviar-button" expand="block" (click)="enviarComentario()"
+    [disabled]="enviando || isComentarioInvalido">
     {{ enviando ? 'Enviando...' : 'Enviar' }}
   </ion-button>
 </ion-content>

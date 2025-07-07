@@ -66,3 +66,16 @@ ion-textarea {
   --background: #{$dark-primary-color};
   --color: #{$inverse-text-color};
 }
+
+.error-message {
+  color: #{$danger-red};
+  font-size: 13px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.comment-container {
+  width: 95%;
+  margin: 0 auto;
+}
+
