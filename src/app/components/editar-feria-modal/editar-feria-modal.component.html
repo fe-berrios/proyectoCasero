@@ -45,6 +45,19 @@
       <ion-text color="danger" *ngIf="errorHoraTermino">{{ errorHoraTermino }}</ion-text>
     </ion-item>
 
+    <!-- Comuna -->
+    <ion-item>
+      <ion-label>Comuna</ion-label>
+      <ion-select [(ngModel)]="comuna" name="comuna" placeholder="Selecciona una comuna">
+        <ion-select-option *ngFor="let comuna of comunasDisponibles" [value]="comuna">
+          {{ comuna }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Calle Principal -->
+    <ion-input type="text" label="Calle Principal" label-placement="floating" fill="outline" [(ngModel)]="calle_principal" name="calle_principal"></ion-input>
+
     <!-- Selección de días -->
     <ion-item button lines="none" (click)="toggleDiasDropdown()" style="margin-top: 1.5rem;">
       <ion-label>Día(s)</ion-label>

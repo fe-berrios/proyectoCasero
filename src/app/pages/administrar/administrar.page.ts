@@ -32,7 +32,8 @@ export class AdministrarPage implements OnInit, OnDestroy {
   }
 
   async cargarFerias() {
-    const { data, error } = await this.feriaService.getFerias();
+    // Obtener las ferias directamente de la tabla ferias para incluir comuna y calle_principal
+    const { data, error } = await this.feriaService.getFeriasRaw();
     if (error) {
       console.error('Error al cargar ferias:', error);
       return;
@@ -54,10 +55,17 @@ export class AdministrarPage implements OnInit, OnDestroy {
   }
 
   async abrirModalEditarFeria(feria: any) {
+    // Obtener la feria desde la tabla ferias para tener todos los campos
+    const { data: feriaCompleta, error } = await this.feriaService.getFeriaRawById(feria.id);
+    if (error) {
+      console.error('Error al obtener la feria:', error);
+      alert('No se pudo obtener la feria para editar.');
+      return;
+    }
     const modal = await this.modalCtrl.create({
       component: EditarFeriaModalComponent,
       componentProps: {
-        feria: feria
+        feria: feriaCompleta
       }
     });
     await modal.present();

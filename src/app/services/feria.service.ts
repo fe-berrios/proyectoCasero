@@ -6,14 +6,16 @@ import { supabase } from '../supabase_client';
 })
 export class FeriaService {
 
-  // Guardar una feria en la base de datos (sin calificación, sigue igual)
+  // Guardar una feria en la base de datos (ahora con comuna y calle_principal)
   async saveFeria(
     nombre: string,
     lat: number,
     lng: number,
     hora_inicio: string,
     hora_termino: string,
-    dia: string
+    dia: string,
+    comuna: string,
+    calle_principal: string
   ) {
     return supabase.from('ferias').insert([
       {
@@ -23,11 +25,13 @@ export class FeriaService {
         hora_inicio,
         hora_termino,
         dia,
+        comuna,
+        calle_principal
       },
     ]);
   }
 
-  // Actualizar feria por id (sin calificación, sigue igual)
+  // Actualizar feria por id (ahora con comuna y calle_principal)
   async updateFeria(
     id: number,
     nombre: string,
@@ -35,7 +39,9 @@ export class FeriaService {
     lng: number,
     hora_inicio: string,
     hora_termino: string,
-    dia: string
+    dia: string,
+    comuna: string,
+    calle_principal: string
   ) {
     return supabase
       .from('ferias')
@@ -45,7 +51,9 @@ export class FeriaService {
         lng,
         hora_inicio,
         hora_termino,
-        dia
+        dia,
+        comuna,
+        calle_principal
       })
       .eq('id', id);
   }
@@ -58,14 +66,24 @@ export class FeriaService {
       .eq('id', id);
   }
 
-  // Obtener todas las ferias con calificación desde la vista
+  // Obtener todas las ferias con calificación desde la vista (usa select('*') para evitar errores si la vista no tiene los campos nuevos)
   async getFerias() {
     return supabase.from('feria_con_calificacion').select('*');
   }
 
-  // Obtener una feria por id con calificación desde la vista
+  // Obtener una feria por id con calificación desde la vista (usa select('*'))
   async getFeriaById(id: number) {
     return supabase.from('feria_con_calificacion').select('*').eq('id', id).single();
+  }
+
+  // Obtener una feria por id directamente de la tabla ferias (todos los campos)
+  async getFeriaRawById(id: number) {
+    return supabase.from('ferias').select('*').eq('id', id).single();
+  }
+
+  // Obtener todas las ferias directamente de la tabla ferias (todos los campos)
+  async getFeriasRaw() {
+    return supabase.from('ferias').select('*');
   }
 
   // Suscribirse a cambios en tiempo real en la tabla de ferias (esto sigue con la tabla real)

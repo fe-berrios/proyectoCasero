@@ -18,6 +18,43 @@ export class EditarFeriaModalComponent implements OnInit {
   lat: number | null = null;
   lng: number | null = null;
   dia: string[] = [];
+  comuna = '';
+  calle_principal = '';
+
+  comunasDisponibles = [
+    'Cerrillos',
+    'La Reina',
+    'Pudahuel',
+    'Cerro Navia',
+    'Las Condes',
+    'Quilicura',
+    'Conchalí',
+    'Lo Barnechea',
+    'Quinta Normal',
+    'El Bosque',
+    'Lo Espejo',
+    'Recoleta',
+    'Estación Central',
+    'Lo Prado',
+    'Renca',
+    'Huechuraba',
+    'Macul',
+    'San Miguel',
+    'Independencia',
+    'Maipú',
+    'San Joaquín',
+    'La Cisterna',
+    'Ñuñoa',
+    'San Ramón',
+    'La Florida',
+    'Pedro Aguirre Cerda',
+    'Santiago (Centro)',
+    'La Pintana',
+    'Peñalolén',
+    'Vitacura',
+    'La Granja',
+    'Providencia'
+  ];
 
   // Cambiado a string para mantener consistencia con AgregarFeriaModalComponent
   horaInicioHora: string = '00';
@@ -47,6 +84,8 @@ export class EditarFeriaModalComponent implements OnInit {
       this.nombre = this.feria.nombre;
       this.lat = this.feria.lat;
       this.lng = this.feria.lng;
+      this.comuna = this.feria.comuna || '';
+      this.calle_principal = this.feria.calle_principal || '';
 
       // Parsear días separados por " - "
       this.dia = this.feria.dia ? this.feria.dia.split(' - ') : [];
@@ -141,7 +180,7 @@ export class EditarFeriaModalComponent implements OnInit {
   }
 
   async updateFeria() {
-    if (!this.nombre || this.lat === null || this.lng === null || this.dia.length === 0) {
+    if (!this.nombre || this.lat === null || this.lng === null || this.dia.length === 0 || !this.comuna || !this.calle_principal) {
       alert('Por favor, completa todos los campos.');
       return;
     }
@@ -159,7 +198,9 @@ export class EditarFeriaModalComponent implements OnInit {
       this.lng,
       hora_inicio,
       hora_termino,
-      diasConcatenados
+      diasConcatenados,
+      this.comuna,
+      this.calle_principal
     );
 
     if (error) {

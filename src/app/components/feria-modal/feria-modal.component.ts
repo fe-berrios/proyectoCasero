@@ -30,13 +30,18 @@ export class FeriaModalComponent {
   ) { }
 
   async ngOnInit() {
+    // Obtener usuario
     const user = await this.supabaseService.user;
     this.userId = user ? user.id : null;
     if (this.userId) {
       this.esFavorita = await this.feriaService.esFeriaFavorita(this.userId, this.feria.id);
     }
-    console.log('Usuario actual:', user);
-
+    // Obtener datos de la vista (calificación y generales)
+    const { data: feriaVista } = await this.feriaService.getFeriaById(this.feria.id);
+    // Obtener datos de la tabla ferias (comuna y calle_principal)
+    const { data: feriaRaw } = await this.feriaService.getFeriaRawById(this.feria.id);
+    // Combinar ambos resultados en this.feria
+    this.feria = { ...feriaVista, ...feriaRaw };
     await this.cargarPuestos();
     await this.cargarComentarios();
   }

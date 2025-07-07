@@ -28,6 +28,14 @@
 
       <ion-card-content>
         <div class="info-row">
+          <ion-icon name="business-outline"></ion-icon>
+          <span>Comuna: {{ feria.comuna || 'No especificada' }}</span>
+        </div>
+        <div class="info-row">
+          <ion-icon name="navigate-outline"></ion-icon>
+          <span>Calle Principal: {{ feria.calle_principal || 'No especificada' }}</span>
+        </div>
+        <div class="info-row">
           <ion-icon name="location-outline"></ion-icon>
           <span>Lat: {{ feria.lat }}, Lng: {{ feria.lng }}</span>
         </div>

@@ -39,6 +39,44 @@ export class AgregarFeriaModalComponent {
     { label: 'dom', value: 'dom' },
   ];
 
+  comuna = '';
+  calle_principal = '';
+
+  comunasDisponibles = [
+    'Cerrillos',
+    'La Reina',
+    'Pudahuel',
+    'Cerro Navia',
+    'Las Condes',
+    'Quilicura',
+    'Conchalí',
+    'Lo Barnechea',
+    'Quinta Normal',
+    'El Bosque',
+    'Lo Espejo',
+    'Recoleta',
+    'Estación Central',
+    'Lo Prado',
+    'Renca',
+    'Huechuraba',
+    'Macul',
+    'San Miguel',
+    'Independencia',
+    'Maipú',
+    'San Joaquín',
+    'La Cisterna',
+    'Ñuñoa',
+    'San Ramón',
+    'La Florida',
+    'Pedro Aguirre Cerda',
+    'Santiago (Centro)',
+    'La Pintana',
+    'Peñalolén',
+    'Vitacura',
+    'La Granja',
+    'Providencia'
+  ];
+
   constructor(private modalCtrl: ModalController, private feriaService: FeriaService) { }
 
   async openPlaceSelectorModal() {
@@ -115,7 +153,7 @@ export class AgregarFeriaModalComponent {
   }
 
   async saveFeria() {
-    if (!this.nombre || this.lat === null || this.lng === null || this.dia.length === 0) {
+    if (!this.nombre || this.lat === null || this.lng === null || this.dia.length === 0 || !this.comuna || !this.calle_principal) {
       alert('Por favor, completa todos los campos.');
       return;
     }
@@ -132,7 +170,9 @@ export class AgregarFeriaModalComponent {
       this.lng,
       hora_inicio,
       hora_termino,
-      diasConcatenados
+      diasConcatenados,
+      this.comuna,
+      this.calle_principal
     );
 
     if (error) {

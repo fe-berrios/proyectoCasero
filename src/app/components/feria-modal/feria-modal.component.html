@@ -23,6 +23,12 @@
       </ion-card-header>
       <ion-card-content>
         <ion-item lines="none">
+          <ion-label><strong>Comuna:</strong> {{ feria.comuna || 'No especificada' }}</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label><strong>Calle Principal:</strong> {{ feria.calle_principal || 'No especificada' }}</ion-label>
+        </ion-item>
+        <ion-item lines="none">
           <ion-label><strong>Hora inicio:</strong> {{ feria.hora_inicio }}</ion-label>
         </ion-item>
 

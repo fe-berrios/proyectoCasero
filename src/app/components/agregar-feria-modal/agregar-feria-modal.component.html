@@ -70,6 +70,19 @@
       : 'Elegir Ubicación' }}
     </ion-button>
 
+    <!-- Comuna -->
+    <ion-item>
+      <ion-label>Comuna</ion-label>
+      <ion-select [(ngModel)]="comuna" name="comuna" placeholder="Selecciona una comuna">
+        <ion-select-option *ngFor="let comuna of comunasDisponibles" [value]="comuna">
+          {{ comuna }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Calle Principal -->
+    <ion-input type="text" label="Calle Principal" label-placement="floating" fill="outline" [(ngModel)]="calle_principal" name="calle_principal"></ion-input>
+
     <!-- Botón para guardar -->
     <ion-button shape="round" class="save-button" style="margin-top: 1rem;" (click)="saveFeria()">
       Guardar Feria
