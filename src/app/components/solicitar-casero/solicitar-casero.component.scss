@@ -14,7 +14,7 @@
   ion-input,
   ion-textarea,
   ion-select {
-    --highlight-color: #{$dark-primary-color};
+    --highlight-color: #{$primary-text-color};
     font-size: 16px;
     transition: all 0.3s ease;
   }
@@ -32,11 +32,6 @@
   margin: 0 auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-}
-
-.custom-toolbar {
-  --background: #{$dark-primary-color};
-  --color: #{$inverse-text-color};
 }
 
 ion-button {
@@ -62,4 +57,63 @@ ion-button {
   ion-icon {
     font-size: 25px;
   }
+}
+
+.phone-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.phone-prefix {
+  background: #{$inverse-text-color};
+  border: 1px solid #{$divider-color};
+  border-radius: 8px;
+  padding: 0 12px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #{$secondary-text-color};
+}
+
+
+// Header
+.back-button-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+
+  ion-back-button {
+    --color: #{$inverse-text-color};
+    --background: transparent;
+    --box-shadow: none;
+    --padding-start: 0;
+  }
+}
+
+.header-text {
+  text-align: center;
+  padding: 60px 20px 20px 20px;
+  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+  color: $inverse-text-color;
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+
+.modal-trigger-container {
+  padding: 16px 20px;
+}
+
+.error-message {
+  color: #{$danger-red};
+  font-size: 13px;
+  margin-top: -10px;
+  margin-bottom: 8px;
+  padding-left: 4px;
 }

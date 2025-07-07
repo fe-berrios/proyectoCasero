@@ -77,7 +77,7 @@ ion-button {
 }
 
 .error-message {
-  color: #e74c3c;
+  color: #{$danger-red};
   font-size: 13px;
   margin-top: -10px;
   margin-bottom: 8px;

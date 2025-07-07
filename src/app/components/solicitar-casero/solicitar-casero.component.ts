@@ -12,6 +12,7 @@ import { SolicitudCaseroService } from 'src/app/services/solicitud-casero.servic
 export class SolicitarCaseroComponent {
   comentario = '';
   telefono = '';
+  telefonoSinPrefijo = '';
   email = '';
   selectedFile: File | null = null;
 
@@ -30,6 +31,64 @@ export class SolicitarCaseroComponent {
   }
 
   async enviarSolicitud() {
+    // Teléfono obligatorio y válido
+    let telefonoValido = true;
+    if (!this.telefonoSinPrefijo || !/^\d{9}$/.test(this.telefonoSinPrefijo)) {
+      telefonoValido = false;
+    }
+    if (!telefonoValido) {
+      const alert = await this.alertCtrl.create({
+        header: 'Error',
+        message: 'El teléfono es obligatorio y debe tener exactamente 9 dígitos numéricos.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      return;
+    }
+    // Concatenar el prefijo +56
+    this.telefono = `+56${this.telefonoSinPrefijo}`;
+
+    // Comentario obligatorio y válido
+    let comentarioValido = true;
+    if (!this.comentario || !/^[^<>{}\[\]"'/\\]{1,500}$/.test(this.comentario) || this.comentario.length > 500) {
+      comentarioValido = false;
+    }
+    if (!comentarioValido) {
+      const alert = await this.alertCtrl.create({
+        header: 'Error',
+        message: 'El comentario es obligatorio, no puede contener los símbolos < > { } [ ] " \' / \\ y debe tener máximo 500 caracteres.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      return;
+    }
+
+    // Documento obligatorio
+    if (!this.selectedFile) {
+      const alert = await this.alertCtrl.create({
+        header: 'Error',
+        message: 'Debes adjuntar un documento (imagen o PDF).',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      return;
+    }
+
+    // Validación del email
+    let emailValido = true;
+    if (!this.email || !/^\S+@\S+\.\S+$/.test(this.email)) {
+      emailValido = false;
+    }
+    if (!emailValido) {
+      const alert = await this.alertCtrl.create({
+        header: 'Error',
+        message: 'Debes ingresar un correo electrónico válido.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      return;
+    }
+
     const user = await this.supabaseService.user;
     if (!user) {
       const alert = await this.alertCtrl.create({
@@ -110,4 +169,15 @@ export class SolicitarCaseroComponent {
 
   await alert.present();
 }
+
+  get isEmailInvalido(): boolean {
+    return !!this.email && !/^\S+@\S+\.\S+$/.test(this.email);
+  }
+
+  get isComentarioInvalido(): boolean {
+    return (
+      !!this.comentario &&
+      (!/^[^<>{}\[\]"'/\\]{0,500}$/.test(this.comentario) || this.comentario.length > 500)
+    );
+  }
 }

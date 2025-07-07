@@ -1,26 +1,38 @@
 <ion-header>
-  <ion-toolbar class="custom-toolbar">
-    <ion-title>Solicitar ser Casero</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+  <!-- Botón de volver atrás -->
+  <div class="back-button-container">
+    <ion-buttons>
+      <ion-back-button defaultHref="/account" (click)="cerrarModal()"></ion-back-button>
     </ion-buttons>
-  </ion-toolbar>
+  </div>
+  <!-- Encabezado -->
+  <div class="header-text">
+    <h2>Solicitar ser Casero</h2>
+  </div>
 </ion-header>
 
 <ion-content class="ion-padding" [fullscreen]="true">
   <form class="admin-form">
 
-    <ion-input type="text" label="Teléfono" label-placement="floating" fill="outline" [(ngModel)]="telefono"
-      name="telefono">
-    </ion-input>
+    <div class="phone-group">
+      <span class="phone-prefix">+56</span>
+      <ion-input type="tel" label="Teléfono" label-placement="floating" fill="outline" [(ngModel)]="telefonoSinPrefijo" name="telefonoSinPrefijo" maxlength="9" pattern="[0-9]*" inputmode="numeric"></ion-input>
+    </div>
+    <div class="error-message" *ngIf="telefonoSinPrefijo && telefonoSinPrefijo.length > 0 && telefonoSinPrefijo.length !== 9">
+      El teléfono debe tener exactamente 9 dígitos numéricos.
+    </div>
 
     <ion-input type="email" label="Correo electrónico" label-placement="floating" fill="outline" [(ngModel)]="email"
-      name="email">
-    </ion-input>
+      name="email"></ion-input>
+    <div class="error-message" *ngIf="isEmailInvalido">
+      Ingresa un correo electrónico válido.
+    </div>
 
     <ion-textarea label="Comentario" label-placement="floating" fill="outline" [(ngModel)]="comentario"
-      name="comentario" rows="4">
-    </ion-textarea>
+      name="comentario" rows="4"></ion-textarea>
+    <div class="error-message" *ngIf="isComentarioInvalido">
+      El comentario no puede contener los símbolos &lt; &gt; {{ '{' }} {{ '}' }} [ ] " ' / \ y debe tener máximo 500 caracteres.
+    </div>
 
     <!-- Label + ícono -->
     <div class="label-with-info">
