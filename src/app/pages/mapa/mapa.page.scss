@@ -27,7 +27,7 @@
 .custom-searchbar {
   display: flex;
   align-items: center;
-  background: #fff;
+  background: #{$inverse-text-color};
   border-radius: 30px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.13);
   padding: 6px 12px 6px 18px;
@@ -52,16 +52,16 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  border: 2.5px solid #4caf50;
+  border: 2.5px solid $primary-color;
   margin-left: 12px;
   object-fit: cover;
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(0,0,0,0.10);
   transition: box-shadow 0.2s;
-  background: #fff;
+  background: #{$inverse-text-color};
 }
 .search-avatar:active {
-  box-shadow: 0 0 0 2px #4caf50;
+  box-shadow: 0 0 0 2px $primary-color;
 }
 
 .autocomplete-list {
@@ -111,7 +111,7 @@
 /* Estilo para los botones */
 ion-button {
     --border-radius: 20px;
-    --background: rgba(255, 255, 255);
+    --background: #{$inverse-text-color};
     --color: rgb(0, 0, 0);
     --box-shadow: none;
     font-weight: bold;
@@ -119,7 +119,7 @@ ion-button {
 
 ion-button.custom-button {
   --border-radius: 18px;
-  --background: #fff;
+  --background: #{$inverse-text-color};
   --color: #222;
   --box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   font-family: 'Inter', sans-serif !important;
@@ -195,7 +195,7 @@ ion-content {
 }
 
 .menu-item {
-  --background: #fff;
+  --background: #{$inverse-text-color};
   --border-radius: 18px;
   --color: $primary-text-color;
   margin-bottom: 10px;
@@ -225,7 +225,7 @@ ion-content {
 
 ion-menu::part(container) {
     border-radius: 0 30px 30px 0;
-    box-shadow: 4px 0px 16px gray;
+    box-shadow: 4px 0px 16px #{$divider-color};
 }
 
 .fab-ubicacion ion-fab-button ion-icon {
