@@ -171,3 +171,19 @@ ion-content {
   --background: #{$dark-primary-color};
   --color: #{$inverse-text-color};
 }
+
+// 11. Estilos para el mapa de Leaflet
+#feriaMap {
+  border: 1px solid #{$divider-color};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  .leaflet-container {
+    border-radius: 8px;
+  }
+  
+  .leaflet-popup-content {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: $primary-text-color;
+  }
+}

@@ -6,6 +6,7 @@ import { ComentarFeriaComponent } from '../comentar-feria/comentar-feria.compone
 import { supabase } from 'src/app/supabase_client'; // Asegúrate de que la ruta sea correcta
 import { SupabaseService } from 'src/app/services/supabase.service'; // Asegúrate de que la ruta sea correcta
 import { FeriaService } from 'src/app/services/feria.service';
+import * as L from 'leaflet';
 
 @Component({
   standalone: false,
@@ -42,6 +43,12 @@ export class FeriaModalComponent {
     const { data: feriaRaw } = await this.feriaService.getFeriaRawById(this.feria.id);
     // Combinar ambos resultados en this.feria
     this.feria = { ...feriaVista, ...feriaRaw };
+    
+    // Inicializar mapa después de obtener los datos
+    setTimeout(() => {
+      this.inicializarMapa();
+    }, 100);
+    
     await this.cargarPuestos();
     await this.cargarComentarios();
   }
@@ -207,6 +214,60 @@ export class FeriaModalComponent {
     }
 
     await this.cargarComentarios();
+  }
+
+  inicializarMapa() {
+    if (!this.feria.lat || !this.feria.lng) return;
+    
+    const map = L.map('feriaMap', {
+      zoomControl: false
+    }).setView([this.feria.lat, this.feria.lng], 15);
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    
+    // Crear icono personalizado
+    const customIcon = L.icon({
+      iconUrl: 'assets/icon/feria-marker.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
+    
+    // Agregar marcador en la ubicación de la feria con icono personalizado
+    L.marker([this.feria.lat, this.feria.lng], { icon: customIcon })
+      .addTo(map);
+    
+    // Guardar referencia a this para usar en el callback
+    const component = this;
+    
+    // Agregar botón de recargar en la esquina superior izquierda
+    const reloadButton = L.Control.extend({
+      options: {
+        position: 'topleft'
+      },
+      
+      onAdd: function() {
+        const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+        const button = L.DomUtil.create('a', 'leaflet-control-zoom-in', container);
+        button.innerHTML = '<ion-icon name="refresh"></ion-icon>';
+        button.title = 'Volver a la ubicación';
+        button.style.width = '30px';
+        button.style.height = '30px';
+        button.style.lineHeight = '30px';
+        button.style.textAlign = 'center';
+        button.style.fontSize = '16px';
+        
+        L.DomEvent.on(button, 'click', function() {
+          map.setView([component.feria.lat, component.feria.lng], 15);
+        });
+        
+        return container;
+      }
+    });
+    
+    map.addControl(new reloadButton());
   }
 
 }
