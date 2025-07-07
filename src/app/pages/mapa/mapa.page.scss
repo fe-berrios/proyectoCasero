@@ -175,7 +175,7 @@ ion-content {
   object-fit: cover;
   margin-bottom: 10px;
   border: 3px solid $light-primary-color;
-  background-color: #fff;
+  background-color: #{$inverse-text-color};
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
 }
 

@@ -4,6 +4,7 @@ import { Profile, SupabaseService } from 'src/app/services/supabase.service'
 import { AlertController } from '@ionic/angular'
 import { ModalController } from '@ionic/angular';
 import { SolicitarCaseroComponent } from 'src/app/components/solicitar-casero/solicitar-casero.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -21,13 +22,42 @@ export class AccountPage implements OnInit {
   }
 
   email = ''
+  form: FormGroup;
 
   constructor(
     private readonly supabase: SupabaseService,
     private router: Router,
     private alertController: AlertController,
-    private modalController: ModalController
-  ) { }
+    private modalController: ModalController,
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      username: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+          Validators.pattern('^[a-zA-Z0-9]+$')
+        ]
+      ],
+      full_name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+          Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s'-]+$/)
+        ]
+      ],
+      phone: [
+        '',
+        [
+          Validators.pattern(/^\d{9}$/)
+        ]
+      ]
+    });
+  }
 
   ngOnInit() {
     this.getEmail()
@@ -49,6 +79,12 @@ export class AccountPage implements OnInit {
           ...profile,
           avatar_url: profile.avatar_url || 'assets/profile_pics/joy.png'
         }
+        // Sincronizar los valores en el formulario reactivo
+        this.form.patchValue({ 
+          username: this.profile.username,
+          full_name: this.profile.full_name,
+          phone: this.profile.phone
+        });
       }
     } catch (error: any) {
       const alert = await this.alertController.create({
@@ -61,10 +97,20 @@ export class AccountPage implements OnInit {
   }
 
   async updateProfile(avatar_url: string = '') {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     const loader = await this.supabase.createLoader()
     await loader.present()
     try {
-      const { error } = await this.supabase.updateProfile({ ...this.profile, avatar_url })
+      // Actualizar los valores desde el formulario reactivo
+      const username = this.form.get('username')?.value;
+      const full_name = this.form.get('full_name')?.value;
+      // Al guardar, concatenar '+56' con el valor del input (o solo '+56' si está vacío)
+      let phone = this.form.get('phone')?.value;
+      phone = phone ? `+56${phone}` : '+56';
+      const { error } = await this.supabase.updateProfile({ ...this.profile, username, full_name, phone, avatar_url })
       if (error) {
         throw error
       }
