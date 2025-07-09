@@ -6,7 +6,7 @@ import { caseroGuard } from './guards/casero.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -47,7 +47,8 @@ const routes: Routes = [
     path: 'administrar-usuarios',
     loadChildren: () => import('./pages/administrar-usuarios/administrar-usuarios.module').then( m => m.AdministrarUsuariosPageModule),
     canActivate: [adminGuard]
-  },  {
+  },
+  {
     path: 'ferias-fav',
     loadChildren: () => import('./pages/ferias-fav/ferias-fav.module').then( m => m.FeriasFavPageModule)
   },

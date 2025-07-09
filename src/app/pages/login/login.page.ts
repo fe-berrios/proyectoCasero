@@ -1,8 +1,9 @@
-import { Component } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { SupabaseService } from 'src/app/services/supabase.service'
-import { AlertController } from '@ionic/angular'
+import { AlertController, Platform } from '@ionic/angular'
 import { Router } from '@angular/router'
 import { supabase } from 'src/app/supabase_client'
+import { App } from '@capacitor/app'
 
 @Component({
   standalone: false,
@@ -10,14 +11,16 @@ import { supabase } from 'src/app/supabase_client'
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage {
+export class LoginPage implements OnInit, OnDestroy {
   email = ''
   showPassword = false
+  private backButtonListener: any;
 
   constructor(
     private readonly supabase: SupabaseService,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
@@ -28,6 +31,21 @@ export class LoginPage {
         this.router.navigate(['/mapa']);
       }
     });
+
+    // Configurar el listener del botón back
+    this.platform.ready().then(() => {
+      this.backButtonListener = App.addListener('backButton', () => {
+        // Salir de la app cuando se presiona back desde login
+        App.exitApp();
+      });
+    });
+  }
+
+  ngOnDestroy() {
+    // Limpiar el listener cuando se destruye el componente
+    if (this.backButtonListener) {
+      this.backButtonListener.remove();
+    }
   }
 
   async handleLogin(event: any) {
