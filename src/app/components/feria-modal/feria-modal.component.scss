@@ -170,6 +170,11 @@ ion-content {
 .custom-toolbar {
   --background: #{$dark-primary-color};
   --color: #{$inverse-text-color};
+  min-height: 80px; // Ajusta la altura según lo que necesites
+  height: 80px;     // O usa height fijo si prefieres
+  display: flex;
+  align-items: flex-end; // Opcional: alinea el contenido abajo
+  padding-bottom: 12px;  // Opcional: agrega espacio inferior
 }
 
 // 11. Estilos para el mapa de Leaflet

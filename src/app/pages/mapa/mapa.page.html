@@ -4,6 +4,7 @@
       <img [src]="profileImgUrl" alt="Foto de perfil" class="profile-img" />
       <div class="profile-info" *ngIf="!loading">
         <div class="profile-greeting">¡Hola, {{ userName || 'Usuario' }}!</div>
+        <div class="profile-message">Bienvenido a Casero</div>
       </div>
     </div>
 
@@ -47,9 +48,16 @@
 <ion-content id="main-content" [fullscreen]="true">
   <div class="buscador">
     <div class="custom-searchbar">
-      <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" placeholder="Buscar feria"
-        class="search-input" autocomplete="off" />
-      <img src="assets/icon/casero_logo.png" alt="Logo Casero" class="casero-logo" (click)="onProfileClick()" />
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        placeholder="Buscar feria"
+        class="search-input"
+        autocomplete="off"
+      />
+      <img [src]="profileImgUrl" alt="Foto de perfil" class="casero-logo" (click)="onProfileClick()" />
     </div>
 
     <!-- Lista de sugerencias -->
@@ -61,9 +69,9 @@
   </div>
 
   <div class="botones-badges">
-    <ion-button class="custom-button" (click)="openDaySelector()">Día</ion-button>
-    <ion-button class="custom-button" (click)="filterByHorario()">Horario</ion-button>
-    <ion-button class="custom-button" (click)="filtrarPorCalificacion()">Calificación</ion-button>
+    <ion-button fill="outline" class="custom-button" (click)="openDaySelector()">Día</ion-button>
+    <ion-button fill="outline" class="custom-button" (click)="filterByHorario()">Horario</ion-button>
+    <ion-button fill="outline" class="custom-button" (click)="filtrarPorCalificacion()">Calificación</ion-button>
   </div>
 
   <div id="map"></div>

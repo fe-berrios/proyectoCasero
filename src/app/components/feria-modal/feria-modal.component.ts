@@ -223,7 +223,7 @@ export class FeriaModalComponent {
       zoomControl: false
     }).setView([this.feria.lat, this.feria.lng], 15);
     
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
     

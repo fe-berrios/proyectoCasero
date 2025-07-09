@@ -15,7 +15,7 @@
 /* Google Maps-style search bar */
 .buscador {
   position: absolute;
-  top: 30px;
+  top: 50px;
   left: 0;
   right: 0;
   z-index: 1100;
@@ -96,7 +96,7 @@
 /* Contenedor de los botones */
 .botones-badges {
   position: absolute;
-  top: calc(30px + 52px + 6px); /* searchbar top + height + margin */
+  top: calc(50px + 52px + 6px); /* searchbar top + height + margin */
   left: 0;
   right: 0;
   display: flex;
@@ -106,6 +106,7 @@
   font-family: 'Inter', sans-serif !important;
   margin-top: 0;
   padding-top: 0;
+  font-size: 0.98rem;
 }
 
 /* Estilo para los botones */
@@ -117,14 +118,20 @@ ion-button {
     font-weight: bold;
 }
 
+.botones-badges ion-button,
+ion-button.custom-button {
+  --border: 2px solid rgb(190, 190, 190) !important; // Cambia #e53935 por el color que prefieras
+  --ion-color-primary: rgb(190, 190, 190) !important; // Opcional, para asegurar el color en outline
+}
+
 ion-button.custom-button {
   --border-radius: 18px;
   --background: #{$inverse-text-color};
   --color: #222;
   --box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   font-family: 'Inter', sans-serif !important;
-  font-size: 0.98rem;
-  font-weight: 500;
+  font-size: 0.78rem;
+  /*font-weight: 500;*/
   padding: 0 18px;
   min-width: 0;
   height: 36px;
@@ -159,9 +166,10 @@ ion-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, $dark-primary-color 60%, $primary-color 100%);
+  /*background: linear-gradient(135deg, $dark-primary-color 60%, $primary-color 100%);*/
+  background: url('/assets/img/fondo.png') center center/cover no-repeat;
   padding: 32px 0 22px 0;
-  border-bottom-left-radius: 32px;
+  border-bottom-left-radius: 0px;
   border-bottom-right-radius: 32px;
   color: $inverse-text-color;
   margin-bottom: 0;
@@ -182,6 +190,15 @@ ion-content {
 .profile-greeting {
   font-size: 1.18rem;
   font-weight: 600;
+  margin-top: 2px;
+  color: $inverse-text-color;
+  font-family: 'Inter', sans-serif !important;
+  text-align: center;
+}
+
+.profile-message {
+  font-size: 1.00rem;
+  font-weight: 300;
   margin-top: 2px;
   color: $inverse-text-color;
   font-family: 'Inter', sans-serif !important;
@@ -233,7 +250,10 @@ ion-menu::part(container) {
 }
 
 .fab-ubicacion ion-fab-button {
-    --background: rgba(255, 255, 255, 0.5);
+    border: solid 2px rgb(190, 190, 190) !important; // Cambia #e53935 por el color que prefieras
+    border-radius: 50% !important;
+    box-sizing: border-box;
+    --background: rgba(255, 255, 255, 1);
     --box-shadow: none !important;
     --color: $primary-text-color !important;
     font-size: 50px !important; // tamaño del ícono
@@ -247,12 +267,25 @@ ion-menu::part(container) {
 
 .fab-ubicacion {
     bottom: 25px !important;
+    right: 15px !important;
     /* mueve todo el FAB hacia arriba */
 }
 
+.fab-cambiar-mapa ion-fab-button {
+    border: solid 2px rgb(190, 190, 190) !important;
+    border-radius: 50% !important;
+    box-sizing: border-box;
+    --background: rgba(255, 255, 255, 1);
+    --box-shadow: none !important;
+    --color: $primary-text-color !important;
+    font-size: 50px !important;
+    width: 50px !important;
+    height: 50px !important;
+}
+
 .fab-cambiar-mapa {
-    bottom: 100px !important; // 25px + 50px (altura botón ubicación) + 10px espacio
-    right: 25px;
+    bottom: 85px !important; // 25px + 50px (altura botón ubicación) + 10px espacio
+    right: 15px;
 }
 
 .custom-button {
@@ -294,14 +327,14 @@ ion-menu::part(container) {
 
 .fab-menu-small {
     position: relative;
-    top: 15px;
-    left: 9px;
+    /*top: 15px;
+    left: 9px;*/
     width: 35px !important; // ancho deseado
     height: 35px !important; // alto deseado
     min-width: 35px !important;
     min-height: 35px !important;
     --border-radius: 10px; // opcional, para que siga con esquinas redondeadas pero menos grandes
-    --background: transparent !important; // fondo transparente para que se vea el mapa
+    /*--background: transparent !important; // fondo transparente para que se vea el mapa*/
     --border-radius: 50% !important; // Para que sea redondo
     --box-shadow: none !important; // Sin sombra para que se vea el mapa
 
@@ -312,10 +345,11 @@ ion-menu::part(container) {
     }
 }
 
-/* Remove default searchbar styles if present */
+/*
 ion-searchbar, .custom-searchbar ion-icon, .custom-searchbar .mic-icon {
   display: none !important;
 }
+*/
 
 /* Leaflet attribution control style */
 .leaflet-control-attribution {
@@ -334,18 +368,30 @@ ion-searchbar, .custom-searchbar ion-icon, .custom-searchbar .mic-icon {
 
 /* Logo Casero en barra de búsqueda */
 .casero-logo {
+  border: 2px solid $primary-color; /* Borde del logo */
   width: 36px;
   height: 36px;
   border-radius: 50%; /* Para mantener proporción, pero sin borde */
-  object-fit: contain;
+  object-fit: cover;
   margin-left: 12px;
   background: transparent;
   box-shadow: none;
-  border: none;
+  /*border: none;*/
   cursor: pointer;
   transition: filter 0.15s;
   padding: 0;
 }
+
+.search-icon {
+  font-size: 1.3rem;
+  color: #888;
+  margin-right: 10px;
+  margin-left: 2px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
 .casero-logo:active {
   filter: brightness(0.92);
 }
@@ -357,6 +403,64 @@ ion-searchbar, .custom-searchbar ion-icon, .custom-searchbar .mic-icon {
 
 .search-input {
   font-family: 'Inter', sans-serif !important;
+}
+
+.menu-item {
+  // ...existing code...
+  border: 2px solid rgb(190, 190, 190); // Mismo color que los botones filtro
+  border-radius: 18px; // Igual que los botones filtro
+  background: #{$inverse-text-color};
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+}
+
+::ng-deep .custom-alert .alert-wrapper {
+  border: 2px solid $dark-primary-color;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  font-family: 'Inter', sans-serif !important;
+}
+
+::ng-deep .custom-alert .alert-head {
+  color: #388e3c;
+  font-weight: bold;
+  font-size: 1.15rem;
+}
+
+::ng-deep .custom-alert .alert-radio-group .alert-radio-button {
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  min-height: 32px !important;
+  padding: 2px 0 !important;
+}
+
+::ng-deep .custom-alert .alert-radio-icon {
+  margin-right: 24px !important;
+}
+
+::ng-deep .custom-alert .alert-radio-label {
+  font-size: 1rem !important;
+  padding: 0 8px !important;
+  flex: 1 1 auto;
+  text-align: left;
+}
+
+::ng-deep .custom-alert .alert-button {
+  min-width: 100px; /* Opcional: igual ancho para ambos */
+  text-align: center;
+  margin: 0 !important;
+  color: #388e3c;
+  font-weight: 300;
+  font-family: 'Inter', sans-serif !important;
+}
+
+::ng-deep .custom-alert .alert-button-group {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 20px !important; /* Ajusta el espacio entre los botones */
+  padding: 0 0 12px 0 !important; /* Opcional: agrega espacio inferior */
 }
 
 :host, ion-content, .custom-menu, .profile-container, .profile-info, .profile-greeting, .menu-options, .menu-item, .menu-item ion-label, .menu-item ion-icon, .buscador, .custom-searchbar, .search-input, .casero-logo, .autocomplete-list, .botones-badges, ion-button, h1, h2, h3, h4, h5, h6, p, label, span, ion-label, ion-item, ion-list {

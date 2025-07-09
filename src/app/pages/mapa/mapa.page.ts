@@ -104,7 +104,7 @@ export class MapaPage implements OnInit, OnDestroy {
     });
 
     // Define solo dos capas base
-    const openStreetMap = leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const openStreetMap = leaflet.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
       maxZoom: 19,
       attribution: '© OpenStreetMap',
     });
@@ -164,6 +164,7 @@ export class MapaPage implements OnInit, OnDestroy {
   public async openDaySelector() {
     const alert = await this.alertCtrl.create({
       header: 'Selecciona un día',
+      cssClass: 'custom-alert',
       inputs: [
         { type: 'radio', label: 'Lunes', value: 'lun' },
         { type: 'radio', label: 'Martes', value: 'mar' },
@@ -216,6 +217,7 @@ export class MapaPage implements OnInit, OnDestroy {
   public async filterByHorario() {
     const alert = await this.alertCtrl.create({
       header: 'Selecciona un rango de horario',
+      cssClass: 'custom-alert',
       inputs: [
         { type: 'time', label: 'Hora Inicio', name: 'horaInicio', placeholder: '08:00' },
         { type: 'time', label: 'Hora Término', name: 'horaTermino', placeholder: '18:00' },
@@ -420,6 +422,7 @@ export class MapaPage implements OnInit, OnDestroy {
   public async filtrarPorCalificacion() {
     const alert = await this.alertCtrl.create({
       header: 'Filtrar por calificación mínima',
+      cssClass: 'custom-alert',
       inputs: [
         { type: 'radio', label: '🍅', value: 1 },
         { type: 'radio', label: '🍅🍅', value: 2 },
