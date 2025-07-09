@@ -38,10 +38,32 @@
         <ion-item lines="none">
           <ion-label><strong>Hora término:</strong> {{ feria.hora_termino }}</ion-label>
         </ion-item>
-
-        <ion-item lines="none">
-          <ion-label><strong>Día(s):</strong> {{ feria.dia }}</ion-label>
-        </ion-item>
+        
+        <div class="dias-semana-container">
+          <div class="dias-semana-bar">
+            <div class="dia-item" [class.activo]="isDiaActivo('lun')">
+              <span class="dia-corto">Lun</span>
+            </div>
+            <div class="dia-item" [class.activo]="isDiaActivo('mar')">
+              <span class="dia-corto">Mar</span>
+            </div>
+            <div class="dia-item" [class.activo]="isDiaActivo('mie')">
+              <span class="dia-corto">Mié</span>
+            </div>
+            <div class="dia-item" [class.activo]="isDiaActivo('jue')">
+              <span class="dia-corto">Jue</span>
+            </div>
+            <div class="dia-item" [class.activo]="isDiaActivo('vie')">
+              <span class="dia-corto">Vie</span>
+            </div>
+            <div class="dia-item" [class.activo]="isDiaActivo('sab')">
+              <span class="dia-corto">Sáb</span>
+            </div>
+            <div class="dia-item" [class.activo]="isDiaActivo('dom')">
+              <span class="dia-corto">Dom</span>
+            </div>
+          </div>
+        </div>
       </ion-card-content>
     </ion-card>
 

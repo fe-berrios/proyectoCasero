@@ -270,4 +270,13 @@ export class FeriaModalComponent {
     map.addControl(new reloadButton());
   }
 
+  // Método para verificar si un día está activo
+  isDiaActivo(dia: string): boolean {
+    if (!this.feria?.dia) return false;
+    
+    // Convertir el string de días a un array y verificar si contiene el día
+    const diasArray = this.feria.dia.split(' - ');
+    return diasArray.includes(dia);
+  }
+
 }

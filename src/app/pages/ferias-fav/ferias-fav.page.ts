@@ -77,4 +77,13 @@ export class FeriasFavPage implements OnInit {
     });
     await alert.present();
   }
+
+  // Método para verificar si un día está activo
+  isDiaActivo(diasString: string, dia: string): boolean {
+    if (!diasString) return false;
+    
+    // Convertir el string de días a un array y verificar si contiene el día
+    const diasArray = diasString.split(' - ');
+    return diasArray.includes(dia);
+  }
 }
