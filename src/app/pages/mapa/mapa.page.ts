@@ -454,6 +454,74 @@ export class MapaPage implements OnInit, OnDestroy {
     await alert.present();
   }
 
+  // Método para mostrar un alert para filtrar por comuna
+  public async filtrarPorComuna() {
+    // Obtener comunas disponibles
+    const comunas = await this.feriaService.getComunasDisponibles();
+    
+    if (comunas.length === 0) {
+      this.mostrarToast('No hay comunas disponibles');
+      return;
+    }
+
+    const inputs = comunas.map(comuna => ({
+      type: 'radio' as const,
+      label: comuna,
+      value: comuna
+    }));
+
+    const alert = await this.alertCtrl.create({
+      header: 'Filtrar por comuna',
+      cssClass: 'custom-alert',
+      inputs: inputs,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: async () => {
+            await this.loadFerias(); // Cargar todas las ferias
+          },
+        },
+        {
+          text: 'Aceptar',
+          handler: async (selectedComuna) => {
+            if (selectedComuna) {
+              await this.loadFeriasPorComuna(selectedComuna);
+            } else {
+              this.mostrarToast('Por favor selecciona una comuna');
+            }
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  // Método para cargar ferias filtradas por comuna
+  private async loadFeriasPorComuna(comuna: string) {
+    const { data: ferias, error } = await this.feriaService.getFeriasPorComuna(comuna);
+    
+    if (error) {
+      console.error('Error al cargar ferias por comuna:', error);
+      this.mostrarToast('Error al cargar ferias filtradas');
+      return;
+    }
+
+    this.clearMarkers();
+
+    ferias?.forEach((feria: any) => {
+      // Agregar calificación por defecto ya que viene de la tabla ferias
+      const feriaConCalificacion = {
+        ...feria,
+        calificacion: 0 // Valor por defecto para ferias sin calificación
+      };
+      this.addMarker(feriaConCalificacion);
+    });
+
+    this.mostrarToast(`Mostrando ferias de ${comuna}`);
+  }
+
   onProfileClick() {
     this.menuCtrl.open('main-menu');
   }

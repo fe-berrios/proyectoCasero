@@ -100,13 +100,14 @@
   left: 0;
   right: 0;
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  justify-content: space-between; /* Distribuir uniformemente */
+  gap: 6px; /* Espacio entre botones */
   z-index: 1000;
   font-family: 'Inter', sans-serif !important;
   margin-top: 0;
   padding-top: 0;
-  font-size: 0.98rem;
+  padding-left: 16px; /* Margen izquierdo */
+  padding-right: 16px; /* Margen derecho */
 }
 
 /* Estilo para los botones */
@@ -130,16 +131,27 @@ ion-button.custom-button {
   --color: #222;
   --box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   font-family: 'Inter', sans-serif !important;
-  font-size: 0.78rem;
-  /*font-weight: 500;*/
-  padding: 0 18px;
-  min-width: 0;
-  height: 36px;
-  margin: 0;
+  font-size: 0.8rem; /* Tamaño de fuente ajustado */
+  font-weight: 500;
+  padding: 0 8px; /* Padding reducido */
+  min-width: 0; /* Sin ancho mínimo para que sea flexible */
+  height: 36px; /* Altura reducida */
+  margin: 0; /* Sin márgenes */
   letter-spacing: 0.01em;
   display: flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap; /* Evitar que el texto se corte */
+  overflow: hidden; /* Ocultar texto que se desborde */
+  text-overflow: ellipsis; /* Mostrar ... si el texto es muy largo */
+  flex: 1; /* Que cada botón ocupe el mismo espacio */
+}
+
+/* Estilo específico para botones dentro del contenedor de badges */
+.botones-badges ion-button.custom-button {
+  margin: 0; /* Sin márgenes */
+  flex: 1; /* Que cada botón ocupe el mismo espacio */
+  max-width: none; /* Sin límite de ancho máximo */
 }
 
 /* Asegura que el contenido ocupe todo el espacio */

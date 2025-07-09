@@ -31,7 +31,14 @@ export class FeriasFavPage implements OnInit {
     if (this.userId) {
       const { data, error } = await this.feriaService.getFeriasFavoritas(this.userId);
       if (!error) {
-        this.feriasFav = data.map((f: any) => f.feria_con_calificacion);
+        this.feriasFav = data.map((f: any) => {
+          // Combinar datos de la vista con calificación y la tabla ferias
+          const feriaCompleta = {
+            ...f.feria_con_calificacion, // Datos con calificación
+            ...f.ferias // Datos de la tabla ferias (comuna, calle_principal)
+          };
+          return feriaCompleta;
+        });
       }
     }
   }

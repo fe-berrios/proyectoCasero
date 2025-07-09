@@ -23,17 +23,25 @@
       </ion-card-header>
       <ion-card-content>
         <div class="info-row">
+          <ion-icon name="business-outline"></ion-icon>
+          <span><strong>Comuna:</strong> {{ feria.comuna || 'No especificada' }}</span>
+        </div>
+        <div class="info-row">
+          <ion-icon name="navigate-outline"></ion-icon>
+          <span><strong>Calle Principal:</strong> {{ feria.calle_principal || 'No especificada' }}</span>
+        </div>
+        <div class="info-row">
           <ion-icon name="calendar-outline"></ion-icon>
-          <span>Día(s): {{ feria.dia }}</span>
+          <span><strong>Día(s):</strong> {{ feria.dia }}</span>
         </div>
         <div class="info-row">
           <ion-icon name="time-outline"></ion-icon>
-          <span>Horario: {{ feria.hora_inicio }} - {{ feria.hora_termino }}</span>
+          <span><strong>Horario:</strong> {{ feria.hora_inicio }} - {{ feria.hora_termino }}</span>
         </div>
         <ng-container *ngIf="feria.calificacion !== null && feria.calificacion !== undefined">
           <div class="info-row">
             <ion-icon name="star"></ion-icon>
-            <span>
+            <span><strong>Calificación:</strong>
               <ng-container *ngFor="let i of [1,2,3,4,5]">
                 <img [src]="i <= feria.calificacion ? 'assets/icon/rank-mark.png' : 'assets/icon/rank-unmark.png'"
                   alt="estrella" class="rating-icon" />

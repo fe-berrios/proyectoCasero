@@ -137,7 +137,36 @@ export class FeriaService {
   async getFeriasFavoritas(userId: string) {
     return supabase
       .from('ferias_fav')
-      .select('feria_id, feria_con_calificacion:feria_id(*)')
+      .select(`
+        feria_id, 
+        feria_con_calificacion:feria_id(*),
+        ferias:feria_id(id, nombre, lat, lng, hora_inicio, hora_termino, dia, comuna, calle_principal)
+      `)
       .eq('user_id', userId);
+  }
+
+  // Obtener ferias filtradas por comuna
+  async getFeriasPorComuna(comuna: string) {
+    return supabase
+      .from('ferias')
+      .select('*')
+      .eq('comuna', comuna);
+  }
+
+  // Obtener todas las comunas disponibles
+  async getComunasDisponibles() {
+    const { data, error } = await supabase
+      .from('ferias')
+      .select('comuna')
+      .not('comuna', 'is', null);
+    
+    if (error) {
+      console.error('Error al obtener comunas:', error);
+      return [];
+    }
+    
+    // Obtener comunas únicas y ordenadas
+    const comunasUnicas = [...new Set(data?.map((item: any) => item.comuna).filter(Boolean))];
+    return comunasUnicas.sort();
   }
 }
