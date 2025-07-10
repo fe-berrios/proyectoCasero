@@ -10,11 +10,13 @@
   <div class="header-background">
     <div class="profile-image-container" (click)="goToAvatar()">
       <img [src]="profile.avatar_url" alt="Foto de perfil" class="profile-image" />
-      <p class="change-picture-text">Cambiar foto</p>
+      <span class="pill change-picture-text">Cambiar foto</span>
     </div>
   </div>
 
   <!-- Formulario -->
+  <div class="feria-container">
+  <ion-card>
   <form class="profile-form" [formGroup]="form">
     <ion-input type="email" label="E-mail" label-placement="floating" fill="outline" [(ngModel)]="email" name="email" readonly [ngModelOptions]="{standalone: true}"></ion-input>
 
@@ -44,13 +46,14 @@
       <ng-container *ngIf="form.get('phone')?.errors?.['pattern']">El teléfono debe tener exactamente 9 dígitos numéricos.</ng-container>
     </div>
 
-    <!-- Código casero solo como label, no editable -->
-    <ion-item>
-      <ion-label>
-        <h2>Código Casero</h2>
-        <p>{{ profile.codigo_casero || 'No asignado' }}</p>
-      </ion-label>
-    </ion-item>
+    <ion-input
+      type="text"
+      label="Código Casero"
+      label-placement="floating"
+      fill="outline"
+      [readonly]="true"
+      [value]="profile.codigo_casero || 'No asignado'">
+    </ion-input>
 
     <ion-button shape="round" class="update-button" (click)="updateProfile()">
       Actualizar
@@ -61,4 +64,6 @@
     </ion-button>
 
   </form>
+  </ion-card>
+  </div>
 </ion-content>

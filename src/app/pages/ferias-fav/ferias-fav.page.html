@@ -22,29 +22,30 @@
         </ion-button>
       </ion-card-header>
       <ion-card-content>
-        <div class="info-row">
+        <div class="comuna-feria">
           <ion-icon name="business-outline"></ion-icon>
-          <span><strong>Comuna:</strong> {{ feria.comuna || 'No especificada' }}</span>
+          {{ feria.comuna || 'No especificada' }}
         </div>
-        <div class="info-row">
+        <div class="comuna-feria">
           <ion-icon name="navigate-outline"></ion-icon>
-          <span><strong>Calle Principal:</strong> {{ feria.calle_principal || 'No especificada' }}</span>
+          {{ feria.calle_principal || 'No especificada' }}
         </div>
-        <div class="info-row">
+        <div class="comuna-feria">
           <ion-icon name="time-outline"></ion-icon>
-          <span><strong>Horario:</strong> {{ feria.hora_inicio }} - {{ feria.hora_termino }}</span>
+          {{ feria.hora_inicio }} - {{ feria.hora_termino }}
         </div>
+
+        <!--
         <ng-container *ngIf="feria.calificacion !== null && feria.calificacion !== undefined">
-          <div class="info-row">
+          <div class="comuna-feria">
             <ion-icon name="star"></ion-icon>
-            <span><strong>Calificación:</strong>
               <ng-container *ngFor="let i of [1,2,3,4,5]">
                 <img [src]="i <= feria.calificacion ? 'assets/icon/rank-mark.png' : 'assets/icon/rank-unmark.png'"
                   alt="estrella" class="rating-icon" />
               </ng-container>
-            </span>
           </div>
         </ng-container>
+        -->
         <div class="dias-semana-container">
           <div class="dias-semana-bar">
             <div class="dia-item" [class.activo]="isDiaActivo(feria.dia, 'lun')">

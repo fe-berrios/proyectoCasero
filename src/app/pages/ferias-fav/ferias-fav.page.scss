@@ -1,12 +1,8 @@
 @use 'src/theme/variables' as *;
 
-:host {
-  font-family: 'Roboto', sans-serif;
-}
-
 .back-button-container {
   position: absolute;
-  top: 10px;
+  top: 35px;
   left: 10px;
   z-index: 10;
 
@@ -21,17 +17,18 @@
 .admin-header {
   text-align: center;
   padding: 60px 20px 20px 20px;
-  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+  background: url('/assets/img/fondo.png') center center/cover no-repeat;
   color: $inverse-text-color;
 
   h2 {
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
     margin: 0;
   }
 }
 
 .custom-card {
+  border: 2px solid rgb(190, 190, 190);
   background-color: rgba(200, 230, 201, 0.5);
   margin-bottom: 15px;
   border-radius: 12px;
@@ -81,6 +78,12 @@
     font-size: 1.2rem;
     min-width: 22px;
   }
+}
+
+.comuna-feria {
+  font-size: 0.8rem;
+  color: $secondary-text-color;
+  margin-top: 4px;
 }
 
 .rating-icon {
@@ -152,4 +155,9 @@
       color: $primary-color;
     }
   }
+}
+
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
 }

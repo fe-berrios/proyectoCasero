@@ -40,7 +40,7 @@
           </div>
 
           </ion-label>
-          <ion-button fill="clear" slot="end" (click)="toggleFavorita()" *ngIf="userId" class="bookmark-button">
+          <ion-button fill="clear" slot="end" (click)="toggleFavorita()" *ngIf="userId && !isInvitado" class="bookmark-button">
             <ion-icon [name]="esFavorita ? 'bookmark' : 'bookmark-outline'" class="bookmark-icon"></ion-icon>
           </ion-button>
         </ion-item>

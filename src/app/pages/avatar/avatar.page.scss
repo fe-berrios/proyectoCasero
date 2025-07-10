@@ -2,7 +2,7 @@
 
 .back-button-container {
     position: absolute;
-    top: 10px;
+    top: 35px;
     left: 10px;
     z-index: 10;
 
@@ -17,11 +17,11 @@
 .avatar-header {
     text-align: center;
     padding: 60px 20px 20px 20px;
-    background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+    background: url('/assets/img/fondo.png') center center/cover no-repeat;
     color: $inverse-text-color;
 
     h2 {
-        font-size: 24px;
+        font-size: 16px;
         font-weight: bold;
         margin: 0;
     }
@@ -84,4 +84,9 @@
     --color: #{$inverse-text-color};
     display: block; /* Asegúrate de que sea un bloque */
     width: 50%; /* O cualquier ancho que prefieras */
+}
+
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
 }

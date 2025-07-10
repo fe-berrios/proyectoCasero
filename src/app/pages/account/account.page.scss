@@ -2,7 +2,7 @@
 
 .back-button-container {
   position: absolute;
-  top: 10px;
+  top: 35px;
   left: 10px;
   z-index: 10;
 
@@ -15,7 +15,7 @@
 }
 
 .header-background {
-  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+  background: url('/assets/img/fondo.png') center center/cover no-repeat;
   height: 180px;
   display: flex;
   justify-content: center;
@@ -24,8 +24,10 @@
 }
 
 .profile-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  transform: translateY(50%);
 }
 
 .profile-image {
@@ -45,7 +47,7 @@
 }
 
 .profile-form {
-  padding: 90px 16px 16px 16px;
+  padding: 16px 16px 16px 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -100,4 +102,81 @@ ion-button {
   align-items: center;
   font-size: 16px;
   color: #{$secondary-text-color};
+}
+
+.pill {
+  display: inline-block;
+  border: solid 1px #{$dark-primary-color};
+  background: $primary-color; /* color de fondo suave, puedes cambiarlo */
+  color: $light-primary-color;      /* color de texto, puedes cambiarlo */
+  border-radius: 999px;
+  padding: 4px 16px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-top: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.pill:hover {
+  background: #b2dfdb;
+}
+
+.feria-container {
+  margin-top: 12px;
+
+  // 3.1. Card de información de la feria
+  ion-card {
+    border-radius: 12px;
+    border: 2px solid rgb(190, 190, 190);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+
+    ion-card-header {
+      background: $light-primary-color;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+
+      ion-card-title {
+        color: $primary-text-color;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: left;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  // 3.2. Item de header de la feria (favorito)
+  .feria-header-item {
+    --background: transparent !important;
+    --ion-item-background: transparent !important;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --inner-padding-start: 0;
+    --min-height: 0;
+    --border-width: 0;
+    box-shadow: none !important;
+  }
+
+  // 3.3. Items de información de la feria
+  ion-card ion-card-content ion-item {
+    --background: transparent;
+    --inner-padding-end: 0;
+    --inner-padding-start: 0;
+    font-size: 16px;
+
+    ion-label {
+      color: $primary-text-color;
+    }
+
+    ion-icon {
+      color: $primary-color; // Color de íconos dentro del contenido
+    }
+  }
+}
+
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
 }
