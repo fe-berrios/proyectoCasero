@@ -25,6 +25,7 @@ export class PuestoDetalleModalComponent implements OnInit {
 
   reviews: ReviewWithUser[] = [];
   tipoBadges: { nombre: string, imagen: string }[] = [];
+  isInvitado = false;
 
   constructor(
     private modalCtrl: ModalController,
@@ -38,6 +39,7 @@ export class PuestoDetalleModalComponent implements OnInit {
   async ngOnInit() {
     await this.cargarPuesto();
     await this.cargarReviewsConUsuarios();
+    this.isInvitado = localStorage.getItem('casero_invitado') === 'true';
   }
 
   private async cargarPuesto() {

@@ -2,19 +2,23 @@
   <ion-content class="custom-menu">
     <div class="profile-container">
       <img [src]="profileImgUrl" alt="Foto de perfil" class="profile-img" />
-      <div class="profile-info" *ngIf="!loading">
+      <div class="profile-info" *ngIf="!loading && !isInvitado">
         <div class="profile-greeting">¡Hola, {{ userName || 'Usuario' }}!</div>
         <div class="profile-message">Bienvenido a Casero</div>
+      </div>
+      <div class="profile-info" *ngIf="!loading && isInvitado">
+        <div class="profile-greeting">¡Hola, Vecino!</div>
+        <div class="profile-message">Cree una cuenta para acceder a todas las funcionalidades de Casero!</div>
       </div>
     </div>
 
     <ion-list class="menu-options">
       <!-- Botones Publicos -->
-      <ion-item class="menu-item" routerLink="/account">
+      <ion-item class="menu-item" *ngIf="!isInvitado" routerLink="/account">
         <ion-icon name="person" slot="start"></ion-icon>
         <ion-label>Mi Perfil</ion-label>
       </ion-item>
-      <ion-item class="menu-item" routerLink="/ferias-fav">
+      <ion-item class="menu-item" *ngIf="!isInvitado" routerLink="/ferias-fav">
         <ion-icon name="bookmark" slot="start"></ion-icon>
         <ion-label>Ferias Favoritas</ion-label>
       </ion-item>

@@ -32,6 +32,7 @@ export class MapaPage implements OnInit, OnDestroy {
   currentTileLayerIndex: number = 0;
   private shouldCenterOnLocation: boolean = false;
   private backButtonListener: any;
+  isInvitado = false;
 
   constructor(
     private router: Router,
@@ -68,14 +69,22 @@ export class MapaPage implements OnInit, OnDestroy {
     this.loadFerias();
     this.subscribeToNewFerias();
 
-    this.supabase.profile.then((response) => {
-      const profile = response.data;
-      this.isAdmin = profile?.admin_status === true;
-      this.isCasero = profile?.casero_status === true; // <-- Agregado
-      this.userName = profile?.full_name || 'Usuario';
-      this.profileImgUrl = profile?.avatar_url || 'assets/profile_pics/loading.svg';
+    this.isInvitado = localStorage.getItem('casero_invitado') === 'true';
+    
+
+    if (this.isInvitado) {
+      this.profileImgUrl = 'assets/profile_pics/joy.png';
       this.loading = false;
-    });
+    } else {
+      this.supabase.profile.then((response) => {
+        const profile = response.data;
+        this.isAdmin = profile?.admin_status === true;
+        this.isCasero = profile?.casero_status === true;
+        this.userName = profile?.full_name || 'Usuario';
+        this.profileImgUrl = profile?.avatar_url || 'assets/profile_pics/loading.svg';
+        this.loading = false;
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -210,6 +219,7 @@ export class MapaPage implements OnInit, OnDestroy {
 
   async signOut() {
     console.log('testing?');
+    localStorage.removeItem('casero_invitado');
     await this.supabase.signOut();
     this.router.navigate(['/'], { replaceUrl: true });
   }

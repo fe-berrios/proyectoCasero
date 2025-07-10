@@ -48,6 +48,11 @@ export class LoginPage implements OnInit, OnDestroy {
     }
   }
 
+  entrarComoInvitado() {
+    localStorage.setItem('casero_invitado', 'true');
+    this.router.navigate(['/mapa']);
+  }
+
   async handleLogin(event: any) {
     event.preventDefault();
 

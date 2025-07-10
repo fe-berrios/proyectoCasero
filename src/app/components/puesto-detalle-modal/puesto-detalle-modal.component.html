@@ -10,51 +10,44 @@
 <ion-content class="ion-padding" [fullscreen]="true">
   <ng-container *ngIf="puesto">
 
+    <!-- card de feria -->
+    <div class="feria-container">
     <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{ puesto.nombre }}</ion-card-title>
+      <ion-card-header class="feria-card-header">
+        <ion-item lines="none" class="feria-header-item">
+          <ion-label>
+            <ion-card-title>{{puesto.nombre}}</ion-card-title>
+            <!-- Nombre comuna -->
+           <div *ngIf="nombreFeria && puesto.ubicacion" class="comuna-feria">
+            <ion-icon name="location-outline"></ion-icon>
+            {{ nombreFeria || 'No especificada' }}, {{ puesto.ubicacion || 'No especificada' }}</div>
+
+          </ion-label>
+        </ion-item>
       </ion-card-header>
-    </ion-card>
 
-    <div class="puesto-image-container" *ngIf="puesto.img_url">
-      <img [src]="puesto.img_url" alt="Imagen del Puesto" class="puesto-image" />
-    </div>
-
-    <!-- Badges tipo de producto -->
-    <ion-card *ngIf="tipoBadges.length > 0">
-      <ion-card-content class="badges-container">
-        <div class="badge" *ngFor="let tipo of tipoBadges">
-          <img [src]="tipo.imagen" [alt]="tipo.nombre" />
+      <ion-card-content>
+        <!-- Mapa de ubicación -->
+        <div class="puesto-image-container" *ngIf="puesto.img_url">
+          <img [src]="puesto.img_url" alt="Imagen del Puesto" class="puesto-image" />
         </div>
-      </ion-card-content>
-    </ion-card>
+        <!--<div id="feriaMap" style="width: 100%; height: 200px; margin: 16px 0 16px 0; border-radius: 8px;"></div>-->
+        <div *ngIf ="puesto.descripcion" class="comuna-feria descripcion-linea">
+          <ion-icon name="newspaper-outline"></ion-icon>
+          <ion-label>{{puesto.descripcion}}</ion-label>
+        </div>
 
-    <ion-card *ngIf="puesto.descripcion">
-      <ion-card-content>
-        <ion-item lines="none">
-          <ion-icon name="newspaper-outline" slot="start"></ion-icon>
-          <ion-label>{{ puesto.descripcion }}</ion-label>
-        </ion-item>
+        <ion-card *ngIf="tipoBadges.length > 0">
+          <ion-card-content class="badges-container">
+          <div class="badge" *ngFor="let tipo of tipoBadges">
+            <img [src]="tipo.imagen" [alt]="tipo.nombre" />
+          </div>
+          </ion-card-content>
+        </ion-card>
       </ion-card-content>
     </ion-card>
-
-    <ion-card *ngIf="puesto.ubicacion">
-      <ion-card-content>
-        <ion-item lines="none">
-          <ion-icon name="pin-outline" slot="start"></ion-icon>
-          <ion-label>{{puesto.ubicacion }}</ion-label>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card *ngIf="nombreFeria">
-      <ion-card-content>
-        <ion-item lines="none">
-          <ion-icon name="storefront-outline" slot="start"></ion-icon>
-          <ion-label>{{ nombreFeria }}</ion-label>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
+    </div>
+    <!-- card de feria -->
 
     <!-- Reviews -->
     <ion-card>
@@ -91,7 +84,7 @@
         </ion-card-content>
       </ng-template>
 
-      <ion-button shape="round" class="comentar-button" expand="full" (click)="abrirModalComentario()">
+      <ion-button shape="round" class="comentar-button" expand="full" *ngIf = "!isInvitado" (click)="abrirModalComentario()">
         Calificar Puesto
       </ion-button>
     </ion-card>

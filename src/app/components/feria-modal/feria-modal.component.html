@@ -11,33 +11,44 @@
   <div class="feria-container">
     <!-- Información de la feria -->
     <ion-card>
-      <ion-card-header>
+      <ion-card-header class="feria-card-header">
         <ion-item lines="none" class="feria-header-item">
           <ion-label>
             <ion-card-title>{{ feria.nombre }}</ion-card-title>
+            <div class="comuna-feria">
+              <ion-icon name="time-outline"></ion-icon>
+              {{ feria.hora_inicio }} - {{ feria.hora_termino }}
+            </div>
+            <!-- Nombre comuna -->
+           <div class="comuna-feria">
+            <ion-icon name="location-outline"></ion-icon>
+            {{ feria.calle_principal || 'No especificada' }}, {{ feria.comuna || 'No especificada' }}</div>
+          <div>
+            <!-- Calificación -->
+            <ng-container *ngIf="feria.calificacion !== null && feria.calificacion !== undefined; else sinCalificacion">
+              <div class="rating-icons">
+                <ng-container *ngFor="let i of [1,2,3,4,5]">
+                  <img [src]="i <= feria.calificacion ? 'assets/icon/rank-mark.png' : 'assets/icon/rank-unmark.png'"
+                    alt="estrella" class="rating-icon" />
+                </ng-container>
+              </div>
+            </ng-container>
+
+            <ng-template #sinCalificacion>
+              <p class="comuna-feria">Aún no hay calificaciones.</p>
+            </ng-template>
+          </div>
+
           </ion-label>
           <ion-button fill="clear" slot="end" (click)="toggleFavorita()" *ngIf="userId" class="bookmark-button">
             <ion-icon [name]="esFavorita ? 'bookmark' : 'bookmark-outline'" class="bookmark-icon"></ion-icon>
           </ion-button>
         </ion-item>
       </ion-card-header>
+
       <ion-card-content>
         <!-- Mapa de ubicación -->
         <div id="feriaMap" style="width: 100%; height: 200px; margin: 16px 0 16px 0; border-radius: 8px;"></div>
-        
-        <ion-item lines="none">
-          <ion-label><strong>Comuna:</strong> {{ feria.comuna || 'No especificada' }}</ion-label>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-label><strong>Calle Principal:</strong> {{ feria.calle_principal || 'No especificada' }}</ion-label>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-label><strong>Hora inicio:</strong> {{ feria.hora_inicio }}</ion-label>
-        </ion-item>
-
-        <ion-item lines="none">
-          <ion-label><strong>Hora término:</strong> {{ feria.hora_termino }}</ion-label>
-        </ion-item>
         
         <div class="dias-semana-container">
           <div class="dias-semana-bar">
@@ -67,7 +78,7 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Calificación de Feria -->
+    <!-- Calificación de Feria
     <ion-card>
       <ion-card-header>
         <ion-card-title>Calificación</ion-card-title>
@@ -88,6 +99,7 @@
         </ng-template>
       </ion-card-content>
     </ion-card>
+    -->
 
     <!-- Acordeón de puestos -->
     <ion-card *ngIf="puestos.length > 0 || isAccordionOpen">
@@ -101,7 +113,10 @@
           <ion-label>
             <h3>{{ puesto.nombre }}</h3>
             <p *ngIf="puesto.descripcion">{{ puesto.descripcion }}</p>
-            <p *ngIf="puesto.ubicacion">Ubicación: {{ puesto.ubicacion }}</p>
+            <div class="comuna-feria" *ngIf="puesto.ubicacion">
+              <ion-icon name="location-outline"></ion-icon>
+              {{ puesto.ubicacion }}
+            </div>
           </ion-label>
           <ion-icon slot="end" name="eye-outline"></ion-icon>
         </ion-item>
@@ -159,7 +174,7 @@
         </ion-item>
 
         <ion-item lines="none">
-          <ion-button class="comentario-button" expand="block" (click)="abrirModalComentario()">
+          <ion-button class="comentario-button" *ngIf="!isInvitado" expand="block" (click)="abrirModalComentario()">
             Comentar
           </ion-button>
         </ion-item>

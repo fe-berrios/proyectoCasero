@@ -22,6 +22,7 @@ export class FeriaModalComponent {
   comentarios: any[] = [];
   userId: string | null = null;
   esFavorita: boolean = false;
+  isInvitado = false;
 
   constructor(
     private modalCtrl: ModalController,
@@ -32,6 +33,9 @@ export class FeriaModalComponent {
 
   async ngOnInit() {
     // Obtener usuario
+  this.isInvitado = localStorage.getItem('casero_invitado') === 'true';
+
+    
     const user = await this.supabaseService.user;
     this.userId = user ? user.id : null;
     if (this.userId) {

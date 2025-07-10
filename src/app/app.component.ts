@@ -10,6 +10,9 @@ import { SupabaseService } from './services/supabase.service';
   standalone: false,
 })
 export class AppComponent {
+
+  isInvitado = false;
+
   constructor(
     private zone: NgZone,
     private router: Router,
@@ -23,6 +26,7 @@ export class AppComponent {
     document.body.classList.remove('dark');
     document.body.classList.add('light');
     document.documentElement.setAttribute('color-theme', 'light');
+    this.isInvitado = localStorage.getItem('casero_invitado') === 'true';
   }
 
   ionViewWillEnter() {
