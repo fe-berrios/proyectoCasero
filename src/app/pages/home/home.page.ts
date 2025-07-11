@@ -12,6 +12,18 @@ export class HomePage {
 
   constructor(private router: Router, private navCtrl: NavController) {}
 
+  ionViewWillEnter() {
+    const logoContainer = document.getElementById('logoContainer');
+    if (logoContainer) {
+      logoContainer.classList.remove('desvanecer');
+      // Reinicia la animación de entrada
+      (logoContainer as HTMLElement).style.animation = 'none';
+      // Forzar reflow para reiniciar la animación
+      void logoContainer.offsetWidth;
+      (logoContainer as HTMLElement).style.animation = '';
+    }
+  }
+
   navegarALogin() {
     // Agregar clase para animación de desvanecimiento
     const logoContainer = document.querySelector('.logo-container') as HTMLElement;
