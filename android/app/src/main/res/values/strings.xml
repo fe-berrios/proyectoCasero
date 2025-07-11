@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">proyectoCasero</string>
-    <string name="title_activity_main">proyectoCasero</string>
+    <string name="app_name">Casero</string>
+    <string name="title_activity_main">Casero</string>
     <string name="package_name">io.ionic.starter</string>
     <string name="custom_url_scheme">casero</string>
 </resources>
