@@ -47,7 +47,7 @@ export class PlaceSelectorModalComponent implements OnInit, AfterViewInit, OnDes
       zoom: 13,
     });
 
-    leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    leaflet.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
       attribution: '© OpenStreetMap contributors',
     }).addTo(this.map);
 

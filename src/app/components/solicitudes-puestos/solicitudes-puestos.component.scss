@@ -1,76 +1,169 @@
 @use 'src/theme/variables' as *;
 
-:host {
-  font-family: 'Roboto', sans-serif;
+/* Header */
+::ng-deep .header-toolbar {
+  text-align: center;
+  background: url('/assets/img/fondo.png') center center/cover no-repeat !important;
+  --background: transparent !important;
+  color: $inverse-text-color;
+  padding: 30px 20px 20px 20px;
+  min-height: 25px;
+  position: relative;
+ 
+  .header-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+    top: 17px;
+  }
+ 
+  ion-buttons[slot="start"] {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    
+    .close-button {
+      --color: #{$inverse-text-color};
+      --background: transparent;
+      --box-shadow: none;
+     
+      ion-icon {
+        font-size: 24px;
+      }
+    }
+  }
 }
 
-ion-card {
-  margin-bottom: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-left: 5px solid transparent;
-  /* default */
+/* Contenido */
+.content {
+  --background: #f8f9fa;
+  --padding-top: 0;
 }
 
-ion-card.estado-aceptado {
-  border-left-color: $primary-color; // color para aceptado
+/* Filtro */
+.filter-item {
+  --background: #ffffff;
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --inner-padding-end: 12px;
+  margin: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-ion-card.estado-pendiente {
-  border-left-color: $accent-color; // color para pendiente
+.filter-select {
+  width: 100%;
 }
 
-ion-card.estado-rechazado {
-  border-left-color: $danger-red; // color para rechazado
+/* Lista de solicitudes */
+.solicitudes-container {
+  padding: 0 16px 16px;
 }
 
-.custom-toolbar {
-  --background: #{$dark-primary-color};
-  --color: #{$inverse-text-color};
+.solicitud-card {
+  border-radius: var(--card-border-radius);
+  margin-bottom: var(--element-spacing);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid transparent;
+  background: #ffffff;
+
+  &.status-aceptado {
+    border-left-color: $primary-color;
+  }
+
+  &.status-pendiente {
+    border-left-color: $accent-color;
+  }
+
+  &.status-rechazado {
+    border-left-color: $danger-red;
+  }
+
+  ion-card-content {
+    padding: 16px;
+  }
 }
 
-ion-card-title {
-  font-size: 18px;
-  color: #{$primary-text-color};
-}
-
-.check-button-container {
-  margin-top: 0px;
+/* Encabezado de tarjeta */
+.card-header {
   display: flex;
-  justify-content: flex-start; // alinea a la izquierda
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+
+  .puesto-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .status-badge {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 8px;
+    border-radius: 10px;
+  }
 }
 
-.check-button {
-  padding-left: 0;
+/* Información de solicitud */
+.solicitud-info {
+  margin-bottom: 12px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #555;
+
+  ion-icon {
+    margin-right: 10px;
+    color: $primary-color;
+    font-size: 18px;
+    min-width: 20px;
+  }
+}
+
+/* Botón de revisar */
+.review-btn {
+  --color: #{$primary-color};
   --padding-start: 0;
   --padding-end: 0;
-  --background: transparent;
+  margin-top: 8px;
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: normal;
+
+  ion-icon {
+    font-size: 18px;
+  }
 }
 
-.check-icon {
-  color: $primary-text-color;
-  font-size: 20px;
+/* Estado vacío */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+
+  ion-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    color: #ccc;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
 }
 
-.check-text {
-  color: $primary-text-color;
-  margin-left: 6px;
-}
-
-.estado-badge.aceptado {
-  background-color: $light-primary-color;
-  color: $primary-color;
-}
-
-.estado-badge.pendiente {
-  background-color: $light-primary-color;
-  color: $accent-color;
-}
-
-.estado-badge.rechazado {
-  background-color: $light-primary-color;
-  color: $danger-red;
-}
-
-.custom-badge {
-  margin-top: 10px;
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
 }

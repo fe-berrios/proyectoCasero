@@ -1,45 +1,158 @@
 @use 'src/theme/variables' as *;
 
-:host {
-  font-family: 'Roboto', sans-serif;
-}
-
-.admin-form {
-  padding: 20px clamp(16px, 5vw, 32px);
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  ion-input,
-  ion-textarea,
-  ion-select {
-    --highlight-color: #{$dark-primary-color};
+/* Header (Mantener según lo indicado) */
+::ng-deep .header-toolbar {
+  text-align: center;
+  background: url('/assets/img/fondo.png') center center/cover no-repeat !important;
+  --background: transparent !important;
+  color: $inverse-text-color;
+  padding: 30px 20px 20px 20px;
+  min-height: 25px;
+  position: relative;
+ 
+  .header-title {
     font-size: 16px;
-    transition: all 0.3s ease;
+    font-weight: bold;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+    top: 17px;
   }
-
-  ion-label {
-    font-size: 14px;
+ 
+  ion-buttons[slot="start"] {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    
+    .close-button {
+      --color: #{$inverse-text-color};
+      --background: transparent;
+      --box-shadow: none;
+     
+      ion-icon {
+        font-size: 24px;
+      }
+    }
   }
 }
 
+/* Contenido del formulario */
+.form-content {
+  --background: #f8f9fa;
+  --padding-top: 16px;
+}
+
+.puesto-form {
+  background: white;
+  margin: 16px;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Elementos del formulario */
+.form-item {
+  --background: transparent;
+  --border-radius: 8px;
+  --border-color: rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  
+  &.accordion-item {
+    --border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+}
+
+.custom-input,
+.custom-textarea {
+  --background: #ffffff;
+  --border-radius: 8px;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --highlight-color-focused: #{$primary-color};
+}
+
+/* Subida de imagen */
+.image-upload-container {
+  margin-bottom: 16px;
+  
+  .upload-button {
+    --border-radius: 8px;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --color: #666;
+    --background: #ffffff;
+    width: 100%;
+  }
+  
+  .image-preview {
+    margin-top: 12px;
+    text-align: center;
+    
+    img {
+      max-width: 100%;
+      max-height: 200px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+/* Acordeones */
+.accordion-content {
+  margin-top: 8px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  
+  .search-bar {
+    padding: 8px;
+    --background: #f5f5f5;
+    --border-radius: 8px;
+  }
+}
+
+/* Listas */
+.ferias-list,
+.tipos-list {
+  background: transparent;
+  
+  .feria-item,
+  .tipo-item {
+    --background: transparent;
+    --border-color: rgba(0, 0, 0, 0.05);
+    
+    &.selected {
+      --background: rgba($primary-color, 0.1);
+      --color: $primary-color;
+    }
+  }
+  
+  .tipo-checkbox {
+    --size: 18px;
+    --background-checked: #{$primary-color};
+    --border-color-checked: #{$primary-color};
+  }
+}
+
+/* Botón Guardar */
 .save-button {
-  --background: #{$dark-primary-color};
-  --color: #{$inverse-text-color};
-  border-radius: 9999px;
-  width: 60%;
-  margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  --background: #{$primary-color};
+  --color: #ffffff;
+  --border-radius: 8px;
+  --padding-top: 18px;
+  --padding-bottom: 18px;
+  font-weight: 500;
+  margin-top: 16px;
+  transition: transform 0.2s ease;
+  
+  &:active {
+    transform: scale(0.98);
+  }
 }
 
-.custom-toolbar {
-  --background: #{$dark-primary-color};
-  --color: #{$inverse-text-color};
-}
-
-.selected {
-  --background: #{$dark-primary-color};  /* tu color personalizado */
-  --color: white;
+/* Mantener */
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
 }

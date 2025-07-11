@@ -1,28 +1,105 @@
 @use 'src/theme/variables' as *;
 
-.custom-toolbar {
-  --background: #{$dark-primary-color};  // Fondo con tu color personalizado
-  --color: #{$inverse-text-color};       // Color del texto y botones
-}
-
 :host {
-  font-family: 'Roboto', sans-serif;
   display: flex;
   flex-direction: column;
   height: 100%;
+  font-family: 'Inter', sans-serif;
 }
 
-ion-header {
+/* Header estilo minimalista */
+.header-toolbar {
   --background: #{$dark-primary-color};
   --color: #{$inverse-text-color};
-  ion-title {
-    font-weight: bold;
+  --border-width: 0;
+  --min-height: 64px;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .header-title {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.15px;
+  }
+
+  .close-button {
+    --color: #{$inverse-text-color};
+    --background-hover: rgba(255, 255, 255, 0.1);
+    --border-radius: 50%;
+    --padding-start: 8px;
+    --padding-end: 8px;
+    
+    ion-icon {
+      font-size: 24px;
+    }
   }
 }
 
-.custom-button {
-  --background: #{$dark-primary-color};
+/* Contenido del mapa */
+.map-content {
+  --background: #f5f5f5;
+  
+  .map-container {
+    height: 100%;
+    width: 100%;
+    background: #e0e0e0;
+  }
+}
+
+/* Footer minimalista */
+.map-footer {
+  ion-toolbar {
+    --background: #ffffff;
+    --border-width: 0;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+
+/* Botón de confirmación moderno */
+.confirm-button {
+  --background: #{$primary-color};
+  --background-activated: #{$dark-primary-color};
   --color: #{$inverse-text-color};
-  --border-radius: 4px;
-  --padding: 10px 20px;
+  --border-radius: 8px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  height: 48px;
+  box-shadow: 0 2px 8px rgba($primary-color, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 4px rgba($primary-color, 0.2);
+  }
+}
+
+/* Asegurar consistencia tipográfica */
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
 }

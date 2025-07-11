@@ -1,11 +1,8 @@
 <ion-content [fullscreen]="true">
-
   <!-- Botón de volver atrás -->
-  <div class="back-button-container">
-    <ion-buttons>
-      <ion-back-button defaultHref="/mapa"></ion-back-button>
-    </ion-buttons>
-  </div>
+  <ion-buttons class="back-button">
+    <ion-back-button defaultHref="/mapa"></ion-back-button>
+  </ion-buttons>
 
   <!-- Encabezado -->
   <div class="admin-header">
@@ -14,54 +11,40 @@
 
   <!-- Botón flotante para agregar feria -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button class="fab-custom-color" (click)="abrirModalAgregarFeria()">
+    <ion-fab-button class="fab-button" (click)="abrirModalAgregarFeria()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <!-- Lista de cards personalizada -->
-  <ion-list>
-    <ion-card *ngFor="let feria of ferias" class="custom-card">
+  <ion-list class="ferias-list">
+    <ion-card *ngFor="let feria of ferias" class="feria-card">
       <ion-card-header>
         <ion-card-title>{{ feria.nombre }}</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
         <div class="info-row">
-          <ion-icon name="business-outline"></ion-icon>
-          <span>Comuna: {{ feria.comuna || 'No especificada' }}</span>
-        </div>
-        <div class="info-row">
-          <ion-icon name="navigate-outline"></ion-icon>
-          <span>Calle Principal: {{ feria.calle_principal || 'No especificada' }}</span>
-        </div>
-        <div class="info-row">
           <ion-icon name="location-outline"></ion-icon>
-          <span>Lat: {{ feria.lat }}, Lng: {{ feria.lng }}</span>
+          <span class="info-text">{{ feria.comuna || 'No especificada' }} · {{ feria.calle_principal || 'No especificada' }}</span>
         </div>
+        
         <div class="info-row">
           <ion-icon name="time-outline"></ion-icon>
-          <span>Horario: {{ feria.hora_inicio }} - {{ feria.hora_termino }}</span>
-        </div>
-        <div class="info-row">
-          <ion-icon name="calendar-outline"></ion-icon>
-          <span>Día(s): {{ feria.dia }}</span>
+          <span class="info-text">{{ feria.hora_inicio }} - {{ feria.hora_termino }} · {{ feria.dia }}</span>
         </div>
 
         <!-- Botones -->
-        <div class="edit-button-container">
-          <ion-button class="button-custom-color" fill="clear" (click)="abrirModalEditarFeria(feria)">
+        <div class="card-actions">
+          <ion-button fill="clear" class="action-button edit" (click)="abrirModalEditarFeria(feria)">
             <ion-icon slot="icon-only" name="create-outline"></ion-icon>
           </ion-button>
 
-          <ion-button class="delete-custom-color" fill="clear" (click)="eliminarFeria(feria.id)">
+          <ion-button fill="clear" class="action-button delete" (click)="eliminarFeria(feria.id)">
             <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
           </ion-button>
         </div>
-
       </ion-card-content>
     </ion-card>
-
   </ion-list>
-
 </ion-content>

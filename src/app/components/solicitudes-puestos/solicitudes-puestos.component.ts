@@ -55,7 +55,6 @@ export class SolicitudesPuestosComponent implements OnInit {
 
     modal.onDidDismiss().then((result) => {
       if (result.data?.recargar) {
-        // Aquí puedes recargar la lista de solicitudes si quieres
         this.cargarSolicitudes();
       }
     });
@@ -75,6 +74,14 @@ export class SolicitudesPuestosComponent implements OnInit {
       );
     } else {
       this.solicitudes = [...this.todasLasSolicitudes];
+    }
+  }
+
+  getStatusColor(status: string): string {
+    switch(status) {
+      case 'aceptado': return 'success';
+      case 'rechazado': return 'danger';
+      default: return 'warning';
     }
   }
 }

@@ -1,12 +1,16 @@
 @use 'src/theme/variables' as *;
 
 :host {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', sans-serif;
+  --card-border-radius: 12px;
+  --card-padding: 16px;
+  --card-spacing: 12px;
+  --icon-size: 18px;
 }
 
-.back-button-container {
+.back-button {
   position: absolute;
-  top: 10px;
+  top: 35px;
   left: 10px;
   z-index: 10;
 
@@ -21,101 +25,106 @@
 .admin-header {
   text-align: center;
   padding: 60px 20px 20px 20px;
-  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+  background: url('/assets/img/fondo.png') center center/cover no-repeat;
   color: $inverse-text-color;
 
   h2 {
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
     margin: 0;
   }
 }
 
-.modal-trigger-container {
-  padding: 16px 20px;
+.ferias-list {
+  background: transparent;
+  padding: 0 16px;
 }
 
-.custom-card {
-  background-color: rgba(200, 230, 201, 0.5);
-  margin-bottom: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.25); // sombra verde oscura con opacidad
+.feria-card {
+  border-radius: var(--card-border-radius);
+  margin-bottom: var(--card-spacing);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 2px solid rgb(190, 190, 190);
+  background: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-  ion-card-title {
-    font-weight: 700;
-    font-size: 1.3rem;
-    color: $primary-text-color; // Verde oscuro
+  &:active {
+    transform: scale(0.98);
   }
 
   ion-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-right: 10px; // espacio para el botón
+    padding: var(--card-padding) var(--card-padding) 0;
   }
 
-  ion-card-header ion-buttons {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
+  ion-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    letter-spacing: 0.2px;
   }
 
-  ion-card-header ion-button {
-    font-size: 1.4rem;
+  ion-card-content {
+    padding: var(--card-padding);
   }
 }
 
 .info-row {
   display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
-  color: $primary-text-color; // Texto principal
+  align-items: flex-start;
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   ion-icon {
-    margin-right: 8px;
-    color: $primary-color; // Verde primario
-    font-size: 1.2rem;
-    min-width: 22px;
+    font-size: var(--icon-size);
+    color: $primary-color;
+    margin-right: 12px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .info-text {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
   }
 }
 
-.fab-custom-color {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  --background: #{$primary-color}; // color de fondo usando tu variable SCSS
-  --color: #{$inverse-text-color}; // color de texto usando tu variable SCSS
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.4);
+.card-actions {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  justify-content: flex-end;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+
+  .action-button {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    margin: 0 4px;
+
+    ion-icon {
+      font-size: 18px;
+    }
+
+    &.edit {
+      --color: #{$primary-color};
+    }
+
+    &.delete {
+      --color: #{$danger-red};
+    }
+  }
 }
 
-.button-custom-color {
-  position: fixed;
-  top: 5px;
-  right: 20px;
-  --color: #{$primary-color};
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
+.fab-button {
+  --background: #{$primary-color};
+  --color: #{$inverse-text-color};
+  --box-shadow: 0 4px 12px rgba(56, 142, 60, 0.3);
+  --transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-.delete-custom-color {
-  position: fixed;
-  top: 40px;
-  right: 22px;
-  --color: #{$danger-red};
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  &:active {
+    transform: scale(0.95);
+  }
 }

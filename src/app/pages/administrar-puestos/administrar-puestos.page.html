@@ -1,45 +1,49 @@
 <ion-content [fullscreen]="true">
-
-  <!-- Botón de volver atrás -->
-  <div class="back-button-container">
-    <ion-buttons>
+  <!-- Header con botón de volver -->
+  <div class="admin-header">
+    <ion-buttons class="back-button">
       <ion-back-button defaultHref="/mapa"></ion-back-button>
     </ion-buttons>
-  </div>
-
-  <!-- Encabezado -->
-  <div class="admin-header">
     <h2>Administrar Puestos</h2>
   </div>
 
-  <!-- Filtro por feria -->
-  <ion-item>
-    <ion-label>Filtrar por feria</ion-label>
-    <ion-select [(ngModel)]="feria_id" (ionChange)="onFeriaSeleccionada()" interface="popover" placeholder="Todas">
-      <ion-select-option [value]="null">Todas las ferias</ion-select-option>
-      <ion-select-option *ngFor="let feria of ferias" [value]="feria.id">
-        {{ feria.nombre }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
+  <!-- Filtros minimalistas -->
+  <div class="filters-container">
+    <ion-item class="filter-item">
+      <ion-select 
+        [(ngModel)]="feria_id" 
+        (ionChange)="onFeriaSeleccionada()" 
+        interface="popover" 
+        placeholder="Filtrar por feria">
+        <ion-select-option [value]="null">Todas las ferias</ion-select-option>
+        <ion-select-option *ngFor="let feria of ferias" [value]="feria.id">
+          {{ feria.nombre }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  <!-- Filtro por estado -->
-  <ion-item>
-    <ion-label>Filtrar por estado</ion-label>
-    <ion-select [(ngModel)]="estadoSeleccionado" (ionChange)="onEstadoSeleccionado()" interface="popover"
-      placeholder="Todos">
-      <ion-select-option [value]="null">Todos los estados</ion-select-option>
-      <ion-select-option value="aceptado">Aceptado</ion-select-option>
-      <ion-select-option value="pendiente">Pendiente</ion-select-option>
-      <ion-select-option value="rechazado">Rechazado</ion-select-option>
-    </ion-select>
-  </ion-item>
+    <ion-item class="filter-item">
+      <ion-select 
+        [(ngModel)]="estadoSeleccionado" 
+        (ionChange)="onEstadoSeleccionado()" 
+        interface="popover"
+        placeholder="Filtrar por estado">
+        <ion-select-option [value]="null">Todos los estados</ion-select-option>
+        <ion-select-option value="aceptado">Aceptado</ion-select-option>
+        <ion-select-option value="pendiente">Pendiente</ion-select-option>
+        <ion-select-option value="rechazado">Rechazado</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
 
-  <!-- Lista de cards personalizada -->
-  <ion-list>
-    <ion-card *ngFor="let puesto of puestos" class="custom-card">
+  <!-- Lista de puestos -->
+  <ion-list class="puestos-list">
+    <ion-card *ngFor="let puesto of puestos" class="puesto-card">
       <ion-card-header>
         <ion-card-title>{{ puesto.nombre }}</ion-card-title>
+        <div class="estado-badge" [ngClass]="puesto.estado_solicitud">
+          {{ puesto.estado_solicitud | titlecase }}
+        </div>
       </ion-card-header>
 
       <ion-card-content>
@@ -50,55 +54,38 @@
 
         <div class="info-row" *ngIf="puesto.ubicacion">
           <ion-icon name="pin-outline"></ion-icon>
-          <span>Ubicación: {{ puesto.ubicacion }}</span>
+          <span>{{ puesto.ubicacion }}</span>
         </div>
 
-        <!-- Nuevo: Mostrar tipos de productos -->
         <div class="info-row" *ngIf="puesto.tipo_productos">
           <ion-icon name="pricetags-outline"></ion-icon>
-          <span>Productos: {{ puesto.tipo_productos }}</span>
+          <span>{{ puesto.tipo_productos }}</span>
         </div>
 
-        <div class="info-row" *ngIf="puesto.feria_id">
-          <ion-icon name="storefront-outline"></ion-icon>
-          <span>ID Feria: {{ puesto.feria_id }}</span>
+        <div class="metadata-row">
+          <span *ngIf="puesto.feria_id">Feria ID: {{ puesto.feria_id }}</span>
+          <span *ngIf="puesto.casero_id">Casero ID: {{ puesto.casero_id }}</span>
         </div>
 
-        <div class="info-row" *ngIf="puesto.casero_id">
-          <ion-icon name="person-circle-outline"></ion-icon>
-          <span>ID Casero: {{ puesto.casero_id }}</span>
-        </div>
-
-        <div class="estado-badge" [ngClass]="puesto.estado_solicitud">
-          Estado: {{ puesto.estado_solicitud | titlecase }}
-        </div>
-
-        <div class="edit-button-container">
-          <ion-button fill="clear" (click)="abrirModalEditarPuesto(puesto)">
+        <div class="actions-row">
+          <ion-button fill="clear" class="edit-btn" (click)="abrirModalEditarPuesto(puesto)">
             <ion-icon slot="icon-only" name="create-outline"></ion-icon>
           </ion-button>
-
-          <ion-button fill="clear" color="danger" (click)="eliminarPuesto(puesto.id)">
+          <ion-button fill="clear" class="delete-btn" (click)="eliminarPuesto(puesto.id)">
             <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
           </ion-button>
         </div>
       </ion-card-content>
-
     </ion-card>
   </ion-list>
 
-  <!-- FAB botón para ver solicitudes -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button class="solicitud-custom-color" (click)="openSolicitudesPuestos()">
+  <!-- Botones flotantes -->
+  <div class="fab-container">
+    <ion-fab-button class="solicitud-btn" (click)="openSolicitudesPuestos()">
       <ion-icon name="eye"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
-
-  <!-- FAB botón flotante para agregar puesto -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button class="fab-custom-color" (click)="openAgregarPuestoModal()">
+    <ion-fab-button class="add-btn" (click)="openAgregarPuestoModal()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
-
+  </div>
 </ion-content>

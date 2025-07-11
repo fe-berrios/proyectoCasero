@@ -1,12 +1,9 @@
 @use 'src/theme/variables' as *;
 
-:host {
-  font-family: 'Roboto', sans-serif;
-}
-
+/* NO MODIFICAR (mantenido según lo indicado) */
 .back-button-container {
   position: absolute;
-  top: 10px;
+  top: 35px;
   left: 10px;
   z-index: 10;
 
@@ -21,19 +18,14 @@
 .admin-header {
   text-align: center;
   padding: 60px 20px 20px 20px;
-  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+  background: url('/assets/img/fondo.png') center center/cover no-repeat;
   color: $inverse-text-color;
 
   h2 {
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
     margin: 0;
   }
-}
-
-.edit-icon {
-  color: $dark-primary-color;
-  font-size: 25px;
 }
 
 .solicitud-custom-color {
@@ -49,5 +41,134 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; // más bajo para que quede debajo
+  z-index: 999;
+}
+
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
+}
+/* FIN NO MODIFICAR */
+
+/* Estilos modernos añadidos */
+.users-content {
+  --background: #f8f9fa;
+}
+
+.search-bar {
+  padding: 16px;
+  --background: #ffffff;
+  --border-radius: 8px;
+  --box-shadow: none;
+  --color: #333;
+  --placeholder-color: #999;
+}
+
+.users-list {
+  padding: 16px 16px 16px 16px;
+}
+
+.modern-list {
+  background: transparent;
+  padding: 10px;
+}
+
+.user-item {
+  --background: #ffffff;
+  --border-radius: 12px;
+  --padding-start: 16px;
+  --inner-padding-end: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  margin-right: 16px;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 6px 1px 1px 1px;
+}
+
+.user-username {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 8px 0;
+}
+
+.user-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-code {
+  font-size: 13px;
+  color: #888;
+  background: rgba(0, 0, 0, 0.03);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.user-badges {
+  display: flex;
+  gap: 6px;
+  margin: 6px 1px 1px 1px;
+}
+
+.badge-admin,
+.badge-casero {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px 4px 4px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  
+  ion-icon {
+    font-size: 12px;
+    margin-right: 4px;
+  }
+}
+
+.edit-btn {
+  --color: #{$primary-color};
+  --padding-start: 8px;
+  --padding-end: 8px;
+  
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+
+  ion-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    color: #ccc;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
 }

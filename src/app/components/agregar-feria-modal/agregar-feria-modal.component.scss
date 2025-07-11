@@ -1,112 +1,166 @@
 @use 'src/theme/variables' as *;
 
-:host {
-  font-family: 'Roboto', sans-serif;
-}
-
-.back-button-container {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 10;
-
-  ion-back-button {
-    --color: #{$inverse-text-color};
-    --background: transparent;
-    --box-shadow: none;
-    --padding-start: 0;
-  }
-}
-
-.admin-header {
+/* Header similar al admin-header */
+::ng-deep .header-toolbar {
   text-align: center;
-  padding: 60px 20px 20px 20px;
-  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+  background: url('/assets/img/fondo.png') center center/cover no-repeat !important;
+  --background: transparent !important;
   color: $inverse-text-color;
-
-  h2 {
-    font-size: 24px;
+  padding: 20px 20px 20px 20px;
+  min-height: 25px;
+  position: relative;
+ 
+  .header-title {
+    font-size: 16px;
     font-weight: bold;
     margin: 0;
+    position: relative;
+    z-index: 2;
+    top: 17px;
+  }
+ 
+  ion-buttons[slot="start"] {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    
+    .close-button {
+      --color: #{$inverse-text-color};
+      --background: transparent;
+      --box-shadow: none;
+     
+      ion-icon {
+        font-size: 24px;
+      }
+    }
   }
 }
 
-.admin-form {
-  padding: 20px clamp(16px, 5vw, 32px);
-  margin-top: 20px;
+/* Contenido del formulario */
+.form-content {
+  --background: #f8f9fa;
+  --padding-top: 16px;
+}
+
+.feria-form {
+  border: 2px solid rgb(190, 190, 190);
+  background: white;
+  margin: 16px;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-item {
+  --background: transparent;
+  --border-radius: 8px;
+  --border-color: rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  
+  &.dropdown-trigger {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    
+    .selected-days {
+      color: #666;
+      font-size: 14px;
+    }
+    
+    ion-icon {
+      color: #999;
+    }
+  }
+}
+
+/* Estilos para los inputs de tiempo */
+.time-container {
   display: flex;
-  flex-direction: column;
   gap: 16px;
-
-  ion-input {
-    --highlight-color: #{$dark-primary-color};
-    font-size: 16px;
-    transition: all 0.3s ease;
+  margin-bottom: 16px;
+  
+  .time-item {
+    flex: 1;
+    
+    ion-label {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+    }
   }
-
-  ion-label {
-    font-size: 14px;
-  }
-}
-
-.save-button {
-  --background: #{$dark-primary-color};
-  --color: #{$inverse-text-color};
-  border-radius: 9999px;
-  width: 60%;
-  margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.map-button {
-  --color: #{$primary-text-color};
-  border-radius: 9999px;
-  width: 80%;
-  margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
 }
 
 .time-inputs {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 4px;
-
+  gap: 8px;
+  
   ion-input {
-    width: 50px;
+    --background: #ffffff;
+    --border-radius: 8px;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --padding-start: 12px;
+    --padding-end: 12px;
     text-align: center;
   }
-
-  span {
-    font-size: 18px;
-    font-weight: bold;
+  
+  .time-separator {
+    color: #666;
+    font-weight: 500;
   }
 }
 
-.days-list {
-  background: #fff;
-  border-radius: 12px;
-  padding: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-
-  ion-item {
-    --inner-padding-end: 8px;
-    --background: transparent;
-    border-bottom: 1px solid #eee;
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    ion-label {
-      font-size: 14px;
+/* Dropdown de días */
+.dropdown-content {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 8px;
+  margin-bottom: 16px;
+  
+  .dropdown-item {
+    --min-height: 48px;
+    
+    .day-checkbox {
+      --size: 18px;
+      --background-checked: #{$primary-color};
+      --border-color-checked: #{$primary-color};
     }
   }
 }
 
-.custom-toolbar {
-  --background: #{$dark-primary-color};  // Fondo con tu color personalizado
-  --color: #{$inverse-text-color};       // Color del texto y botones
+/* Botones */
+.location-button {
+  --border-radius: 8px;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --color: #666;
+  --background: #ffffff;
+  margin-bottom: 16px;
+  width: 100%;
+  
+  ion-icon {
+    color: #{$primary-color};
+  }
+}
+
+.save-button {
+  --background: #{$primary-color};
+  --color: #ffffff;
+  --border-radius: 8px;
+  --padding-top: 18px;
+  --padding-bottom: 18px;
+  font-weight: 500;
+  margin-top: 16px;
+}
+
+/* Estilos para errores */
+ion-text[color="danger"] {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+  padding-left: 16px;
+}
+
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
 }

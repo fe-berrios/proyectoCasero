@@ -1,49 +1,65 @@
-<ion-content [fullscreen]="true">
-  <!-- Botón de volver atrás -->
-  <div class="back-button-container">
-    <ion-buttons>
-      <ion-back-button defaultHref="/mapa"></ion-back-button>
-    </ion-buttons>
-  </div>
-
-  <!-- Encabezado -->
+<ion-content class="users-content" [fullscreen]="true">
+  <!-- Header con botón de volver (mantenido según lo indicado) -->
   <div class="admin-header">
+    <div class="back-button-container">
+      <ion-buttons>
+        <ion-back-button defaultHref="/mapa"></ion-back-button>
+      </ion-buttons>
+    </div>
     <h2>Administrar Usuarios</h2>
   </div>
 
-  <!-- Barra busqueda -->
-  <ion-searchbar placeholder="Buscar por nombre o codigo casero" [(ngModel)]="searchTerm"
-    (ionInput)="filtrarUsuarios()"></ion-searchbar>
+  <!-- Barra de búsqueda minimalista -->
+  <ion-searchbar 
+    class="search-bar"
+    placeholder="Buscar por nombre o código casero" 
+    [(ngModel)]="searchTerm"
+    (ionInput)="filtrarUsuarios()"
+    mode="ios">
+  </ion-searchbar>
 
-  <!-- Lista Usuarios -->
-  <ion-list *ngIf="usuariosFiltrados.length > 0">
-    <ion-item *ngFor="let user of usuariosFiltrados">
-      <ion-avatar slot="start">
-        <img [src]="user.avatar_url || 'assets/profile_pics/loading.svg'" />
-      </ion-avatar>
-      <ion-label>
-        <h2>{{ user.full_name || 'Sin nombre' }}</h2>
-        <p>{{ user.username }}</p>
-        <p>Codigo Casero: {{ user.codigo_casero }}</p>
-        <p *ngIf="user.admin_status">🛡️ Admin</p>
-        <p *ngIf="user.casero_status">🍅 Casero</p>
-      </ion-label>
+  <!-- Lista de usuarios -->
+  <div class="users-list">
+    <ion-list *ngIf="usuariosFiltrados.length > 0" class="modern-list">
+      <ion-item *ngFor="let user of usuariosFiltrados" class="user-item">
+        <ion-avatar slot="start" class="user-avatar">
+          <img [src]="user.avatar_url || 'assets/profile_pics/loading.svg'" />
+        </ion-avatar>
+        
+        <div class="user-info">
+          <h3 class="user-name">{{ user.full_name || 'Sin nombre' }}</h3>
+          <p class="user-username">{{ user.username }}</p>
+          
+          <div class="user-meta">
+            <span class="user-code">#{{ user.codigo_casero }}</span>
+            
+            <div class="user-badges">
+              <ion-badge *ngIf="user.admin_status" color="primary" class="badge-admin">
+                <ion-icon name="shield-checkmark"></ion-icon> Admin
+              </ion-badge>
+              <ion-badge *ngIf="user.casero_status" color="success" class="badge-casero">
+                <ion-icon name="leaf"></ion-icon> Casero
+              </ion-badge>
+            </div>
+          </div>
+        </div>
 
-      <ion-button fill="clear" slot="end" (click)="abrirModal(user.id)">
-        <ion-icon class="edit-icon" name="create-outline"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list>
+        <ion-button fill="clear" class="edit-btn" (click)="abrirModal(user.id)">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
 
-  <ion-text *ngIf="usuariosFiltrados.length === 0">
-    <p class="ion-text-center">No se encontraron usuarios</p>
-  </ion-text>
+    <div *ngIf="usuariosFiltrados.length === 0" class="empty-state">
+      <ion-icon name="people-outline"></ion-icon>
+      <p>No se encontraron usuarios</p>
+    </div>
+  </div>
 
-  <!-- FAB botón para ver solicitudes -->
+  <!-- Botón flotante (mantenido según lo indicado) -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button class="solicitud-custom-color" (click)="openSolicitudesCasero()">
       <ion-icon name="people"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
 </ion-content>
