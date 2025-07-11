@@ -15,6 +15,9 @@ export class SolicitarCaseroComponent {
   telefonoSinPrefijo = '';
   email = '';
   selectedFile: File | null = null;
+  run = '';
+  dv = '';
+  runFocused: boolean = false;
 
   constructor(
     private modalCtrl: ModalController,
@@ -127,6 +130,8 @@ export class SolicitarCaseroComponent {
       telefono: this.telefono,
       email: this.email,
       documento_url,
+      run: Number(this.run),
+      dv: this.dv.toUpperCase(),
     });
 
     if (error) {
@@ -179,5 +184,18 @@ export class SolicitarCaseroComponent {
       !!this.comentario &&
       (!/^[^<>{}\[\]"'/\\]{0,500}$/.test(this.comentario) || this.comentario.length > 500)
     );
+  }
+
+  get isRunInvalido(): boolean {
+    return !/^\d{7,8}$/.test(this.run);
+  }
+
+  get isDvInvalido(): boolean {
+    return !/^[0-9Kk]{1}$/.test(this.dv);
+  }
+
+  quitarArchivo(event: Event) {
+    event.preventDefault();
+    this.selectedFile = null;
   }
 }

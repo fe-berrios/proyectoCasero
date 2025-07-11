@@ -11,6 +11,8 @@ export class SolicitudCaseroService {
     telefono: string;
     email: string;
     documento_url?: string; // se guarda como path interno
+    run: number;
+    dv: string;
   }) {
     const result = await supabase.from('solicitud_casero').insert([data]).select('*');
     return result;
@@ -28,6 +30,8 @@ export class SolicitudCaseroService {
         documento_url,
         created_at,
         status,
+        run,
+        dv,
         profiles:profiles!user_id(full_name, codigo_casero)
       `)
       .order('created_at', { ascending: false });
@@ -51,6 +55,8 @@ export class SolicitudCaseroService {
       documento_url,
       created_at,
       status,
+      run,
+      dv,
       profiles:profiles!user_id(full_name, codigo_casero)
     `)
       .eq('user_id', userId)

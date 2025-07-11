@@ -240,3 +240,45 @@ ion-button {
 :host * {
   font-family: 'Inter', sans-serif !important;
 }
+
+.run-group {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.dv-select {
+  min-width: 70px;
+  max-width: 80px;
+}
+
+.remove-file-icon {
+  color: #{$danger-red};
+  font-size: 1.4em;
+  margin-left: 8px;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.remove-file-icon:hover {
+  color: #{$danger-red};
+}
+
+.upload-file-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.upload-file-layout .upload-icon {
+  margin-bottom: 8px;
+}
+.upload-file-layout .file-name {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upload-file-layout .file-types {
+  margin-top: 0;
+}

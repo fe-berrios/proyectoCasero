@@ -22,6 +22,20 @@ export class SolicitudCaseroComponent implements OnInit {
   descargadoLocalPath: string | null = null; // ruta local del archivo descargado
   descargando = false;
 
+  get runDvFormateado(): string {
+    if (!this.solicitud?.run || !this.solicitud?.dv) return '';
+    const runStr = this.solicitud.run.toString().padStart(7, '0');
+    let runFormateado = '';
+    if (runStr.length === 7) {
+      runFormateado = `${runStr.slice(0,1)}.${runStr.slice(1,4)}.${runStr.slice(4,7)}`;
+    } else if (runStr.length === 8) {
+      runFormateado = `${runStr.slice(0,2)}.${runStr.slice(2,5)}.${runStr.slice(5,8)}`;
+    } else {
+      runFormateado = runStr;
+    }
+    return `${runFormateado}-${this.solicitud.dv}`;
+  }
+
   constructor(
     private modalCtrl: ModalController,
     private supabaseService: SupabaseService,
