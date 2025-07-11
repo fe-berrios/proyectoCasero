@@ -145,3 +145,21 @@ ion-item.calificacion ion-label {
   width: 95%;
   margin: 0 auto;
 }
+
+.custom-toolbar {
+  --background: #{$dark-primary-color};
+  --color: #{$inverse-text-color};
+  height: 95px;     // O usa height fijo si prefieres
+  display: flex;
+  align-items: flex-end; // Opcional: alinea el contenido abajo
+  padding-bottom: 12px;  // Opcional: agrega espacio inferior
+}
+
+.custom-toolbar ion-title {
+  font-weight: bold;
+  padding-top: 30px;       // Opcional: más espacio solo para el título
+}
+
+.custom-toolbar ion-button {
+  padding-top: 30px;       // Opcional: más espacio solo para el título
+}
