@@ -30,6 +30,13 @@
 
 ---
 
+## 💾 Descarga el APK
+
+![QR](./QR.png)  
+[Descargar versión estable aquí](https://github.com/fe-berrios/proyectoCasero/releases/tag/stable)
+
+---
+
 ## 👥 Autores
 
 - Felipe Andrés Berríos Ovalle – [GitHub](https://github.com/fe-berrios)
