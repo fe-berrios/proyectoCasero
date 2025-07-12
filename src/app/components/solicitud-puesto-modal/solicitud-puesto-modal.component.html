@@ -1,88 +1,111 @@
 <ion-header>
-  <ion-toolbar class="custom-toolbar">
-    <ion-title>Solicitar Agregar Puesto</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">Cerrar</ion-button>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button class="close-button" (click)="closeModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
+    <ion-title class="header-title">Solicitar agregar puesto</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" [fullscreen]="true">
-  <form class="admin-form">
-    <ion-input type="text" label="Nombre del Puesto" label-placement="floating" fill="outline" [(ngModel)]="nombre"
-      name="nombre"></ion-input>
+<ion-content class="ion-padding form-container" [fullscreen]="true">
+  <form class="solicitud-form">
+    <!-- Sección principal del formulario -->
+    <div class="form-section">
+      <ion-input type="text" label="Nombre del Puesto" label-placement="floating" fill="outline" 
+                [(ngModel)]="nombre" name="nombre" class="form-input"></ion-input>
 
-    <ion-textarea label="Descripción" label-placement="floating" fill="outline" [(ngModel)]="descripcion"
-      name="descripcion" rows="3"></ion-textarea>
+      <ion-textarea label="Descripción" label-placement="floating" fill="outline" 
+                   [(ngModel)]="descripcion" name="descripcion" rows="3" class="form-input"></ion-textarea>
 
-    <ion-input type="text" label="ID Casero" label-placement="floating" fill="outline" [(ngModel)]="casero_id"
-      name="casero_id"></ion-input>
-
-    <!-- Imagen del puesto -->
-    <ion-item lines="none">
-      <ion-label position="stacked">Imagen del Puesto</ion-label>
-      <input type="file" accept="image/*" (change)="subirImagen($event)" class="file-input" />
-    </ion-item>
-
-    <!-- Vista previa -->
-    <div *ngIf="img_url" style="text-align:center; margin: 1rem 0;">
-      <img [src]="img_url" alt="Imagen subida" style="max-width: 100%; max-height: 200px; border-radius: 8px;" />
+      <ion-input type="text" label="ID Casero" label-placement="floating" fill="outline" 
+                [(ngModel)]="casero_id" name="casero_id" class="form-input"></ion-input>
     </div>
 
-    <!-- Feria -->
-    <ion-item button (click)="toggleAccordion()">
-      <ion-label>
-        {{ feria_id ? nombreFeriaSeleccionada : 'Seleccionar Feria' }}
-      </ion-label>
-      <ion-icon slot="end" [name]="isAccordionOpen ? 'chevron-up' : 'chevron-down'"></ion-icon>
-    </ion-item>
+    <!-- Sección de imágenes -->
+    <div class="form-section">
+      <label class="section-label">Imagen del Puesto</label>
+      <div class="file-upload-container">
+        <label class="file-upload-label">
+          <input type="file" accept="image/*" (change)="subirImagen($event)" class="file-input" />
+          <span class="upload-button">Seleccionar imagen</span>
+        </label>
+      </div>
+      
+      <div *ngIf="img_url" class="image-preview">
+        <img [src]="img_url" alt="Imagen subida" />
+      </div>
+    </div>
 
-    <div *ngIf="isAccordionOpen" class="accordion-content" style="margin-top: 0.5rem;">
-      <ion-searchbar [(ngModel)]="filtroFerias" name="filtroFerias" (ionInput)="actualizarFiltro($event)" debounce="300"
-        placeholder="Buscar feria..."></ion-searchbar>
+    <!-- Selector de feria con acordeón -->
+    <div class="form-section">
+      <div class="accordion-header" (click)="toggleAccordion()">
+        <label class="section-label">Feria</label>
+        <ion-icon [name]="isAccordionOpen ? 'chevron-up' : 'chevron-down'"></ion-icon>
+      </div>
+      
+      <div *ngIf="isAccordionOpen" class="accordion-content">
+        <ion-searchbar [(ngModel)]="filtroFerias" name="filtroFerias" 
+                     (ionInput)="actualizarFiltro($event)" debounce="300"
+                     placeholder="Buscar feria..." class="search-bar"></ion-searchbar>
 
-      <ion-list>
-        <ion-item *ngFor="let feria of feriasFiltradas" button detail="false" (click)="seleccionarFeria(feria)"
-          [class.selected]="feria_id === feria.id">
-          {{ feria.nombre }}
-        </ion-item>
-      </ion-list>
+        <div class="options-list">
+          <div *ngFor="let feria of feriasFiltradas" class="option-item" 
+              [class.selected]="feria_id === feria.id" (click)="seleccionarFeria(feria)">
+            {{ feria.nombre }}
+          </div>
+        </div>
+        <div *ngIf="nombreFeriaSeleccionada" class="selected-item">
+          Seleccionado: {{ nombreFeriaSeleccionada }}
+        </div>
+      </div>
     </div>
 
     <!-- Tipos de productos -->
-    <ion-item button (click)="toggleTiposAccordion()">
-      <ion-label>
-        {{ tiposSeleccionados.length > 0 ? 'Tipos Seleccionados' : 'Seleccionar Tipos de Productos' }}
-      </ion-label>
-      <ion-icon slot="end" [name]="isTiposAccordionOpen ? 'chevron-up' : 'chevron-down'"></ion-icon>
-    </ion-item>
-
-    <div *ngIf="isTiposAccordionOpen" class="accordion-content" style="margin-top: 0.5rem;">
-      <ion-list>
-        <ion-item *ngFor="let tipo of tiposDisponibles">
-          <ion-checkbox slot="start" [checked]="tiposSeleccionados.includes(tipo)"
-            (ionChange)="toggleTipoProducto(tipo)"></ion-checkbox>
-          <ion-label>{{ tipo }}</ion-label>
-        </ion-item>
-      </ion-list>
+    <div class="form-section">
+      <div class="accordion-header" (click)="toggleTiposAccordion()">
+        <label class="section-label">Tipos de Productos</label>
+        <ion-icon [name]="isTiposAccordionOpen ? 'chevron-up' : 'chevron-down'"></ion-icon>
+      </div>
+      
+      <div *ngIf="isTiposAccordionOpen" class="accordion-content">
+        <div class="options-list">
+          <div *ngFor="let tipo of tiposDisponibles" class="checkbox-item">
+            <label>
+              <input type="checkbox" [checked]="tiposSeleccionados.includes(tipo)"
+                    (change)="toggleTipoProducto(tipo)" class="custom-checkbox">
+              <span>{{ tipo }}</span>
+            </label>
+          </div>
+        </div>
+        <div *ngIf="tiposSeleccionados.length > 0" class="selected-items">
+          Seleccionados: {{ tiposSeleccionados.join(', ') }}
+        </div>
+      </div>
     </div>
 
-    <!-- Comentario -->
-    <ion-textarea label="Comentario" label-placement="floating" fill="outline" [(ngModel)]="comentario"
-      name="comentario" rows="3"></ion-textarea>
+    <!-- Documento y comentario -->
+    <div class="form-section">
+      <ion-textarea label="Comentario" label-placement="floating" fill="outline" 
+                   [(ngModel)]="comentario" name="comentario" rows="3" class="form-input"></ion-textarea>
 
-    <!-- Documento -->
-    <ion-item lines="none" style="margin-top: 1rem;">
-      <ion-label position="stacked">Documento (PDF o Imagen)</ion-label>
-      <input type="file" accept="image/*,application/pdf" (change)="onFileSelected($event)" class="file-input" />
-      <ion-text *ngIf="documento" color="medium" style="margin-top: 0.5rem;">
+      <label class="section-label">Documento (PDF o Imagen)</label>
+      <div class="file-upload-container">
+        <label class="file-upload-label">
+          <input type="file" accept="image/*,application/pdf" (change)="onFileSelected($event)" class="file-input" />
+          <span class="upload-button">Seleccionar archivo</span>
+        </label>
+      </div>
+      <div *ngIf="documento" class="file-info">
         Archivo seleccionado: {{ documento.name }}
-      </ion-text>
-    </ion-item>
+      </div>
+    </div>
 
-    <ion-button shape="round" class="save-button" style="margin-top: 1rem;" (click)="enviarSolicitud()">
+    <!-- Botón de envío -->
+    <ion-button shape="round" class="submit-button" (click)="enviarSolicitud()">
       Enviar Solicitud
+      <ion-icon name="send-outline" slot="end"></ion-icon>
     </ion-button>
   </form>
-
 </ion-content>

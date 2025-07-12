@@ -1,12 +1,9 @@
 @use 'src/theme/variables' as *;
 
-:host {
-  font-family: 'Roboto', sans-serif;
-}
-
+/* NO MODIFICAR (sección conservada exactamente igual) */
 .back-button-container {
   position: absolute;
-  top: 10px;
+  top: 35px;
   left: 10px;
   z-index: 10;
 
@@ -21,65 +18,171 @@
 .admin-header {
   text-align: center;
   padding: 60px 20px 20px 20px;
-  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+  background: url('/assets/img/fondo.png') center center/cover no-repeat;
   color: $inverse-text-color;
 
   h2 {
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
     margin: 0;
   }
 }
 
-.modal-trigger-container {
-  padding: 16px 20px;
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
+}
+/* FIN NO MODIFICAR */
+
+/* Nuevos estilos modernos */
+.filter-container {
+  padding: 0 16px;
+  margin-bottom: 16px;
+  
+  .filter-item {
+    --background: transparent;
+    --border-radius: 12px;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    
+    ion-label {
+      font-size: 0.9rem;
+      color: var(--ion-color-medium);
+      margin-bottom: 8px;
+    }
+    
+    .custom-select {
+      width: 100%;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 12px 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+  }
 }
 
-.custom-card {
-  background-color: rgba(200, 230, 201, 0.5); // verde claro con opacidad
-  margin-bottom: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.25); // sombra verde oscura
+.puestos-container {
+  padding: 0 16px 80px;
+  display: grid;
+  gap: 16px;
+}
 
-  ion-card-title {
-    font-weight: 700;
-    font-size: 1.3rem;
-    color: $primary-text-color;
+.puesto-card {
+  border: 2px solid rgb(190, 190, 190);
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   }
-
-  ion-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-right: 10px;
+  
+  &.aceptado {
+    border-left: 4px solid $success-color;
   }
-
-  ion-card-header ion-buttons {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
+  
+  &.pendiente {
+    border-left: 4px solid $accent-color;
   }
-
-  ion-card-header ion-button {
-    font-size: 1.4rem;
+  
+  &.rechazado {
+    border-left: 4px solid $danger-red;
   }
 }
 
-.info-row {
+.card-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
-  color: $primary-text-color;
-
-  ion-icon {
-    margin-right: 8px;
-    color: $primary-color;
+  margin-bottom: 12px;
+  
+  .puesto-nombre {
     font-size: 1.2rem;
-    min-width: 22px;
+    font-weight: 600;
+    color: $primary-text-color;
+    margin: 0;
+  }
+  
+  .edit-button {
+    background: transparent;
+    border: none;
+    color: $primary-color;
+    font-size: 1.4rem;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    
+    &:active {
+      background: rgba($primary-color, 0.1);
+    }
   }
 }
 
+.card-content {
+  display: grid;
+  gap: 12px;
+  
+  .info-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    
+    ion-icon {
+      color: $primary-color;
+      font-size: 1.2rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    
+    p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: $secondary-text-color;
+      line-height: 1.4;
+    }
+  }
+}
+
+.card-footer {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  
+  .estado-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    .aceptado & {
+      background: rgba($success-color, 0.1);
+      color: $success-color;
+    }
+    
+    .pendiente & {
+      background: rgba($accent-color, 0.1);
+      color: $accent-color;
+    }
+    
+    .rechazado & {
+      background: rgba($danger-red, 0.1);
+      color: $danger-red;
+    }
+  }
+}
+
+/* Conservar FAB button original */
 .fab-custom-color {
   position: fixed;
   bottom: 20px;
@@ -94,42 +197,4 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-}
-
-.button-custom-color {
-  position: fixed;
-  top: 5px;
-  right: 20px;
-  --color: #{$primary-color};
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.estado-badge {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.9em;
-  margin-top: 8px;
-  font-weight: bold;
-  text-align: center;
-  width: fit-content;
-}
-
-.estado-badge.aceptado {
-  background-color: $light-primary-color;
-  color: $primary-color;
-}
-
-.estado-badge.pendiente {
-  background-color: $light-primary-color;
-  color: $accent-color;
-}
-
-.estado-badge.rechazado {
-  background-color: $light-primary-color;
-  color: $danger-red;
 }

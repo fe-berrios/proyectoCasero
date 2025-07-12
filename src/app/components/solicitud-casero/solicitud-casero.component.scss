@@ -1,118 +1,206 @@
-@use 'src/theme/variables' as *;
-
-.custom-toolbar {
-    --background: #{ $dark-primary-color };
-    --color: #{ $inverse-text-color };
+/* Variables */
+:host {
+  --primary-color: #2c3e50;
+  --secondary-color: #34495e;
+  --accent-color: #3498db;
+  --danger-color: #e74c3c;
+  --success-color: #2ecc71;
+  --light-gray: #ecf0f1;
+  --medium-gray: #bdc3c7;
+  --dark-gray: #7f8c8d;
+  --text-color: #2c3e50;
+  --inverse-text: #ffffff;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
 }
 
+/* Header */
+.header-toolbar {
+  --background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  --color: var(--inverse-text);
+  --min-height: 64px;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  
+  .header-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  
+  .close-button {
+    --color: var(--inverse-text);
+    --padding-start: 8px;
+    --padding-end: 8px;
+  }
+}
+
+/* Content */
 .solicitud-content {
-    max-width: 480px;
-    margin: 0 auto;
-    color: #{ $dark-primary-color };
-
-    h2 {
-        font-weight: 700;
-        font-size: 1.8rem;
-        margin-bottom: 0.2rem;
+  --background: var(--light-gray);
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+  
+  .form-container {
+    border: 2px solid rgb(190, 190, 190);
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    padding: 0;
+  }
+  
+  .form-section {
+    padding: 20px;
+    
+    .applicant-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin: 0 0 16px 0;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--light-gray);
     }
-
-    h3 {
-        font-weight: 400;
-        font-size: 1.2rem;
-        opacity: 0.7;
-        margin-bottom: 1.5rem;
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+      
+      @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+      }
     }
-
-    p {
-        font-size: 1rem;
-        margin-bottom: 0.8rem;
-
-        strong {
-            font-weight: 600;
-        }
-    }
-
-    .buttons-container {
-        margin-top: 2rem;
-        display: flex;
-        gap: 0; // quitar gap para que no haya espacio extra
-        justify-content: center;
-
-        ion-button.accept-button,
-        ion-button.deny-button,
-        ion-button.pending-button {
-            flex: 1; // que ocupen el mismo espacio
-            height: 36px;
-            font-size: 0.9rem;
-            border-radius: 9999px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-            transition: background-color 0.3s ease;
-            margin: 0; // quitar márgenes externos
-            padding: 0; // quitar padding para que se ajuste mejor
-
-            // agregar algo de espacio interno para el texto
-            --padding-start: 8px;
-            --padding-end: 8px;
-        }
-
-        // para que no estén pegados, agregar margen izquierda a los 2 últimos
-        ion-button.deny-button,
-        ion-button.pending-button {
-            margin-left: 6px;
-        }
-
-        ion-button.accept-button {
-            --background: #{ $dark-primary-color };
-            --color: #{ $inverse-text-color };
-
-            &:hover {
-                --background: #{ lighten($dark-primary-color, 10%) };
-            }
-        }
-
-        ion-button.deny-button {
-            --background: #{ $danger-red };
-            --color: #{ $inverse-text-color };
-
-            &:hover {
-                --background: #{ lighten($danger-red, 10%) };
-            }
-        }
-
-        ion-button.pending-button {
-            --background: #{ $accent-color };
-            --color: #{ $inverse-text-color };
-
-            &:hover {
-                --background: #{ lighten($accent-color, 10%) };
-            }
-        }
-    }
-
-}
-
-.document-card {
-    ion-card-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        text-align: center;
-        margin-bottom: 8px;
-    }
-
-    ion-button {
-        margin-top: 8px;
+    
+    .form-group {
+      margin-bottom: 0;
+      
+      label {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--dark-gray);
+        margin-bottom: 4px;
+        font-weight: 500;
+      }
+      
+      input, textarea {
+        width: 100%;
+        border: 1px solid var(--medium-gray);
+        border-radius: 8px;
+        padding: 10px 12px;
         font-size: 0.95rem;
-        height: 40px;
-        --border-radius: 20px;
+        background: #f9f9f9;
+        color: var(--text-color);
+        transition: var(--transition);
+        
+        &:focus {
+          outline: none;
+          border-color: var(--accent-color);
+          box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+      }
+      
+      textarea {
+        min-height: 80px;
+        resize: vertical;
+      }
     }
+    
+    .comment-group {
+      grid-column: 1 / -1;
+    }
+  }
+  
+  .document-section {
+    padding: 16px 20px;
+    background: #f8f9fa;
+    border-top: 1px solid var(--light-gray);
+    border-bottom: 1px solid var(--light-gray);
+    
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--primary-color);
+      margin: 0 0 16px 0;
+    }
+    
+    .document-actions {
+      display: flex;
+      gap: 12px;
+      
+      @media (max-width: 480px) {
+        flex-direction: column;
+      }
+    }
+    
+    .document-button {
+      flex: 1;
+      --border-radius: 8px;
+      --padding-top: 12px;
+      --padding-bottom: 12px;
+      font-weight: 500;
+      
+      &.download {
+        --background: var(--primary-color);
+        --color: var(--inverse-text);
+      }
+      
+      &.view {
+        --background: var(--accent-color);
+        --color: var(--inverse-text);
+      }
+    }
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 12px;
+    padding: 20px;
+    justify-content: flex-end;
+    
+    @media (max-width: 480px) {
+      flex-direction: column;
+    }
+    
+    ion-button {
+      margin: 0;
+      --padding-top: 12px;
+      --padding-bottom: 12px;
+      --padding-start: 20px;
+      --padding-end: 20px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      
+      &.accept {
+        --background: var(--success-color);
+        --color: var(--inverse-text);
+      }
+      
+      &.pending {
+        --border-color: var(--accent-color);
+        --color: var(--accent-color);
+      }
+      
+      &.deny {
+        --border-color: var(--danger-color);
+        --color: var(--danger-color);
+      }
+    }
+  }
 }
 
-.download-button {
-    --background: #{ $primary-text-color };
-    --color: #{ $inverse-text-color };
+.loading-spinner {
+  color: var(--accent-color);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.view-button {
-    --background: #{ $secondary-text-color };
-    --color: #{ $inverse-text-color };
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
 }

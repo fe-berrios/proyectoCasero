@@ -1,78 +1,192 @@
 @use 'src/theme/variables' as *;
 
-:host {
-  font-family: 'Roboto', sans-serif;
+/* Mantenemos el header según lo indicado */
+::ng-deep .header-toolbar {
+  text-align: center;
+  background: url('/assets/img/fondo.png') center center/cover no-repeat !important;
+  --background: transparent !important;
+  color: $inverse-text-color;
+  padding: 20px;
+  min-height: 25px;
+  position: relative;
+ 
+  .header-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+    top: 17px;
+  }
+ 
+  ion-buttons[slot="start"] {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    
+    .close-button {
+      --color: #{$inverse-text-color};
+      --background: transparent;
+      --box-shadow: none;
+     
+      ion-icon {
+        font-size: 24px;
+      }
+    }
+  }
 }
 
-ion-card {
-  margin-bottom: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-left: 5px solid transparent;
-  /* default */
+/* Estilos generales */
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
 }
 
-ion-card.estado-aceptado {
-  border-left-color: $primary-color; // color para aceptado
+.admin-content {
+  --background: #f8f9fa;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
 }
 
-ion-card.estado-pendiente {
-  border-left-color: $accent-color; // color para pendiente
+/* Filtro moderno */
+.filter-container {
+  margin-bottom: 24px;
+  
+  .filter-item {
+    --background: #ffffff;
+    --border-radius: 12px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    
+    .custom-select {
+      width: 100%;
+      --placeholder-color: #{$secondary-text-color};
+      --placeholder-opacity: 1;
+    }
+  }
 }
 
-ion-card.estado-rechazado {
-  border-left-color: $danger-red; // color para rechazado
-}
-
-
-.custom-toolbar {
-  --background: #{$dark-primary-color};
-  --color: #{$inverse-text-color};
-}
-
-ion-card-title {
-  font-size: 18px;
-  color: #{$primary-text-color};
-}
-
-.check-button-container {
-  margin-top: 0px;
+/* Tarjetas de solicitud */
+.requests-container {
   display: flex;
-  justify-content: flex-start; // alinea a la izquierda
+  flex-direction: column;
+  gap: 16px;
 }
 
-.check-button {
-  padding-left: 0;
+.request-card {
+  border: 2px solid rgb(190, 190, 190);
+  margin: 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-content {
+    padding: 20px;
+  }
+  
+  /* Borde izquierdo según estado */
+  &.estado-aceptado {
+    border-left: 4px solid $primary-color;
+  }
+  
+  &.estado-pendiente {
+    border-left: 4px solid $accent-color;
+  }
+  
+  &.estado-rechazado {
+    border-left: 4px solid $danger-red;
+  }
+}
+
+/* Encabezado de tarjeta */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  
+  .user-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: $primary-text-color;
+    margin: 0;
+  }
+  
+  .status-badge {
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}
+
+/* Detalles de la solicitud */
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  
+  .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    .detail-icon {
+      color: $secondary-text-color;
+      font-size: 16px;
+    }
+    
+    .detail-text {
+      font-size: 14px;
+      color: $secondary-text-color;
+    }
+  }
+}
+
+/* Botón de revisar */
+.review-button {
+  --color: #{$primary-color};
   --padding-start: 0;
   --padding-end: 0;
-  --background: transparent;
+  font-weight: 500;
+  
+  ion-icon {
+    margin-left: 8px;
+    transition: transform 0.2s ease;
+  }
+  
+  &:hover ion-icon {
+    transform: translateX(4px);
+  }
 }
 
-.check-icon {
-  color: $primary-text-color;
-  font-size: 20px;
-}
-
-.check-text {
-  color: $primary-text-color;
-  margin-left: 6px;
-}
-
-
-.estado-badge.aceptado {
-  background-color: $light-primary-color;
-  color: $primary-color;
-}
-
-.estado-badge.pendiente {
-  background-color: $light-primary-color;
-  color: $accent-color;
-}
-
-.estado-badge.rechazado {
-  background-color: $light-primary-color;
-  color: $danger-red;
-}
-
-.custom-badge{
-  margin-top: 10px;
+/* Estado vacío */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  
+  .empty-icon {
+    font-size: 48px;
+    color: $secondary-text-color;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+  
+  ion-text {
+    font-size: 16px;
+  }
 }

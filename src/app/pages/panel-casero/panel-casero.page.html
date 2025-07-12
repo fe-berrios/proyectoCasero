@@ -1,73 +1,67 @@
 <ion-content [fullscreen]="true">
-  <!-- Botón de volver atrás -->
+  <!-- Botón de volver atrás (NO MODIFICAR) -->
   <div class="back-button-container">
     <ion-buttons>
       <ion-back-button defaultHref="/mapa"></ion-back-button>
     </ion-buttons>
   </div>
-  <!-- Encabezado -->
+
+  <!-- Encabezado (NO MODIFICAR) -->
   <div class="admin-header">
     <h2>Mis Puestos</h2>
   </div>
 
-  <!-- Filtro por estado -->
-  <ion-item>
-    <ion-label>Filtrar por estado</ion-label>
-    <ion-select [(ngModel)]="estadoSeleccionado" (ionChange)="onEstadoSeleccionado()" interface="popover"
-      placeholder="Todos">
-      <ion-select-option [value]="null">Todos los estados</ion-select-option>
-      <ion-select-option value="aceptado">Aceptado</ion-select-option>
-      <ion-select-option value="pendiente">Pendiente</ion-select-option>
-      <ion-select-option value="rechazado">Rechazado</ion-select-option>
-    </ion-select>
-  </ion-item>
+  <!-- Filtro moderno -->
+  <div class="filter-container">
+    <ion-item lines="none" class="filter-item">
+      <ion-label position="stacked">Filtrar por estado</ion-label>
+      <ion-select [(ngModel)]="estadoSeleccionado" (ionChange)="onEstadoSeleccionado()" 
+                 interface="popover" class="custom-select">
+        <ion-select-option [value]="null">Todos los estados</ion-select-option>
+        <ion-select-option value="aceptado">Aceptado</ion-select-option>
+        <ion-select-option value="pendiente">Pendiente</ion-select-option>
+        <ion-select-option value="rechazado">Rechazado</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
 
-  <!-- Lista de cards personalizada -->
-  <ion-list>
-    <ion-card *ngFor="let puesto of puestos" class="custom-card">
-      <ion-card-header>
-        <ion-card-title>{{ puesto.nombre }}</ion-card-title>
-      </ion-card-header>
+  <!-- Lista minimalista de puestos -->
+  <div class="puestos-container">
+    <div *ngFor="let puesto of puestos" class="puesto-card" [class]="puesto.estado_solicitud">
+      <div class="card-header">
+        <h3 class="puesto-nombre">{{ puesto.nombre }}</h3>
+        <button class="edit-button" (click)="abrirModalEditarPuesto(puesto)">
+          <ion-icon name="create-outline"></ion-icon>
+        </button>
+      </div>
 
-      <ion-card-content>
-        <div class="info-row" *ngIf="puesto.descripcion">
+      <div class="card-content">
+        <div class="info-item" *ngIf="puesto.descripcion">
           <ion-icon name="information-circle-outline"></ion-icon>
-          <span>{{ puesto.descripcion }}</span>
+          <p>{{ puesto.descripcion }}</p>
         </div>
 
-        <div class="info-row" *ngIf="puesto.ubicacion">
+        <div class="info-item" *ngIf="puesto.ubicacion">
           <ion-icon name="pin-outline"></ion-icon>
-          <span>Ubicación: {{ puesto.ubicacion }}</span>
+          <p>{{ puesto.ubicacion }}</p>
         </div>
 
-        <div class="info-row" *ngIf="puesto.tipo_productos">
+        <div class="info-item" *ngIf="puesto.tipo_productos">
           <ion-icon name="pricetags-outline"></ion-icon>
-          <span>Productos: {{ puesto.tipo_productos }}</span>
+          <p>{{ puesto.tipo_productos }}</p>
         </div>
+      </div>
 
-        <div class="info-row" *ngIf="puesto.feria_id">
-          <ion-icon name="storefront-outline"></ion-icon>
-          <span>ID Feria: {{ puesto.feria_id }}</span>
-        </div>
+      <div class="card-footer">
+        <span class="estado-badge">{{ puesto.estado_solicitud | titlecase }}</span>
+      </div>
+    </div>
+  </div>
 
-        <div class="estado-badge" [ngClass]="puesto.estado_solicitud">
-          Estado: {{ puesto.estado_solicitud | titlecase }}
-        </div>
-
-        <div class="edit-button-container">
-          <ion-button fill="clear" (click)="abrirModalEditarPuesto(puesto)">
-            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-          </ion-button>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
-
-  <!-- FAB botón flotante para agregar puesto -->
+  <!-- FAB botón flotante (estilo conservado) -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button class="fab-custom-color" (click)="openSolicitudPuestoModal()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
 </ion-content>

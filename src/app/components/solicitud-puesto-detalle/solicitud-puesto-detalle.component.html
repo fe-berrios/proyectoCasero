@@ -1,56 +1,111 @@
 <ion-header>
-  <ion-toolbar class="custom-toolbar">
-    <ion-title>Revisar Solicitud</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button class="close-button" (click)="cerrarModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
+    <ion-title class="header-title">Revisar solicitud</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="!loading" class="ion-padding solicitud-content">
-  <h2>{{ solicitud?.usuario?.full_name || 'Usuario Desconocido' }}</h2>
-  <p><strong>Fecha de Solicitud:</strong> {{ solicitud?.created_at | date: 'dd/MM/yyyy HH:mm' }}</p>
-  <p><strong>Estado:</strong> {{ solicitud?.status }}</p>
-  <p><strong>Email:</strong> {{ solicitud?.usuario?.email || 'N/A' }}</p>
-  <p><strong>Comentario:</strong> {{ solicitud?.comentario || 'Sin comentario' }}</p>
+<ion-content *ngIf="!loading" class="solicitud-content">
+  <div class="solicitud-container">
+    <!-- Información del usuario -->
+    <div class="user-section">
+      <div class="user-header">
+        <ion-avatar class="user-avatar">
+          <img [src]="solicitud?.usuario?.avatar_url || 'assets/profile_pics/default.svg'" />
+        </ion-avatar>
+        <h2 class="user-name">{{ solicitud?.usuario?.full_name || 'Usuario Desconocido' }}</h2>
+      </div>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span>{{ solicitud?.created_at | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        
+        <div class="info-item">
+          <ion-icon name="mail-outline"></ion-icon>
+          <span>{{ solicitud?.usuario?.email || 'N/A' }}</span>
+        </div>
+        
+        <div class="info-item status-badge" [ngClass]="'status-' + solicitud?.status">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span>{{ solicitud?.status | titlecase }}</span>
+        </div>
+      </div>
+      
+      <div class="comment-section" *ngIf="solicitud?.comentario">
+        <ion-icon name="chatbubble-outline"></ion-icon>
+        <p class="comment-text">{{ solicitud.comentario }}</p>
+      </div>
+    </div>
 
-  <ng-container *ngIf="puestoCompleto">
-    <h2>{{ puestoCompleto.nombre || 'N/A' }}</h2>
-    <p><strong>Descripción:</strong> {{ puestoCompleto.descripcion || 'N/A' }}</p>
-    <p><strong>Ubicación:</strong> {{ puestoCompleto.ubicacion || 'N/A' }}</p>
-    <p><strong>Tipo de Productos:</strong> {{ puestoCompleto.tipo_productos || 'N/A' }}</p>
-  </ng-container>
+    <!-- Información del puesto -->
+    <div class="puesto-section" *ngIf="puestoCompleto">
+      <h3 class="section-title">Información del Puesto</h3>
+      
+      <div class="puesto-card">
+        <h4 class="puesto-name">{{ puestoCompleto.nombre || 'N/A' }}</h4>
+        
+        <div class="puesto-details">
+          <div class="detail-item">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <p>{{ puestoCompleto.descripcion || 'Sin descripción' }}</p>
+          </div>
+          
+          <div class="detail-item">
+            <ion-icon name="location-outline"></ion-icon>
+            <p>{{ puestoCompleto.ubicacion || 'Ubicación no especificada' }}</p>
+          </div>
+          
+          <div class="detail-item">
+            <ion-icon name="pricetags-outline"></ion-icon>
+            <p>{{ puestoCompleto.tipo_productos || 'Tipos no especificados' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <ion-card class="document-card" *ngIf="solicitud?.documento_url">
-    <ion-card-header>
-      <ion-card-title>Documento Adjunto</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-button class="download-button" expand="block" shape="round" (click)="descargarDocumento()"
-        [disabled]="descargando">
-        {{ descargando ? 'Descargando...' : 'Descargar Documento' }}
+    <!-- Documento adjunto -->
+    <div class="document-section" *ngIf="solicitud?.documento_url">
+      <h3 class="section-title">Documento Adjunto</h3>
+      
+      <div class="document-card">
+        <div class="document-actions">
+          <ion-button class="download-button" fill="outline" (click)="descargarDocumento()" [disabled]="descargando">
+            <ion-icon slot="start" name="download-outline"></ion-icon>
+            {{ descargando ? 'Descargando...' : 'Descargar' }}
+          </ion-button>
+          
+          <ion-button *ngIf="descargadoLocalPath" class="view-button" fill="outline" (click)="abrirDocumento()">
+            <ion-icon slot="start" name="document-outline"></ion-icon>
+            Ver Documento
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="action-buttons">
+      <ion-button class="accept-button" expand="block" (click)="actualizarEstado('aceptado')">
+        <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+        Aceptar
       </ion-button>
-
-      <ion-button class="view-button" expand="block" shape="round" (click)="abrirDocumento()"
-        [disabled]="!descargadoLocalPath" *ngIf="descargadoLocalPath">
-        Abrir Documento
+      
+      <ion-button class="pending-button" fill="outline" expand="block" (click)="actualizarEstado('pendiente')">
+        <ion-icon slot="start" name="time-outline"></ion-icon>
+        Pendiente
       </ion-button>
-    </ion-card-content>
-  </ion-card>
-
-  <div class="buttons-container">
-    <ion-button shape="round" class="accept-button" (click)="actualizarEstado('aceptado')">
-      Aceptar Solicitud
-    </ion-button>
-
-    <ion-button shape="round" class="pending-button" (click)="actualizarEstado('pendiente')">
-      Dejar Pendiente
-    </ion-button>
-
-    <ion-button shape="round" class="deny-button" (click)="actualizarEstado('rechazado')">
-      Rechazar Solicitud
-    </ion-button>
+      
+      <ion-button class="deny-button" fill="outline" expand="block" (click)="actualizarEstado('rechazado')">
+        <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+        Rechazar
+      </ion-button>
+    </div>
   </div>
 </ion-content>
 
-<ion-spinner *ngIf="loading" class="ion-padding"></ion-spinner>
+<ion-spinner *ngIf="loading" class="loading-spinner" name="crescent"></ion-spinner>

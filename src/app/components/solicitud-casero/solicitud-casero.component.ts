@@ -211,4 +211,12 @@ export class SolicitudCaseroComponent implements OnInit {
       reader.readAsDataURL(blob);
     });
   }
+
+    getStatusColor(status: string): string {
+    switch (status) {
+      case 'aceptado': return 'success';
+      case 'rechazado': return 'danger';
+      default: return 'warning'; // Para pendiente o cualquier otro estado
+    }
+  }
 }

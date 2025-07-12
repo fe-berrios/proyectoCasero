@@ -1,68 +1,184 @@
 @use 'src/theme/variables' as *;
 
-:host {
-  font-family: 'Roboto', sans-serif;
-}
-
-.admin-form {
-  padding: 20px clamp(16px, 5vw, 32px);
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  ion-input,
-  ion-textarea,
-  ion-select {
-    --highlight-color: #{$dark-primary-color};
+/* NO MODIFICAR - Header */
+::ng-deep .header-toolbar {
+  text-align: center;
+  background: url('/assets/img/fondo.png') center center/cover no-repeat !important;
+  --background: transparent !important;
+  color: $inverse-text-color;
+  padding: 20px 20px 20px 20px;
+  min-height: 25px;
+  position: relative;
+ 
+  .header-title {
     font-size: 16px;
-    transition: all 0.3s ease;
+    font-weight: bold;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+    top: 17px;
   }
-
-  ion-label {
-    font-size: 14px;
+ 
+  ion-buttons[slot="start"] {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    
+    .close-button {
+      --color: #{$inverse-text-color};
+      --background: transparent;
+      --box-shadow: none;
+     
+      ion-icon {
+        font-size: 24px;
+      }
+    }
   }
 }
 
-.save-button {
-  --background: #{$dark-primary-color};
-  --color: #{$inverse-text-color};
-  border-radius: 9999px;
-  width: 60%;
-  margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+:host,
+:host * {
+  font-family: 'Inter', sans-serif !important;
 }
 
-.custom-toolbar {
-  --background: #{$dark-primary-color};
-  --color: #{$inverse-text-color};
-  height: 95px;     // O usa height fijo si prefieres
-  display: flex;
-  align-items: flex-end; // Opcional: alinea el contenido abajo
-  padding-bottom: 12px;  // Opcional: agrega espacio inferior
+/* Estilos Modernos */
+.profile-edit-content {
+  --background: #f8fafb;
+  --padding-top: 0;
 }
 
-.custom-toolbar ion-title {
-  font-weight: bold;
-  padding-top: 30px;       // Opcional: más espacio solo para el título
-}
-
-.custom-toolbar ion-button {
-  padding-top: 30px;       // Opcional: más espacio solo para el título
-}
-.avatar-container {
+/* Avatar Section */
+.avatar-uploader {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
+  padding: 24px 0 16px;
+  position: relative;
 }
 
-.avatar {
-  width: 125px;
-  height: 125px;
+.avatar-wrapper {
+  position: relative;
+  width: fit-content;
+}
+
+.profile-avatar {
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid ($dark-primary-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba($primary-color, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  background-color: #f5f5f5;
+}
+
+.upload-fab {
+  --background: #{$primary-color};
+  --color: #{$inverse-text-color};
+  --box-shadow: 0 2px 8px rgba($primary-color, 0.3);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(25%, 25%);
+}
+
+/* Form Container */
+.form-container {
+  background: white;
+  border-radius: 24px 24px 0 0;
+  padding: 16px;
+  box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.04);
+  height: 100%;
+}
+
+.form-list {
+  background: transparent;
+  padding: 0;
+}
+
+.section-header {
+  padding-left: 0;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  
+  ion-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: $primary-color;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+}
+
+.form-item {
+  --background: transparent;
+  --border-radius: 12px;  /* Esta variable es útil si la usas en componentes de Ionic */
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --min-height: 64px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: var(--border-radius);  /* Aplicamos el border-radius directamente */
+  overflow: hidden;  /* Esto asegura que los hijos no sobresalgan de los bordes redondeados */
+  
+  ion-icon {
+    padding-left: 10px;
+    font-size: 20px;
+    margin-right: 12px;
+  }
+  
+  ion-input {
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    --highlight-color-focused: #{$primary-color};
+    --border-radius: var(--border-radius);  /* También aplicamos a ion-input si es necesario */
+  }
+}
+
+.toggle-item {
+  --background: transparent;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --min-height: 56px;
+  margin-bottom: 4px;
+  
+  ion-icon {
+    font-size: 20px;
+    margin-right: 12px;
+  }
+  
+  ion-toggle {
+    --background: rgba(0, 0, 0, 0.08);
+    --background-checked: #{$primary-color};
+    --handle-background: white;
+    --handle-background-checked: white;
+  }
+}
+
+/* Action Buttons */
+.action-buttons {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.save-btn {
+  --background: #{$primary-color};
+  --color: #{$inverse-text-color};
+  --border-radius: 12px;
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 0;
+  
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
+.cancel-btn {
+  --color: #666;
+  font-weight: 500;
+  margin: 0;
 }

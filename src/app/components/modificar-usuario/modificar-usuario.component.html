@@ -1,71 +1,114 @@
 <ion-header>
-  <ion-toolbar class="custom-toolbar">
-    <ion-title>Editar Usuario</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button class="close-button" (click)="cerrarModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
+    <ion-title class="header-title">Editar Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" [fullscreen]="true">
-  <!-- Avatar -->
-  <div class="avatar-container" *ngIf="usuario.avatar_url">
-    <img
-      class="avatar"
-      [src]="usuario.avatar_url"
-      alt="Avatar"
-      onerror="this.src='assets/profile_pics/loading.svg'"
-    />
+<ion-content class="profile-edit-content">
+  <!-- Sección Avatar -->
+  <div class="avatar-uploader">
+    <div class="avatar-wrapper">
+      <img 
+        [src]="usuario.avatar_url || 'assets/profile_pics/loading.svg'" 
+        class="profile-avatar"
+        alt="Foto de perfil"
+      />
+    </div>
   </div>
 
-  <!-- Formulario de edición -->
-  <form class="admin-form">
+  <!-- Formulario -->
+  <div class="form-container">
+    <ion-list lines="none" class="form-list">
+      <!-- Grupo de Información Básica -->
+      <ion-list-header class="section-header">
+        <ion-label>Información Personal</ion-label>
+      </ion-list-header>
+      
+      <ion-item class="form-item">
+        <ion-icon slot="start" name="person-circle" color="medium"></ion-icon>
+        <ion-input
+          label="Nombre completo"
+          label-placement="stacked"
+          [(ngModel)]="usuario.full_name"
+          name="full_name"
+          clearInput
+        ></ion-input>
+      </ion-item>
 
-    <ion-input
-      type="text"
-      label="Nombre completo"
-      label-placement="floating"
-      fill="outline"
-      [(ngModel)]="usuario.full_name"
-      name="full_name"
-    ></ion-input>
+      <ion-item class="form-item">
+        <ion-icon slot="start" name="at" color="medium"></ion-icon>
+        <ion-input
+          label="Nombre de usuario"
+          label-placement="stacked"
+          [(ngModel)]="usuario.username"
+          name="username"
+          clearInput
+        ></ion-input>
+      </ion-item>
 
-    <ion-input
-      type="text"
-      label="Username"
-      label-placement="floating"
-      fill="outline"
-      [(ngModel)]="usuario.username"
-      name="username"
-    ></ion-input>
+      <ion-item class="form-item">
+        <ion-icon slot="start" name="call" color="medium"></ion-icon>
+        <ion-input
+          label="Teléfono"
+          label-placement="stacked"
+          type="tel"
+          [(ngModel)]="usuario.phone"
+          name="phone"
+          clearInput
+        ></ion-input>
+      </ion-item>
 
-    <ion-input
-      type="text"
-      label="Teléfono"
-      label-placement="floating"
-      fill="outline"
-      [(ngModel)]="usuario.phone"
-      name="phone"
-    ></ion-input>
+      <!-- Grupo de Permisos -->
+      <ion-list-header class="section-header">
+        <ion-label>Permisos y Estado</ion-label>
+      </ion-list-header>
 
-    <ion-item lines="none">
-      <ion-label>Admin</ion-label>
-      <ion-toggle [(ngModel)]="usuario.admin_status" name="admin_status"></ion-toggle>
-    </ion-item>
+      <ion-item class="toggle-item">
+        <ion-icon slot="start" name="shield" color="medium"></ion-icon>
+        <ion-label>Administrador</ion-label>
+        <ion-toggle 
+          [(ngModel)]="usuario.admin_status" 
+          name="admin_status"
+          color="primary"
+        ></ion-toggle>
+      </ion-item>
 
-    <ion-item lines="none">
-      <ion-label>Casero</ion-label>
-      <ion-toggle [(ngModel)]="usuario.casero_status" name="casero_status"></ion-toggle>
-    </ion-item>
+      <ion-item class="toggle-item">
+        <ion-icon slot="start" name="storefront" color="medium"></ion-icon>
+        <ion-label>Cuenta de Vendedor</ion-label>
+        <ion-toggle 
+          [(ngModel)]="usuario.casero_status" 
+          name="casero_status"
+          color="secondary"
+        ></ion-toggle>
+      </ion-item>
 
-    <!-- Toggle para banear usuario -->
-    <ion-item lines="none">
-      <ion-label>Baneado</ion-label>
-      <ion-toggle [(ngModel)]="usuario.banned" name="banned"></ion-toggle>
-    </ion-item>
+      <ion-item class="toggle-item">
+        <ion-icon slot="start" name="ban" color="medium"></ion-icon>
+        <ion-label>Cuenta Bloqueada</ion-label>
+        <ion-toggle 
+          [(ngModel)]="usuario.banned" 
+          name="banned"
+          color="danger"
+        ></ion-toggle>
+      </ion-item>
+    </ion-list>
 
-    <ion-button shape="round" class="save-button" style="margin-top: 1rem;" (click)="guardarCambios()">
-      Guardar Cambios
-    </ion-button>
-  </form>
+    <!-- Acciones -->
+    <div class="action-buttons">
+      <ion-button expand="block" shape="round" class="save-btn" (click)="guardarCambios()">
+        <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+        Confirmar Cambios
+      </ion-button>
+      
+      <ion-button expand="block" fill="clear" class="cancel-btn" (click)="cerrarModal()">
+        Cancelar
+      </ion-button>
+    </div>
+  </div>
 </ion-content>
