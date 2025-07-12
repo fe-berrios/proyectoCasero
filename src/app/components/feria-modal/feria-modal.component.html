@@ -1,9 +1,11 @@
 <ion-header>
-  <ion-toolbar class="custom-toolbar">
-    <ion-title>Detalles de la Feria</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">Cerrar</ion-button>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button class="close-button" (click)="closeModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
+    <ion-title class="header-title">Detalles de la Feria</ion-title>
   </ion-toolbar>
 </ion-header>
 

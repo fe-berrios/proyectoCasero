@@ -1,17 +1,40 @@
 @use 'src/theme/variables' as *;
 
 // 1. Encabezado principal (ion-toolbar)
-ion-toolbar {
-  background: linear-gradient(135deg, $dark-primary-color, $primary-color);
+/* Header */
+::ng-deep .header-toolbar {
+  text-align: center;
+  background: url('/assets/img/fondo.png') center center/cover no-repeat !important;
+  --background: transparent !important;
   color: $inverse-text-color;
-
-  ion-title {
-    color: $inverse-text-color;
+  padding: 30px 20px 20px 20px;
+  min-height: 25px;
+  position: relative;
+ 
+  .header-title {
+    font-size: 16px;
     font-weight: bold;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+    top: 17px;
   }
-
-  ion-button {
-    --color: #{$inverse-text-color};
+ 
+  ion-buttons[slot="start"] {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    
+    .close-button {
+      --color: #{$inverse-text-color};
+      --background: transparent;
+      --box-shadow: none;
+     
+      ion-icon {
+        font-size: 24px;
+      }
+    }
   }
 }
 

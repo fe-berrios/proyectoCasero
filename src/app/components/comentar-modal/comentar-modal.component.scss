@@ -20,6 +20,7 @@ ion-content {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: center; // <-- Agrega esta línea
 }
 
 // margen entre primer ion-item (comentario) y siguiente (calificación)
@@ -42,6 +43,8 @@ ion-item {
   align-items: stretch;
   padding: 0 !important;
   margin: 0 !important;
+
+  width: 100% !important;
 }
 
 ion-label {
@@ -66,6 +69,7 @@ ion-textarea {
 
   width: 100% !important;
   margin-bottom: 15px !important; // margen inferior para separar del botón
+  margin-top: 15px;
   padding: 0 !important;
 
   textarea {
@@ -122,11 +126,15 @@ ion-item + ion-button {
 
 // Centrar verticalmente label y tomates en el ion-item de calificación
 ion-item.calificacion {
-  flex-direction: row;    // para que label y contenedor de tomates estén en línea
-  align-items: center;    // centra verticalmente
-  gap: 12px;              // espacio entre label y tomates
-  padding-left: 12px;     // igualar padding a otros ion-item si quieres
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding-left: 12px;
   padding-right: 12px;
+  width: 95% !important;   // <-- Fuerza el ancho solo para este item
+  max-width: 400px;        // <-- Opcional: limita el ancho máximo
+  margin: 0 auto !important; // <-- ¡IMPORTANTE! fuerza el centrado
+  justify-content: center;
 }
 
 ion-item.calificacion ion-label {

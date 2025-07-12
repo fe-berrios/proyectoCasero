@@ -1,9 +1,11 @@
 <ion-header>
-  <ion-toolbar class="custom-toolbar">
-    <ion-title>Calificar Puesto</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="cerrar()">Cerrar</ion-button>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button class="close-button" (click)="cerrarModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
+    <ion-title class="header-title">Calificar Feria</ion-title>
   </ion-toolbar>
 </ion-header>
 

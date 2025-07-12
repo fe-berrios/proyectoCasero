@@ -68,7 +68,7 @@ export class ComentarModalComponent {
     }
   }
 
-  cerrar() {
+  cerrarModal() {
     this.modalCtrl.dismiss(false);
   }
 

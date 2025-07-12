@@ -32,7 +32,7 @@ export class ComentarFeriaComponent {
     }
   }
 
-  cancelar() {
+  cerrarModal() {
     this.modalCtrl.dismiss()
   }
 
